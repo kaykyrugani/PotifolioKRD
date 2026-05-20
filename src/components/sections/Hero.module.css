@@ -1,0 +1,422 @@
+.hero {
+  position: relative;
+  min-height: calc(100svh - 80px);
+  padding: clamp(4.75rem, 8vh, 5.75rem) var(--space-4) clamp(2rem, 5vh, 3.5rem);
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(7, 11, 20, 0.99) 0%, rgba(7, 11, 20, 0.9) 35%, rgba(7, 11, 20, 0.34) 61%, rgba(7, 11, 20, 0.54) 100%),
+    radial-gradient(circle at 72% 45%, rgba(59, 130, 246, 0.16), transparent 34%),
+    radial-gradient(circle at 82% 72%, rgba(124, 58, 237, 0.16), transparent 38%),
+    #070b14;
+}
+
+.hero::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  z-index: 3;
+  height: 22%;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(7, 11, 20, 0.58) 58%, #070b14 100%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: min(100%, 1240px);
+  min-height: calc(100svh - 9.5rem);
+  margin: 0 auto;
+  align-content: center;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 4;
+  max-width: 980px;
+  padding: var(--space-4) 0 0;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  color: var(--color-blue-cyan);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  content: "";
+  background: var(--color-blue-soft);
+  box-shadow: 0 0 22px rgba(59, 130, 246, 0.72);
+}
+
+.heroTitle {
+  position: relative;
+  z-index: 4;
+  max-width: 920px;
+  margin-bottom: var(--space-5);
+  font-family: var(--font-heading);
+  font-size: clamp(3.8rem, 5.8vw, 5.9rem);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+.heroTitle span {
+  color: transparent;
+  background: var(--gradient-text);
+  background-clip: text;
+  text-shadow: 0 0 36px rgba(59, 130, 246, 0.18);
+}
+
+.heroTextBlock {
+  position: relative;
+  z-index: 4;
+  max-width: 620px;
+}
+
+.subtitle {
+  max-width: 620px;
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.quickBenefits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  position: relative;
+  z-index: 5;
+  width: min(100%, 1100px);
+  margin-top: var(--space-8);
+}
+
+.quickBenefits li {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 0 var(--space-3);
+  align-items: center;
+  min-width: 0;
+  padding: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  background: rgba(10, 15, 28, 0.78);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(16px);
+}
+
+.benefitIcon {
+  position: relative;
+  grid-row: span 2;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(0, 194, 255, 0.2);
+  border-radius: 13px;
+  background: rgba(45, 127, 249, 0.08);
+}
+
+.benefitIcon::before,
+.benefitIcon::after {
+  position: relative;
+  display: block;
+  content: "";
+}
+
+.benefitIcon::before {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--color-blue-cyan);
+  border-radius: 5px;
+  box-shadow: 0 0 18px rgba(0, 194, 255, 0.32);
+}
+
+.benefitIcon::after {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--color-purple-soft);
+  transform: translate(7px, -7px);
+}
+
+.quickBenefits strong {
+  overflow: hidden;
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.quickBenefits small {
+  color: #a1a1aa;
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.heroImageArea {
+  position: relative;
+  z-index: 2;
+  min-height: 320px;
+  margin: var(--space-4) calc(var(--space-4) * -1) calc(var(--space-10) * -1);
+  opacity: 1;
+  pointer-events: none;
+}
+
+.heroImageArea::before {
+  position: absolute;
+  top: 12%;
+  right: 8%;
+  z-index: -1;
+  width: min(72vw, 620px);
+  aspect-ratio: 1;
+  content: "";
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.28), rgba(124, 58, 237, 0.16) 44%, transparent 68%);
+  filter: blur(28px);
+  opacity: 1;
+}
+
+.heroImageArea::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 30%;
+  content: "";
+  background: linear-gradient(180deg, transparent, rgba(7, 11, 20, 0.52));
+}
+
+.heroImageArea img {
+  width: min(112vw, 720px);
+  max-width: none;
+  margin-left: auto;
+  object-fit: contain;
+  object-position: right bottom;
+  filter: drop-shadow(0 36px 70px rgba(0, 0, 0, 0.46));
+}
+
+.floatingBadges {
+  display: none;
+}
+
+.floatingBadge {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.62rem 0.88rem;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.045);
+  color: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.08);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  opacity: 0.84;
+  backdrop-filter: blur(12px);
+  animation: floatBadge 6s ease-in-out infinite;
+}
+
+.floatingBadge::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  content: "";
+  background: linear-gradient(135deg, #00c2ff, #7c3aed);
+  box-shadow: 0 0 12px rgba(0, 194, 255, 0.5);
+}
+
+.floatingBadge:nth-child(2) {
+  animation-delay: 0.8s;
+}
+
+.floatingBadge:nth-child(3) {
+  animation-delay: 1.4s;
+}
+
+.floatingBadge:nth-child(4) {
+  animation-delay: 2s;
+}
+
+.floatingBadge:nth-child(5) {
+  animation-delay: 2.6s;
+}
+
+.floatingBadge:nth-child(6) {
+  animation-delay: 3.2s;
+}
+
+@keyframes floatBadge {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (min-width: 720px) {
+  .quickBenefits {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .hero {
+    min-height: calc(100svh - 76px);
+    padding: clamp(4.5rem, 7vh, 5.5rem) var(--space-6) clamp(2rem, 5vh, 3.5rem);
+  }
+
+  .inner {
+    min-height: calc(100svh - 9rem);
+  }
+
+  .heroContent {
+    padding: var(--space-3) 0 0;
+  }
+
+  .heroImageArea {
+    position: absolute;
+    right: -16%;
+    bottom: -7%;
+    width: clamp(920px, 68vw, 1240px);
+    z-index: 1;
+    min-height: 0;
+    margin: 0;
+  }
+
+  .heroImageArea img {
+    width: 100%;
+  }
+
+  .floatingBadges {
+    position: absolute;
+    top: clamp(1.6rem, 5vh, 3.5rem);
+    right: clamp(1.25rem, 5vw, 4rem);
+    z-index: 2;
+    display: block;
+    width: min(420px, 32vw);
+    height: 250px;
+    pointer-events: none;
+  }
+
+  .floatingBadge:nth-child(1) {
+    top: 0;
+    right: 2.5rem;
+  }
+
+  .floatingBadge:nth-child(2) {
+    top: 3.6rem;
+    right: 9.4rem;
+  }
+
+  .floatingBadge:nth-child(3) {
+    top: 7rem;
+    right: 1.2rem;
+  }
+
+  .floatingBadge:nth-child(4) {
+    top: 10.8rem;
+    right: 7.5rem;
+  }
+
+  .floatingBadge:nth-child(5) {
+    top: 14rem;
+    right: 0;
+  }
+
+  .floatingBadge:nth-child(6) {
+    top: 2.2rem;
+    right: 0;
+  }
+}
+
+@media (min-width: 1180px) {
+  .heroContent h1 {
+    font-size: clamp(3.8rem, 5.8vw, 5.9rem);
+  }
+
+  .quickBenefits {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: min(72vw, 1100px);
+  }
+
+  .heroImageArea {
+    right: -15%;
+    bottom: -7%;
+    width: clamp(980px, 66vw, 1280px);
+  }
+
+  .floatingBadges {
+    top: clamp(2rem, 6vh, 4.6rem);
+    right: clamp(2.5rem, 8vw, 7.5rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding-top: 7rem;
+  }
+
+  .heroContent {
+    padding-top: var(--space-6);
+  }
+
+  .heroTitle {
+    font-size: clamp(2.35rem, 12vw, 2.875rem);
+    line-height: 1.03;
+    letter-spacing: -0.03em;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .actions {
+    display: grid;
+  }
+
+  .actions a {
+    width: 100%;
+  }
+
+  .quickBenefits {
+    grid-template-columns: 1fr;
+  }
+
+  .heroImageArea {
+    opacity: 0.9;
+  }
+
+  .heroImageArea img {
+    width: min(130vw, 620px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floatingBadge {
+    animation: none;
+  }
+}

@@ -1,0 +1,38 @@
+.header {
+  max-width: 720px;
+  margin: 0 auto var(--space-10);
+  text-align: center;
+}
+
+.header span {
+  display: inline-flex;
+  margin-bottom: var(--space-3);
+  color: var(--color-blue-cyan);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.header h2 {
+  margin-bottom: var(--space-4);
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 6vw, 3.8rem);
+  line-height: 1.05;
+}
+
+.header p {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+}
+
+@media (min-width: 760px) {
+  .header {
+    margin-bottom: var(--space-16);
+  }
+
+  .header p {
+    font-size: 1.08rem;
+  }
+}

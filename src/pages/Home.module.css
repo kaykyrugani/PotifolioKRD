@@ -1,0 +1,116 @@
+.horizontalTransition {
+  position: relative;
+}
+
+.horizontalSticky {
+  position: relative;
+}
+
+.horizontalTrack {
+  width: 100%;
+}
+
+.horizontalPanel {
+  width: 100%;
+}
+
+.transitionIntro {
+  width: min(780px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.transitionIntro span {
+  display: inline-flex;
+  margin-bottom: var(--space-4);
+  color: var(--color-blue-cyan);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.transitionIntro h2 {
+  margin-bottom: var(--space-5);
+  font-family: var(--font-heading);
+  font-size: clamp(2.35rem, 6vw, 5rem);
+  line-height: 1;
+}
+
+.transitionIntro p {
+  max-width: 620px;
+  color: var(--color-text-muted);
+  font-size: clamp(1rem, 1.5vw, 1.16rem);
+  line-height: 1.75;
+}
+
+@media (min-width: 901px) {
+  .horizontalTransition {
+    height: 180vh;
+  }
+
+  .horizontalSticky {
+    position: sticky;
+    top: 84px;
+    height: calc(100vh - 84px);
+    overflow: hidden;
+  }
+
+  .horizontalTrack {
+    display: flex;
+    width: 200vw;
+    height: 100%;
+    will-change: transform;
+  }
+
+  .horizontalPanel {
+    display: flex;
+    width: 100vw;
+    height: 100%;
+    flex: 0 0 100vw;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .horizontalPanel :global(#tecnologias) {
+    display: flex;
+    height: 100%;
+    min-height: calc(100vh - 84px);
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: clamp(2rem, 4vh, 3.5rem);
+    padding-bottom: clamp(2rem, 4vh, 3.5rem);
+  }
+}
+
+@media (max-width: 900px) {
+  .horizontalTransition {
+    height: auto;
+  }
+
+  .horizontalSticky {
+    position: relative;
+    top: auto;
+    height: auto;
+    overflow: visible;
+  }
+
+  .horizontalTrack {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: none !important;
+  }
+
+  .horizontalPanel {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .horizontalPanel:first-child {
+    display: none;
+  }
+}

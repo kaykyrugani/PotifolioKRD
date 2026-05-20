@@ -1,0 +1,25 @@
+.card {
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025)),
+    rgba(11, 15, 26, 0.74);
+  box-shadow: var(--shadow-premium);
+  transition: transform var(--transition-base), border-color var(--transition-base), background var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 194, 255, 0.24);
+}
+
+.muted {
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow: none;
+}
+
+.glow {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(0, 194, 255, 0.14), transparent 28rem),
+    rgba(14, 19, 34, 0.78);
+}

@@ -1,0 +1,65 @@
+.page {
+  padding: 8rem 0 var(--space-20);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.card {
+  padding: var(--space-6);
+}
+
+.card h2,
+.card h3 {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+}
+
+.card p {
+  color: var(--color-text-muted);
+}
+
+.card ul {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.card li {
+  color: var(--color-text-soft);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+@media (min-width: 780px) {
+  .page {
+    padding-top: 10rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

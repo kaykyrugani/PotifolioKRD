@@ -1,0 +1,37 @@
+.header {
+  max-width: 760px;
+  margin-bottom: var(--space-10);
+}
+
+.center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.header h1 {
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-4);
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 7vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.04;
+}
+
+.header p {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+}
+
+@media (min-width: 760px) {
+  .header {
+    margin-bottom: var(--space-14, 3.5rem);
+  }
+
+  .header p {
+    font-size: 1.08rem;
+  }
+}
