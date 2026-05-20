@@ -1,0 +1,199 @@
+.techAtmosphereBridge {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 72% 24%, rgba(0, 194, 255, 0.18), transparent 34%),
+    radial-gradient(circle at 90% 66%, rgba(124, 58, 237, 0.24), transparent 36%),
+    linear-gradient(120deg, transparent 0%, rgba(7, 17, 31, 0.64) 42%, rgba(16, 11, 36, 0.88) 100%);
+}
+
+.techAtmosphereBridge::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.14) 1px, transparent 1.5px) 0 0 / 42px 42px,
+    linear-gradient(125deg, transparent 0 52%, rgba(0, 194, 255, 0.08) 52.2% 52.7%, transparent 53%),
+    linear-gradient(32deg, transparent 0 62%, rgba(139, 92, 246, 0.08) 62.2% 62.7%, transparent 63%);
+  mask-image: linear-gradient(90deg, transparent 0%, black 42%, black 100%);
+  opacity: 0.34;
+}
+
+.techAtmosphereBridge::after {
+  position: absolute;
+  right: 8%;
+  bottom: -190px;
+  width: 520px;
+  height: 520px;
+  content: "";
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.15), transparent 62%);
+}
+
+.techAtmosphereBridge__orbit {
+  position: absolute;
+  top: 9%;
+  right: 7%;
+  width: min(360px, 34vw);
+  opacity: 0.24;
+  animation: techAtmosphereDrift 42s linear infinite;
+}
+
+.techAtmosphereBridge__orbit circle,
+.techAtmosphereBridge__orbit path,
+.techAtmosphereBridge__orbit line {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.54);
+  stroke-width: 1;
+}
+
+.techAtmosphereBridge__orbit circle:nth-of-type(n + 3) {
+  fill: rgba(0, 194, 255, 0.82);
+  stroke: rgba(0, 194, 255, 0.28);
+  stroke-width: 7;
+}
+
+.techAtmosphere {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(0, 194, 255, 0.12), transparent 34rem),
+    radial-gradient(circle at 88% 18%, rgba(124, 58, 237, 0.18), transparent 38rem),
+    radial-gradient(circle at 62% 72%, rgba(20, 184, 166, 0.1), transparent 32rem),
+    linear-gradient(165deg, #07111f 0%, #0a1020 40%, #110d27 100%);
+  isolation: isolate;
+}
+
+.techAtmosphere::before,
+.techAtmosphere::after {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+}
+
+.techAtmosphere::before {
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 88px 88px;
+  mask-image:
+    radial-gradient(circle at 72% 22%, black, transparent 38%),
+    linear-gradient(to bottom, black, transparent 92%);
+  opacity: 0.26;
+}
+
+.techAtmosphere::after {
+  top: 18%;
+  left: -220px;
+  width: 520px;
+  height: 520px;
+  border: 1px solid rgba(0, 194, 255, 0.1);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 194, 255, 0.12), transparent 64%);
+}
+
+.techAtmosphere__mesh {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 46% 22%, rgba(255, 255, 255, 0.12) 1px, transparent 1.5px) 0 0 / 48px 48px,
+    linear-gradient(118deg, transparent 0 45%, rgba(0, 194, 255, 0.07) 45.1% 45.5%, transparent 45.7%),
+    linear-gradient(62deg, transparent 0 64%, rgba(124, 58, 237, 0.08) 64.1% 64.5%, transparent 64.7%);
+  mask-image: radial-gradient(ellipse at 62% 34%, black, transparent 72%);
+  opacity: 0.34;
+}
+
+.techAtmosphere__constellation {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.techAtmosphere__constellation circle,
+.techAtmosphere__constellation path {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.28);
+  stroke-width: 1;
+}
+
+.techAtmosphere__constellation circle {
+  fill: rgba(0, 194, 255, 0.54);
+  stroke: rgba(0, 194, 255, 0.18);
+  stroke-width: 8;
+}
+
+.techAtmosphere__constellation--one {
+  top: 7%;
+  right: -90px;
+  width: min(520px, 42vw);
+  opacity: 0.32;
+}
+
+.techAtmosphere__constellation--two {
+  right: 4%;
+  bottom: 9%;
+  width: min(560px, 46vw);
+  opacity: 0.18;
+}
+
+.techAtmosphere__constellation--two circle,
+.techAtmosphere__constellation--two path {
+  fill: none;
+  stroke: rgba(204, 251, 241, 0.32);
+  stroke-width: 1;
+}
+
+@keyframes techAtmosphereDrift {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .techAtmosphereBridge {
+    display: none;
+  }
+
+  .techAtmosphere {
+    background:
+      radial-gradient(circle at 16% 8%, rgba(0, 194, 255, 0.1), transparent 24rem),
+      radial-gradient(circle at 92% 18%, rgba(124, 58, 237, 0.14), transparent 26rem),
+      linear-gradient(165deg, #07111f 0%, #0b1020 48%, #100b24 100%);
+  }
+
+  .techAtmosphere::before,
+  .techAtmosphere__mesh {
+    opacity: 0.18;
+  }
+
+  .techAtmosphere::after,
+  .techAtmosphere__constellation--two {
+    display: none;
+  }
+
+  .techAtmosphere__constellation--one {
+    top: 3%;
+    right: -160px;
+    width: 360px;
+    opacity: 0.18;
+  }
+}
+
+@media (max-width: 560px) {
+  .techAtmosphere__constellation--one {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .techAtmosphereBridge__orbit {
+    animation: none;
+  }
+}

@@ -4,6 +4,7 @@
 
 .horizontalSticky {
   position: relative;
+  z-index: 1;
 }
 
 .horizontalTrack {
@@ -112,5 +113,9 @@
 
   .horizontalPanel:first-child {
     display: none;
+  }
+
+  .horizontalPanel:last-child {
+    opacity: 1 !important;
   }
 }
