@@ -20,8 +20,8 @@ export default function Navbar() {
   const getLinkClass = ({ isActive }) => [styles.link, isActive ? styles.active : ''].filter(Boolean).join(' ');
 
   return (
-    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
-      <nav className={styles.nav} aria-label="Navegação principal">
+    <header className={styles.header}>
+      <nav className={`${styles.nav} ${isScrolled ? styles.navScrolled : ''}`} aria-label="Navegação principal">
         <NavLink className={styles.brand} to="/" onClick={closeMenu}>
           <span className={styles.brandMark}>KR</span>
           <span>
@@ -33,7 +33,7 @@ export default function Navbar() {
         <button
           className={styles.menuButton}
           type="button"
-          aria-label="Abrir menu"
+          aria-label={isOpen ? 'Fechar menu' : 'Abrir menu'}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((value) => !value)}
         >

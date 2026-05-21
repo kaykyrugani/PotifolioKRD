@@ -1,0 +1,42 @@
+.waveBackground {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0.32;
+  pointer-events: none;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 14%,
+    black 86%,
+    transparent 100%
+  );
+}
+
+.waveBackground::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(
+    180deg,
+    rgba(7, 11, 20, 0.7) 0,
+    transparent 32%,
+    transparent 68%,
+    rgba(7, 11, 20, 0.72) 100%
+  );
+}
+
+.waveCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 900px) {
+  .waveBackground {
+    opacity: 0.18;
+  }
+}

@@ -1,6 +1,7 @@
 import { useRef } from 'react';
-import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { services } from '../../data/siteContent';
+import ServicesWaveBackground from '../effects/ServicesWaveBackground/ServicesWaveBackground';
 import Button from '../ui/Button';
 import styles from './Services.module.css';
 
@@ -8,18 +9,45 @@ function AnimatedServiceCard({ children, index, total, scrollYProgress }) {
   const segment = 1 / total;
   const start = index * segment;
   const end = start + segment;
+  const fixedRanges = [
+    {
+      inputRange: [0, 0.2, 0.36],
+      opacityRange: [1, 1, 0],
+      yRange: [0, 0, -96],
+      scaleRange: [1, 1, 0.97],
+    },
+    {
+      inputRange: [0.18, 0.24, 0.4, 0.48, 0.58],
+      opacityRange: [0, 0, 1, 1, 0],
+      yRange: [220, 140, 0, 0, -96],
+      scaleRange: [0.94, 0.96, 1, 1, 0.96],
+    },
+    {
+      inputRange: [0.43, 0.49, 0.65, 0.69, 0.78],
+      opacityRange: [0, 0, 1, 1, 0],
+      yRange: [220, 140, 0, 0, -96],
+      scaleRange: [0.94, 0.96, 1, 1, 0.96],
+    },
+    {
+      inputRange: [0.68, 0.74, 0.9, 1],
+      opacityRange: [0, 0, 1, 1],
+      yRange: [220, 140, 0, 0],
+      scaleRange: [0.94, 0.96, 1, 1],
+    },
+  ];
   let inputRange;
   let opacityRange;
   let yRange;
   let scaleRange;
-  let zIndexValue;
+  const zIndexValue = index + 2;
 
-  if (index === 0) {
+  if (total === fixedRanges.length) {
+    ({ inputRange, opacityRange, yRange, scaleRange } = fixedRanges[index]);
+  } else if (index === 0) {
     inputRange = [0, end * 0.62, end * 0.88];
     opacityRange = [1, 1, 0];
     yRange = [0, 0, -120];
     scaleRange = [1, 1, 0.97];
-    zIndexValue = index + 2;
   } else if (index === total - 1) {
     inputRange = [
       start - segment * 0.45,
@@ -30,7 +58,6 @@ function AnimatedServiceCard({ children, index, total, scrollYProgress }) {
     opacityRange = [0, 0, 1, 1];
     yRange = [260, 160, 0, 0];
     scaleRange = [0.94, 0.96, 1, 1];
-    zIndexValue = index + 2;
   } else {
     inputRange = [
       start - segment * 0.45,
@@ -42,7 +69,6 @@ function AnimatedServiceCard({ children, index, total, scrollYProgress }) {
     opacityRange = [0, 0, 1, 1, 0];
     yRange = [260, 160, 0, 0, -120];
     scaleRange = [0.94, 0.96, 1, 1, 0.96];
-    zIndexValue = index + 2;
   }
 
   const opacity = useTransform(scrollYProgress, inputRange, opacityRange);
@@ -73,13 +99,10 @@ export default function Services() {
     offset: ['start start', 'end end'],
   });
 
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    console.log('scroll progress', latest);
-  });
-
   return (
     <section id="servicos" className={styles.servicesScrollArea} ref={sectionRef}>
       <div className={styles.servicesSticky}>
+        <ServicesWaveBackground />
         <div className={styles.servicesContainer}>
           <div className={styles.servicesContent}>
             <div className={styles.servicesIntro}>
