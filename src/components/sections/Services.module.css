@@ -11,21 +11,6 @@
   overflow: hidden;
 }
 
-.servicesSticky::after {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  content: "";
-  background:
-    linear-gradient(
-      90deg,
-      rgba(7, 11, 20, 0.92) 0%,
-      rgba(7, 11, 20, 0.58) 42%,
-      rgba(7, 11, 20, 0.72) 100%
-    );
-}
-
 .servicesContainer {
   position: relative;
   z-index: 2;

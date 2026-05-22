@@ -66,6 +66,30 @@ O tamanho do canvas passa a ser calculado a partir do elemento pai, e nao da jan
 
 Quando o usuario prefere movimento reduzido, o componente desenha uma versao estatica das ondas e nao inicia o loop de animacao.
 
+## Refinamento visual das ondas
+
+Em 2026-05-21, a camada visual das ondas foi refinada sem alterar sticky, altura da secao, cards, textos ou layout principal. A opacidade do `waveBackground` subiu para `0.44` no desktop e `0.22` no mobile, deixando a assinatura tecnologica mais presente sem competir com o conteudo.
+
+O canvas passou a desenhar mais linhas no desktop, com variacao de amplitude, espessura e velocidade. O movimento foi acelerado de forma controlada para ficar mais perceptivel, com deslocamento lateral e respiracao suave nas curvas. As cores seguem a paleta do projeto: cyan, blue, purple e violet, sempre com transparencia nas pontas das linhas para integrar as ondas ao fundo.
+
+Algumas ondas principais agora recebem glow moderado e poucos pontos luminosos em movimento. Os pontos sao pequenos e esparsos para sugerir energia sem criar um visual neon ou gamer. O overlay de leitura em `servicesSticky::after` foi ajustado para preservar contraste sobre texto, card ativo e CTA.
+
+O suporte a `prefers-reduced-motion` foi mantido: quando o usuario prefere menos movimento, o componente desenha uma imagem estatica e nao inicia `requestAnimationFrame`. A performance continua limitada por `devicePixelRatio` maximo de 2, cleanup do frame no unmount e listener de resize com recalculo do canvas.
+
+## Reforco de presenca visual
+
+Em novo refinamento, a opacidade desktop do layer foi elevada para `0.58`, com `12` ondas no desktop. Os gradientes passaram a usar cyan, blue, purple e violet com mais saturacao e glow moderado, mantendo transparencia nas extremidades para nao formar blocos de cor.
+
+A animacao ficou mais evidente com `time += 0.024`, maior amplitude vertical e formula de onda com movimento lateral mais organico. As particulas luminosas continuam restritas a poucas ondas principais, com brilho suave e tamanho pequeno, para sugerir fluxo digital sem poluir a leitura.
+
+Como a camada ficou mais presente, o overlay de `servicesSticky::after` foi levemente escurecido nas areas de texto e card. O canvas continua absoluto, restrito ao sticky da secao, com `pointer-events: none`, cleanup de animacao e respeito a `prefers-reduced-motion`.
+
+## Retirada da Home
+
+Em 2026-05-22, o componente `ServicesWaveBackground` deixou de ser montado na secao de servicos da Home. O componente e seus estilos foram mantidos no projeto para reaproveitamento futuro em outro ponto visual apropriado.
+
+A remocao ficou limitada ao import e ao uso dentro de `Services.jsx`. A camada `servicesSticky::after`, criada para suavizar a leitura sobre as ondas, tambem foi removida da secao porque nao ha mais canvas ativo nesse trecho.
+
 ## Arquivos editados
 
 - src/components/effects/ServicesWaveBackground/ServicesWaveBackground.jsx

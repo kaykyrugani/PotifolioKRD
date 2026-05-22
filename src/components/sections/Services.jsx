@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { services } from '../../data/siteContent';
-import ServicesWaveBackground from '../effects/ServicesWaveBackground/ServicesWaveBackground';
 import Button from '../ui/Button';
 import styles from './Services.module.css';
 
@@ -102,7 +101,6 @@ export default function Services() {
   return (
     <section id="servicos" className={styles.servicesScrollArea} ref={sectionRef}>
       <div className={styles.servicesSticky}>
-        <ServicesWaveBackground />
         <div className={styles.servicesContainer}>
           <div className={styles.servicesContent}>
             <div className={styles.servicesIntro}>
