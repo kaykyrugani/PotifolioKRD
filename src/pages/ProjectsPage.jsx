@@ -3,6 +3,7 @@ import { projectPreviews } from '../data/siteContent';
 import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
+import projetosHeroImage from '../assets/images/projetosIMG.png';
 import { whatsappPath } from '../utils/contact';
 import styles from './Page.module.css';
 
@@ -92,11 +93,8 @@ export default function ProjectsPage() {
                 </div>
               </div>
 
-              <div className={styles.projectsHeroSignal} aria-hidden="true">
-                <span>Estratégia</span>
-                <span>Design</span>
-                <span>Código</span>
-                <span>Deploy</span>
+              <div className={`${styles.heroImageVisual} ${styles.projectsHeroSignal}`} aria-hidden="true">
+                <img src={projetosHeroImage} alt="" loading="eager" />
               </div>
             </div>
           </Container>

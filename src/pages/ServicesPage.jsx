@@ -1,6 +1,7 @@
 import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
+import servicosHeroImage from '../assets/images/servicosIMG.png';
 import { whatsappPath } from '../utils/contact';
 import styles from './Page.module.css';
 
@@ -173,22 +174,8 @@ export default function ServicesPage() {
                 </div>
               </div>
 
-              <div className={styles.servicesHeroVisual} aria-hidden="true">
-                <svg className={styles.servicesHeroLines} viewBox="0 0 520 420">
-                  <path d="M42 214C126 78 248 68 356 142C422 187 454 254 486 346" />
-                  <path d="M76 112C172 168 236 176 316 132C366 104 416 96 474 130" />
-                  <path d="M54 314C142 270 232 268 320 312C372 338 418 348 472 322" />
-                  <circle cx="126" cy="78" r="5" />
-                  <circle cx="356" cy="142" r="5" />
-                  <circle cx="316" cy="132" r="4" />
-                  <circle cx="472" cy="322" r="5" />
-                </svg>
-                <span className={styles.servicesHeroCore}>PROJETO</span>
-                <span className={`${styles.servicesHeroOrbital} ${styles.servicesHeroOrbitalOne}`} />
-                <span className={`${styles.servicesHeroOrbital} ${styles.servicesHeroOrbitalTwo}`} />
-                <span className={`${styles.servicesHeroTag} ${styles.servicesHeroTagOne}`}>SEO</span>
-                <span className={`${styles.servicesHeroTag} ${styles.servicesHeroTagTwo}`}>Deploy</span>
-                <span className={`${styles.servicesHeroTag} ${styles.servicesHeroTagThree}`}>UI</span>
+              <div className={`${styles.heroImageVisual} ${styles.servicesHeroVisual}`} aria-hidden="true">
+                <img src={servicosHeroImage} alt="" loading="eager" />
               </div>
             </div>
           </Container>

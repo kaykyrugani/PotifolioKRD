@@ -1,0 +1,192 @@
+.techHeroNetwork {
+  position: relative;
+  min-height: 340px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(0, 194, 255, 0.14), transparent 15rem),
+    radial-gradient(circle at 78% 74%, rgba(124, 58, 237, 0.12), transparent 18rem),
+    rgba(7, 12, 24, 0.48);
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
+  backdrop-filter: blur(14px);
+}
+
+.techHeroNetwork::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.13) 0 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 34px 34px, 68px 68px, 68px 68px;
+  opacity: 0.2;
+  mask-image: radial-gradient(circle at 50% 44%, black, transparent 82%);
+}
+
+.techHeroNetworkLines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.techHeroNetworkLines path {
+  fill: none;
+  stroke: rgba(0, 194, 255, 0.16);
+  stroke-linecap: round;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.techHeroCore,
+.techHeroNode {
+  position: relative;
+  z-index: 2;
+}
+
+.techHeroCore {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: min(58%, 220px);
+  min-height: 118px;
+  align-content: center;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border: 1px solid rgba(0, 194, 255, 0.24);
+  border-radius: 24px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(0, 194, 255, 0.14), transparent 11rem),
+    rgba(7, 11, 20, 0.86);
+  box-shadow:
+    0 0 60px rgba(0, 194, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.075);
+  transform: translate(-50%, -50%);
+}
+
+.techHeroCore span {
+  color: var(--color-blue-cyan);
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.techHeroCore strong {
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 1.08rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.12;
+}
+
+.techHeroNode {
+  position: absolute;
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-3);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--radius-full);
+  color: rgba(255, 255, 255, 0.86);
+  background: rgba(8, 13, 24, 0.72);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055);
+  backdrop-filter: blur(12px);
+}
+
+.techHeroNode1 {
+  top: 13%;
+  left: 7%;
+}
+
+.techHeroNode2 {
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.techHeroNode3 {
+  top: 16%;
+  right: 7%;
+}
+
+.techHeroNode4 {
+  right: 7%;
+  bottom: 16%;
+}
+
+.techHeroNode5 {
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.techHeroNode6 {
+  bottom: 17%;
+  left: 6%;
+}
+
+@media (min-width: 900px) {
+  .techHeroNetwork {
+    min-height: 500px;
+  }
+
+  .techHeroNode {
+    min-height: 44px;
+    padding-inline: var(--space-4);
+    font-size: 0.84rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .techHeroNetwork {
+    min-height: 310px;
+    border-radius: 24px;
+  }
+
+  .techHeroCore {
+    width: min(62%, 190px);
+    min-height: 104px;
+    padding: var(--space-4);
+  }
+
+  .techHeroCore strong {
+    font-size: 0.96rem;
+  }
+
+  .techHeroNode {
+    min-height: 34px;
+    padding-inline: var(--space-2);
+    font-size: 0.72rem;
+  }
+
+  .techHeroNode3,
+  .techHeroNode4 {
+    right: 5%;
+  }
+}
+
+@media (max-width: 380px) {
+  .techHeroNetwork {
+    min-height: 286px;
+  }
+
+  .techHeroNode {
+    font-size: 0.68rem;
+  }
+}
