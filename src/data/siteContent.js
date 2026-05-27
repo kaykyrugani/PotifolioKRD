@@ -12,21 +12,25 @@ export const services = [
     title: 'Sites Institucionais',
     description: 'Presença digital profissional para apresentar sua marca com clareza, autoridade e experiência responsiva.',
     items: ['Arquitetura de páginas', 'HTML semântico', 'SEO técnico base', 'Interface responsiva'],
+    ctaLabel: 'Conversar sobre site institucional',
   },
   {
     title: 'Landing Pages',
     description: 'Páginas objetivas para campanhas, lançamentos e captação de leads com foco em conversão.',
     items: ['Hierarquia de oferta', 'CTAs estratégicos', 'Carregamento rápido', 'Estrutura para métricas'],
+    ctaLabel: 'Criar minha landing page',
   },
   {
     title: 'Hospedagem',
     description: 'Preparação e publicação do site em ambiente moderno, com atenção a estabilidade e performance.',
     items: ['Deploy orientado', 'Configuração inicial', 'SSL quando disponível', 'Boas práticas de publicação'],
+    ctaLabel: 'Ver opções de hospedagem',
   },
   {
     title: 'Manutenção',
     description: 'Ajustes, melhorias e evolução contínua para manter o site claro, atual e tecnicamente saudável.',
     items: ['Correções pontuais', 'Melhorias visuais', 'Atualizações de conteúdo', 'Acompanhamento técnico'],
+    ctaLabel: 'Solicitar manutenção',
   },
 ];
 
