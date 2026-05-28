@@ -1,0 +1,235 @@
+export const navItems = [
+	{
+		label: "Home",
+		path: "/"
+	},
+	{
+		label: "Sobre",
+		path: "/sobre"
+	},
+	{
+		label: "Serviços",
+		path: "/servicos"
+	},
+	{
+		label: "Projetos",
+		path: "/projetos"
+	},
+	{
+		label: "Tecnologias",
+		path: "/tecnologias"
+	},
+	{
+		label: "Contato",
+		path: "/contato"
+	}
+];
+export const services = [
+	{
+		title: "Sites Institucionais",
+		description: "Presença digital profissional para apresentar sua marca com clareza, autoridade e experiência responsiva.",
+		items: [
+			"Arquitetura de páginas",
+			"HTML semântico",
+			"SEO técnico base",
+			"Interface responsiva"
+		],
+		ctaLabel: "Conversar sobre site institucional"
+	},
+	{
+		title: "Landing Pages",
+		description: "Páginas objetivas para campanhas, lançamentos e captação de leads com foco em conversão.",
+		items: [
+			"Hierarquia de oferta",
+			"CTAs estratégicos",
+			"Carregamento rápido",
+			"Estrutura para métricas"
+		],
+		ctaLabel: "Criar minha landing page"
+	},
+	{
+		title: "Hospedagem",
+		description: "Preparação e publicação do site em ambiente moderno, com atenção a estabilidade e performance.",
+		items: [
+			"Deploy orientado",
+			"Configuração inicial",
+			"SSL quando disponível",
+			"Boas práticas de publicação"
+		],
+		ctaLabel: "Ver opções de hospedagem"
+	},
+	{
+		title: "Manutenção",
+		description: "Ajustes, melhorias e evolução contínua para manter o site claro, atual e tecnicamente saudável.",
+		items: [
+			"Correções pontuais",
+			"Melhorias visuais",
+			"Atualizações de conteúdo",
+			"Acompanhamento técnico"
+		],
+		ctaLabel: "Solicitar manutenção"
+	}
+];
+export const technologies = [
+	"React",
+	"JavaScript",
+	"HTML",
+	"CSS",
+	"Vite",
+	"Node.js",
+	"APIs",
+	"SEO",
+	"Performance"
+];
+export const benefits = [
+	{
+		title: "Sites profissionais que fortalecem sua presença digital",
+		description: "Criação de sites institucionais modernos, responsivos e otimizados para apresentar sua empresa com autoridade, melhorar a experiência do usuário e gerar mais oportunidades de contato."
+	},
+	{
+		title: "Landing pages focadas em conversão",
+		description: "Desenvolvimento de landing pages rápidas e estratégicas para campanhas, lançamentos, tráfego pago e captação de leads, com copy clara, CTAs bem posicionados e estrutura pensada para transformar visitantes em clientes."
+	},
+	{
+		title: "Performance, SEO técnico e carregamento rápido",
+		description: "Construção com código limpo, boas práticas de SEO, HTML semântico, responsividade e otimizações para melhorar velocidade, indexação e experiência em todos os dispositivos."
+	},
+	{
+		title: "Manutenção, hospedagem e evolução contínua",
+		description: "Suporte para manter seu site seguro, atualizado e preparado para crescer, com ajustes, melhorias, publicação, hospedagem e acompanhamento técnico conforme a necessidade do projeto."
+	}
+];
+export const differentials = [
+	"Design orientado a conversão, não apenas estética.",
+	"Código organizado para manutenção e evolução simples.",
+	"Interface mobile-first com hierarquia visual clara.",
+	"SEO técnico e acessibilidade considerados desde a base."
+];
+export const projectPreviews = [
+	{
+		title: "Landing page comercial",
+		category: "Landing Page",
+		filters: ["landing"],
+		description: "Estrutura para apresentar uma oferta, reforçar diferenciais e direcionar o contato.",
+		objective: "Captação de leads com uma primeira dobra objetiva, narrativa clara e CTAs posicionados para conversão.",
+		solution: "Hierarquia de oferta, blocos de prova, leitura rápida no mobile e base técnica preparada para campanhas.",
+		indicators: [
+			"SEO técnico",
+			"Responsivo",
+			"Performance otimizada",
+			"Copy estruturada",
+			"Deploy preparado"
+		],
+		stack: [
+			"HTML",
+			"CSS",
+			"JavaScript",
+			"SEO"
+		],
+		preview: {
+			eyebrow: "Oferta digital",
+			title: "Captação orientada por CTA",
+			details: [
+				"Proposta clara",
+				"Prova visual",
+				"Contato direto"
+			]
+		},
+		tone: "cyan"
+	},
+	{
+		title: "Site institucional premium",
+		category: "Site institucional",
+		filters: ["institucional", "sites"],
+		description: "Estrutura para empresas e profissionais que precisam transmitir confiança e organização.",
+		objective: "Fortalecer autoridade da marca com presença digital organizada, responsiva e fácil de entender.",
+		solution: "Arquitetura institucional, seções comerciais, navegação clara e estrutura semântica para SEO técnico.",
+		indicators: [
+			"SEO técnico",
+			"Responsivo",
+			"Performance otimizada",
+			"Arquitetura de páginas",
+			"Deploy preparado"
+		],
+		stack: [
+			"HTML semântico",
+			"CSS",
+			"JavaScript",
+			"Performance"
+		],
+		preview: {
+			eyebrow: "Presença digital",
+			title: "Autoridade para marcas e serviços",
+			details: [
+				"Institucional",
+				"Serviços",
+				"Contato"
+			]
+		},
+		tone: "violet"
+	},
+	{
+		title: "Página de serviços",
+		category: "Sites",
+		filters: ["sites"],
+		description: "Apresentação objetiva de soluções, benefícios e chamada final para conversão.",
+		objective: "Explicar soluções com contexto suficiente para reduzir dúvidas e orientar o próximo passo.",
+		solution: "Fluxo editorial com benefícios, diferenciais, FAQ, sinais técnicos e chamada final para contato.",
+		indicators: [
+			"SEO técnico",
+			"Responsivo",
+			"Performance otimizada",
+			"Copy estruturada",
+			"Código escalável"
+		],
+		stack: [
+			"Conteúdo",
+			"SEO",
+			"Responsivo",
+			"Deploy"
+		],
+		preview: {
+			eyebrow: "Oferta de serviços",
+			title: "Soluções organizadas por prioridade",
+			details: [
+				"Serviços",
+				"Benefícios",
+				"FAQ"
+			]
+		},
+		tone: "blue"
+	},
+	{
+		title: "Projeto personalizado",
+		category: "Projeto personalizado",
+		filters: ["personalizado"],
+		description: "Estrutura para demandas específicas, integrações futuras e evolução técnica sob medida.",
+		objective: "Transformar necessidades específicas em uma interface planejada para evoluir com o projeto.",
+		solution: "Definição de escopo, componentes reutilizáveis, organização front-end e preparação para integrações.",
+		indicators: [
+			"Responsivo",
+			"Código escalável",
+			"Performance otimizada",
+			"Deploy preparado",
+			"Manutenção simples"
+		],
+		stack: [
+			"JavaScript",
+			"Componentes",
+			"APIs",
+			"Manutenção"
+		],
+		preview: {
+			eyebrow: "Solução específica",
+			title: "Interface preparada para evolução",
+			details: [
+				"Fluxo próprio",
+				"Integrações",
+				"Escala"
+			]
+		},
+		tone: "teal"
+	}
+];
+
+//# sourceMappingURL=data:application/json;base64,eyJtYXBwaW5ncyI6IkFBQUEsT0FBTyxNQUFNLFdBQVc7Q0FDdEI7RUFBRSxPQUFPO0VBQVEsTUFBTTtDQUFJO0NBQzNCO0VBQUUsT0FBTztFQUFTLE1BQU07Q0FBUztDQUNqQztFQUFFLE9BQU87RUFBWSxNQUFNO0NBQVk7Q0FDdkM7RUFBRSxPQUFPO0VBQVksTUFBTTtDQUFZO0NBQ3ZDO0VBQUUsT0FBTztFQUFlLE1BQU07Q0FBZTtDQUM3QztFQUFFLE9BQU87RUFBVyxNQUFNO0NBQVc7QUFDdkM7QUFFQSxPQUFPLE1BQU0sV0FBVztDQUN0QjtFQUNFLE9BQU87RUFDUCxhQUFhO0VBQ2IsT0FBTztHQUFDO0dBQTBCO0dBQWtCO0dBQW9CO0VBQXNCO0VBQzlGLFVBQVU7Q0FDWjtDQUNBO0VBQ0UsT0FBTztFQUNQLGFBQWE7RUFDYixPQUFPO0dBQUM7R0FBd0I7R0FBcUI7R0FBdUI7RUFBeUI7RUFDckcsVUFBVTtDQUNaO0NBQ0E7RUFDRSxPQUFPO0VBQ1AsYUFBYTtFQUNiLE9BQU87R0FBQztHQUFvQjtHQUF3QjtHQUF5QjtFQUE2QjtFQUMxRyxVQUFVO0NBQ1o7Q0FDQTtFQUNFLE9BQU87RUFDUCxhQUFhO0VBQ2IsT0FBTztHQUFDO0dBQXNCO0dBQXFCO0dBQTRCO0VBQXdCO0VBQ3ZHLFVBQVU7Q0FDWjtBQUNGO0FBRUEsT0FBTyxNQUFNLGVBQWU7Q0FBQztDQUFTO0NBQWM7Q0FBUTtDQUFPO0NBQVE7Q0FBVztDQUFRO0NBQU87QUFBYTtBQUVsSCxPQUFPLE1BQU0sV0FBVztDQUN0QjtFQUNFLE9BQU87RUFDUCxhQUFhO0NBQ2Y7Q0FDQTtFQUNFLE9BQU87RUFDUCxhQUFhO0NBQ2Y7Q0FDQTtFQUNFLE9BQU87RUFDUCxhQUFhO0NBQ2Y7Q0FDQTtFQUNFLE9BQU87RUFDUCxhQUFhO0NBQ2Y7QUFDRjtBQUVBLE9BQU8sTUFBTSxnQkFBZ0I7Q0FDM0I7Q0FDQTtDQUNBO0NBQ0E7QUFDRjtBQUVBLE9BQU8sTUFBTSxrQkFBa0I7Q0FDN0I7RUFDRSxPQUFPO0VBQ1AsVUFBVTtFQUNWLFNBQVMsQ0FBQyxTQUFTO0VBQ25CLGFBQWE7RUFDYixXQUFXO0VBQ1gsVUFBVTtFQUNWLFlBQVk7R0FBQztHQUFlO0dBQWM7R0FBeUI7R0FBb0I7RUFBa0I7RUFDekcsT0FBTztHQUFDO0dBQVE7R0FBTztHQUFjO0VBQUs7RUFDMUMsU0FBUztHQUNQLFNBQVM7R0FDVCxPQUFPO0dBQ1AsU0FBUztJQUFDO0lBQWtCO0lBQWdCO0dBQWdCO0VBQzlEO0VBQ0EsTUFBTTtDQUNSO0NBQ0E7RUFDRSxPQUFPO0VBQ1AsVUFBVTtFQUNWLFNBQVMsQ0FBQyxpQkFBaUIsT0FBTztFQUNsQyxhQUFhO0VBQ2IsV0FBVztFQUNYLFVBQVU7RUFDVixZQUFZO0dBQUM7R0FBZTtHQUFjO0dBQXlCO0dBQTBCO0VBQWtCO0VBQy9HLE9BQU87R0FBQztHQUFrQjtHQUFPO0dBQWM7RUFBYTtFQUM1RCxTQUFTO0dBQ1AsU0FBUztHQUNULE9BQU87R0FDUCxTQUFTO0lBQUM7SUFBaUI7SUFBWTtHQUFTO0VBQ2xEO0VBQ0EsTUFBTTtDQUNSO0NBQ0E7RUFDRSxPQUFPO0VBQ1AsVUFBVTtFQUNWLFNBQVMsQ0FBQyxPQUFPO0VBQ2pCLGFBQWE7RUFDYixXQUFXO0VBQ1gsVUFBVTtFQUNWLFlBQVk7R0FBQztHQUFlO0dBQWM7R0FBeUI7R0FBb0I7RUFBa0I7RUFDekcsT0FBTztHQUFDO0dBQVk7R0FBTztHQUFjO0VBQVE7RUFDakQsU0FBUztHQUNQLFNBQVM7R0FDVCxPQUFPO0dBQ1AsU0FBUztJQUFDO0lBQVk7SUFBYztHQUFLO0VBQzNDO0VBQ0EsTUFBTTtDQUNSO0NBQ0E7RUFDRSxPQUFPO0VBQ1AsVUFBVTtFQUNWLFNBQVMsQ0FBQyxlQUFlO0VBQ3pCLGFBQWE7RUFDYixXQUFXO0VBQ1gsVUFBVTtFQUNWLFlBQVk7R0FBQztHQUFjO0dBQW9CO0dBQXlCO0dBQW9CO0VBQW9CO0VBQ2hILE9BQU87R0FBQztHQUFjO0dBQWU7R0FBUTtFQUFZO0VBQ3pELFNBQVM7R0FDUCxTQUFTO0dBQ1QsT0FBTztHQUNQLFNBQVM7SUFBQztJQUFpQjtJQUFlO0dBQVE7RUFDcEQ7RUFDQSxNQUFNO0NBQ1I7QUFDRiIsIm5hbWVzIjpbXSwic291cmNlcyI6WyJzaXRlQ29udGVudC5qcyJdLCJ2ZXJzaW9uIjozLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgY29uc3QgbmF2SXRlbXMgPSBbXG4gIHsgbGFiZWw6ICdIb21lJywgcGF0aDogJy8nIH0sXG4gIHsgbGFiZWw6ICdTb2JyZScsIHBhdGg6ICcvc29icmUnIH0sXG4gIHsgbGFiZWw6ICdTZXJ2acOnb3MnLCBwYXRoOiAnL3NlcnZpY29zJyB9LFxuICB7IGxhYmVsOiAnUHJvamV0b3MnLCBwYXRoOiAnL3Byb2pldG9zJyB9LFxuICB7IGxhYmVsOiAnVGVjbm9sb2dpYXMnLCBwYXRoOiAnL3RlY25vbG9naWFzJyB9LFxuICB7IGxhYmVsOiAnQ29udGF0bycsIHBhdGg6ICcvY29udGF0bycgfSxcbl07XG5cbmV4cG9ydCBjb25zdCBzZXJ2aWNlcyA9IFtcbiAge1xuICAgIHRpdGxlOiAnU2l0ZXMgSW5zdGl0dWNpb25haXMnLFxuICAgIGRlc2NyaXB0aW9uOiAnUHJlc2Vuw6dhIGRpZ2l0YWwgcHJvZmlzc2lvbmFsIHBhcmEgYXByZXNlbnRhciBzdWEgbWFyY2EgY29tIGNsYXJlemEsIGF1dG9yaWRhZGUgZSBleHBlcmnDqm5jaWEgcmVzcG9uc2l2YS4nLFxuICAgIGl0ZW1zOiBbJ0FycXVpdGV0dXJhIGRlIHDDoWdpbmFzJywgJ0hUTUwgc2Vtw6JudGljbycsICdTRU8gdMOpY25pY28gYmFzZScsICdJbnRlcmZhY2UgcmVzcG9uc2l2YSddLFxuICAgIGN0YUxhYmVsOiAnQ29udmVyc2FyIHNvYnJlIHNpdGUgaW5zdGl0dWNpb25hbCcsXG4gIH0sXG4gIHtcbiAgICB0aXRsZTogJ0xhbmRpbmcgUGFnZXMnLFxuICAgIGRlc2NyaXB0aW9uOiAnUMOhZ2luYXMgb2JqZXRpdmFzIHBhcmEgY2FtcGFuaGFzLCBsYW7Dp2FtZW50b3MgZSBjYXB0YcOnw6NvIGRlIGxlYWRzIGNvbSBmb2NvIGVtIGNvbnZlcnPDo28uJyxcbiAgICBpdGVtczogWydIaWVyYXJxdWlhIGRlIG9mZXJ0YScsICdDVEFzIGVzdHJhdMOpZ2ljb3MnLCAnQ2FycmVnYW1lbnRvIHLDoXBpZG8nLCAnRXN0cnV0dXJhIHBhcmEgbcOpdHJpY2FzJ10sXG4gICAgY3RhTGFiZWw6ICdDcmlhciBtaW5oYSBsYW5kaW5nIHBhZ2UnLFxuICB9LFxuICB7XG4gICAgdGl0bGU6ICdIb3NwZWRhZ2VtJyxcbiAgICBkZXNjcmlwdGlvbjogJ1ByZXBhcmHDp8OjbyBlIHB1YmxpY2HDp8OjbyBkbyBzaXRlIGVtIGFtYmllbnRlIG1vZGVybm8sIGNvbSBhdGVuw6fDo28gYSBlc3RhYmlsaWRhZGUgZSBwZXJmb3JtYW5jZS4nLFxuICAgIGl0ZW1zOiBbJ0RlcGxveSBvcmllbnRhZG8nLCAnQ29uZmlndXJhw6fDo28gaW5pY2lhbCcsICdTU0wgcXVhbmRvIGRpc3BvbsOtdmVsJywgJ0JvYXMgcHLDoXRpY2FzIGRlIHB1YmxpY2HDp8OjbyddLFxuICAgIGN0YUxhYmVsOiAnVmVyIG9ww6fDtWVzIGRlIGhvc3BlZGFnZW0nLFxuICB9LFxuICB7XG4gICAgdGl0bGU6ICdNYW51dGVuw6fDo28nLFxuICAgIGRlc2NyaXB0aW9uOiAnQWp1c3RlcywgbWVsaG9yaWFzIGUgZXZvbHXDp8OjbyBjb250w61udWEgcGFyYSBtYW50ZXIgbyBzaXRlIGNsYXJvLCBhdHVhbCBlIHRlY25pY2FtZW50ZSBzYXVkw6F2ZWwuJyxcbiAgICBpdGVtczogWydDb3JyZcOnw7VlcyBwb250dWFpcycsICdNZWxob3JpYXMgdmlzdWFpcycsICdBdHVhbGl6YcOnw7VlcyBkZSBjb250ZcO6ZG8nLCAnQWNvbXBhbmhhbWVudG8gdMOpY25pY28nXSxcbiAgICBjdGFMYWJlbDogJ1NvbGljaXRhciBtYW51dGVuw6fDo28nLFxuICB9LFxuXTtcblxuZXhwb3J0IGNvbnN0IHRlY2hub2xvZ2llcyA9IFsnUmVhY3QnLCAnSmF2YVNjcmlwdCcsICdIVE1MJywgJ0NTUycsICdWaXRlJywgJ05vZGUuanMnLCAnQVBJcycsICdTRU8nLCAnUGVyZm9ybWFuY2UnXTtcblxuZXhwb3J0IGNvbnN0IGJlbmVmaXRzID0gW1xuICB7XG4gICAgdGl0bGU6ICdTaXRlcyBwcm9maXNzaW9uYWlzIHF1ZSBmb3J0YWxlY2VtIHN1YSBwcmVzZW7Dp2EgZGlnaXRhbCcsXG4gICAgZGVzY3JpcHRpb246ICdDcmlhw6fDo28gZGUgc2l0ZXMgaW5zdGl0dWNpb25haXMgbW9kZXJub3MsIHJlc3BvbnNpdm9zIGUgb3RpbWl6YWRvcyBwYXJhIGFwcmVzZW50YXIgc3VhIGVtcHJlc2EgY29tIGF1dG9yaWRhZGUsIG1lbGhvcmFyIGEgZXhwZXJpw6puY2lhIGRvIHVzdcOhcmlvIGUgZ2VyYXIgbWFpcyBvcG9ydHVuaWRhZGVzIGRlIGNvbnRhdG8uJyxcbiAgfSxcbiAge1xuICAgIHRpdGxlOiAnTGFuZGluZyBwYWdlcyBmb2NhZGFzIGVtIGNvbnZlcnPDo28nLFxuICAgIGRlc2NyaXB0aW9uOiAnRGVzZW52b2x2aW1lbnRvIGRlIGxhbmRpbmcgcGFnZXMgcsOhcGlkYXMgZSBlc3RyYXTDqWdpY2FzIHBhcmEgY2FtcGFuaGFzLCBsYW7Dp2FtZW50b3MsIHRyw6FmZWdvIHBhZ28gZSBjYXB0YcOnw6NvIGRlIGxlYWRzLCBjb20gY29weSBjbGFyYSwgQ1RBcyBiZW0gcG9zaWNpb25hZG9zIGUgZXN0cnV0dXJhIHBlbnNhZGEgcGFyYSB0cmFuc2Zvcm1hciB2aXNpdGFudGVzIGVtIGNsaWVudGVzLicsXG4gIH0sXG4gIHtcbiAgICB0aXRsZTogJ1BlcmZvcm1hbmNlLCBTRU8gdMOpY25pY28gZSBjYXJyZWdhbWVudG8gcsOhcGlkbycsXG4gICAgZGVzY3JpcHRpb246ICdDb25zdHJ1w6fDo28gY29tIGPDs2RpZ28gbGltcG8sIGJvYXMgcHLDoXRpY2FzIGRlIFNFTywgSFRNTCBzZW3Dom50aWNvLCByZXNwb25zaXZpZGFkZSBlIG90aW1pemHDp8O1ZXMgcGFyYSBtZWxob3JhciB2ZWxvY2lkYWRlLCBpbmRleGHDp8OjbyBlIGV4cGVyacOqbmNpYSBlbSB0b2RvcyBvcyBkaXNwb3NpdGl2b3MuJyxcbiAgfSxcbiAge1xuICAgIHRpdGxlOiAnTWFudXRlbsOnw6NvLCBob3NwZWRhZ2VtIGUgZXZvbHXDp8OjbyBjb250w61udWEnLFxuICAgIGRlc2NyaXB0aW9uOiAnU3Vwb3J0ZSBwYXJhIG1hbnRlciBzZXUgc2l0ZSBzZWd1cm8sIGF0dWFsaXphZG8gZSBwcmVwYXJhZG8gcGFyYSBjcmVzY2VyLCBjb20gYWp1c3RlcywgbWVsaG9yaWFzLCBwdWJsaWNhw6fDo28sIGhvc3BlZGFnZW0gZSBhY29tcGFuaGFtZW50byB0w6ljbmljbyBjb25mb3JtZSBhIG5lY2Vzc2lkYWRlIGRvIHByb2pldG8uJyxcbiAgfSxcbl07XG5cbmV4cG9ydCBjb25zdCBkaWZmZXJlbnRpYWxzID0gW1xuICAnRGVzaWduIG9yaWVudGFkbyBhIGNvbnZlcnPDo28sIG7Do28gYXBlbmFzIGVzdMOpdGljYS4nLFxuICAnQ8OzZGlnbyBvcmdhbml6YWRvIHBhcmEgbWFudXRlbsOnw6NvIGUgZXZvbHXDp8OjbyBzaW1wbGVzLicsXG4gICdJbnRlcmZhY2UgbW9iaWxlLWZpcnN0IGNvbSBoaWVyYXJxdWlhIHZpc3VhbCBjbGFyYS4nLFxuICAnU0VPIHTDqWNuaWNvIGUgYWNlc3NpYmlsaWRhZGUgY29uc2lkZXJhZG9zIGRlc2RlIGEgYmFzZS4nLFxuXTtcblxuZXhwb3J0IGNvbnN0IHByb2plY3RQcmV2aWV3cyA9IFtcbiAge1xuICAgIHRpdGxlOiAnTGFuZGluZyBwYWdlIGNvbWVyY2lhbCcsXG4gICAgY2F0ZWdvcnk6ICdMYW5kaW5nIFBhZ2UnLFxuICAgIGZpbHRlcnM6IFsnbGFuZGluZyddLFxuICAgIGRlc2NyaXB0aW9uOiAnRXN0cnV0dXJhIHBhcmEgYXByZXNlbnRhciB1bWEgb2ZlcnRhLCByZWZvcsOnYXIgZGlmZXJlbmNpYWlzIGUgZGlyZWNpb25hciBvIGNvbnRhdG8uJyxcbiAgICBvYmplY3RpdmU6ICdDYXB0YcOnw6NvIGRlIGxlYWRzIGNvbSB1bWEgcHJpbWVpcmEgZG9icmEgb2JqZXRpdmEsIG5hcnJhdGl2YSBjbGFyYSBlIENUQXMgcG9zaWNpb25hZG9zIHBhcmEgY29udmVyc8Ojby4nLFxuICAgIHNvbHV0aW9uOiAnSGllcmFycXVpYSBkZSBvZmVydGEsIGJsb2NvcyBkZSBwcm92YSwgbGVpdHVyYSByw6FwaWRhIG5vIG1vYmlsZSBlIGJhc2UgdMOpY25pY2EgcHJlcGFyYWRhIHBhcmEgY2FtcGFuaGFzLicsXG4gICAgaW5kaWNhdG9yczogWydTRU8gdMOpY25pY28nLCAnUmVzcG9uc2l2bycsICdQZXJmb3JtYW5jZSBvdGltaXphZGEnLCAnQ29weSBlc3RydXR1cmFkYScsICdEZXBsb3kgcHJlcGFyYWRvJ10sXG4gICAgc3RhY2s6IFsnSFRNTCcsICdDU1MnLCAnSmF2YVNjcmlwdCcsICdTRU8nXSxcbiAgICBwcmV2aWV3OiB7XG4gICAgICBleWVicm93OiAnT2ZlcnRhIGRpZ2l0YWwnLFxuICAgICAgdGl0bGU6ICdDYXB0YcOnw6NvIG9yaWVudGFkYSBwb3IgQ1RBJyxcbiAgICAgIGRldGFpbHM6IFsnUHJvcG9zdGEgY2xhcmEnLCAnUHJvdmEgdmlzdWFsJywgJ0NvbnRhdG8gZGlyZXRvJ10sXG4gICAgfSxcbiAgICB0b25lOiAnY3lhbicsXG4gIH0sXG4gIHtcbiAgICB0aXRsZTogJ1NpdGUgaW5zdGl0dWNpb25hbCBwcmVtaXVtJyxcbiAgICBjYXRlZ29yeTogJ1NpdGUgaW5zdGl0dWNpb25hbCcsXG4gICAgZmlsdGVyczogWydpbnN0aXR1Y2lvbmFsJywgJ3NpdGVzJ10sXG4gICAgZGVzY3JpcHRpb246ICdFc3RydXR1cmEgcGFyYSBlbXByZXNhcyBlIHByb2Zpc3Npb25haXMgcXVlIHByZWNpc2FtIHRyYW5zbWl0aXIgY29uZmlhbsOnYSBlIG9yZ2FuaXphw6fDo28uJyxcbiAgICBvYmplY3RpdmU6ICdGb3J0YWxlY2VyIGF1dG9yaWRhZGUgZGEgbWFyY2EgY29tIHByZXNlbsOnYSBkaWdpdGFsIG9yZ2FuaXphZGEsIHJlc3BvbnNpdmEgZSBmw6FjaWwgZGUgZW50ZW5kZXIuJyxcbiAgICBzb2x1dGlvbjogJ0FycXVpdGV0dXJhIGluc3RpdHVjaW9uYWwsIHNlw6fDtWVzIGNvbWVyY2lhaXMsIG5hdmVnYcOnw6NvIGNsYXJhIGUgZXN0cnV0dXJhIHNlbcOibnRpY2EgcGFyYSBTRU8gdMOpY25pY28uJyxcbiAgICBpbmRpY2F0b3JzOiBbJ1NFTyB0w6ljbmljbycsICdSZXNwb25zaXZvJywgJ1BlcmZvcm1hbmNlIG90aW1pemFkYScsICdBcnF1aXRldHVyYSBkZSBww6FnaW5hcycsICdEZXBsb3kgcHJlcGFyYWRvJ10sXG4gICAgc3RhY2s6IFsnSFRNTCBzZW3Dom50aWNvJywgJ0NTUycsICdKYXZhU2NyaXB0JywgJ1BlcmZvcm1hbmNlJ10sXG4gICAgcHJldmlldzoge1xuICAgICAgZXllYnJvdzogJ1ByZXNlbsOnYSBkaWdpdGFsJyxcbiAgICAgIHRpdGxlOiAnQXV0b3JpZGFkZSBwYXJhIG1hcmNhcyBlIHNlcnZpw6dvcycsXG4gICAgICBkZXRhaWxzOiBbJ0luc3RpdHVjaW9uYWwnLCAnU2VydmnDp29zJywgJ0NvbnRhdG8nXSxcbiAgICB9LFxuICAgIHRvbmU6ICd2aW9sZXQnLFxuICB9LFxuICB7XG4gICAgdGl0bGU6ICdQw6FnaW5hIGRlIHNlcnZpw6dvcycsXG4gICAgY2F0ZWdvcnk6ICdTaXRlcycsXG4gICAgZmlsdGVyczogWydzaXRlcyddLFxuICAgIGRlc2NyaXB0aW9uOiAnQXByZXNlbnRhw6fDo28gb2JqZXRpdmEgZGUgc29sdcOnw7VlcywgYmVuZWbDrWNpb3MgZSBjaGFtYWRhIGZpbmFsIHBhcmEgY29udmVyc8Ojby4nLFxuICAgIG9iamVjdGl2ZTogJ0V4cGxpY2FyIHNvbHXDp8O1ZXMgY29tIGNvbnRleHRvIHN1ZmljaWVudGUgcGFyYSByZWR1emlyIGTDunZpZGFzIGUgb3JpZW50YXIgbyBwcsOzeGltbyBwYXNzby4nLFxuICAgIHNvbHV0aW9uOiAnRmx1eG8gZWRpdG9yaWFsIGNvbSBiZW5lZsOtY2lvcywgZGlmZXJlbmNpYWlzLCBGQVEsIHNpbmFpcyB0w6ljbmljb3MgZSBjaGFtYWRhIGZpbmFsIHBhcmEgY29udGF0by4nLFxuICAgIGluZGljYXRvcnM6IFsnU0VPIHTDqWNuaWNvJywgJ1Jlc3BvbnNpdm8nLCAnUGVyZm9ybWFuY2Ugb3RpbWl6YWRhJywgJ0NvcHkgZXN0cnV0dXJhZGEnLCAnQ8OzZGlnbyBlc2NhbMOhdmVsJ10sXG4gICAgc3RhY2s6IFsnQ29udGXDumRvJywgJ1NFTycsICdSZXNwb25zaXZvJywgJ0RlcGxveSddLFxuICAgIHByZXZpZXc6IHtcbiAgICAgIGV5ZWJyb3c6ICdPZmVydGEgZGUgc2VydmnDp29zJyxcbiAgICAgIHRpdGxlOiAnU29sdcOnw7VlcyBvcmdhbml6YWRhcyBwb3IgcHJpb3JpZGFkZScsXG4gICAgICBkZXRhaWxzOiBbJ1NlcnZpw6dvcycsICdCZW5lZsOtY2lvcycsICdGQVEnXSxcbiAgICB9LFxuICAgIHRvbmU6ICdibHVlJyxcbiAgfSxcbiAge1xuICAgIHRpdGxlOiAnUHJvamV0byBwZXJzb25hbGl6YWRvJyxcbiAgICBjYXRlZ29yeTogJ1Byb2pldG8gcGVyc29uYWxpemFkbycsXG4gICAgZmlsdGVyczogWydwZXJzb25hbGl6YWRvJ10sXG4gICAgZGVzY3JpcHRpb246ICdFc3RydXR1cmEgcGFyYSBkZW1hbmRhcyBlc3BlY8OtZmljYXMsIGludGVncmHDp8O1ZXMgZnV0dXJhcyBlIGV2b2x1w6fDo28gdMOpY25pY2Egc29iIG1lZGlkYS4nLFxuICAgIG9iamVjdGl2ZTogJ1RyYW5zZm9ybWFyIG5lY2Vzc2lkYWRlcyBlc3BlY8OtZmljYXMgZW0gdW1hIGludGVyZmFjZSBwbGFuZWphZGEgcGFyYSBldm9sdWlyIGNvbSBvIHByb2pldG8uJyxcbiAgICBzb2x1dGlvbjogJ0RlZmluacOnw6NvIGRlIGVzY29wbywgY29tcG9uZW50ZXMgcmV1dGlsaXrDoXZlaXMsIG9yZ2FuaXphw6fDo28gZnJvbnQtZW5kIGUgcHJlcGFyYcOnw6NvIHBhcmEgaW50ZWdyYcOnw7Vlcy4nLFxuICAgIGluZGljYXRvcnM6IFsnUmVzcG9uc2l2bycsICdDw7NkaWdvIGVzY2Fsw6F2ZWwnLCAnUGVyZm9ybWFuY2Ugb3RpbWl6YWRhJywgJ0RlcGxveSBwcmVwYXJhZG8nLCAnTWFudXRlbsOnw6NvIHNpbXBsZXMnXSxcbiAgICBzdGFjazogWydKYXZhU2NyaXB0JywgJ0NvbXBvbmVudGVzJywgJ0FQSXMnLCAnTWFudXRlbsOnw6NvJ10sXG4gICAgcHJldmlldzoge1xuICAgICAgZXllYnJvdzogJ1NvbHXDp8OjbyBlc3BlY8OtZmljYScsXG4gICAgICB0aXRsZTogJ0ludGVyZmFjZSBwcmVwYXJhZGEgcGFyYSBldm9sdcOnw6NvJyxcbiAgICAgIGRldGFpbHM6IFsnRmx1eG8gcHLDs3ByaW8nLCAnSW50ZWdyYcOnw7VlcycsICdFc2NhbGEnXSxcbiAgICB9LFxuICAgIHRvbmU6ICd0ZWFsJyxcbiAgfSxcbl07XG4iXX0=
