@@ -168,12 +168,28 @@ export default function ServicesPage() {
       if (import.meta.env.DEV) {
         console.log('Hero ready:', true);
       }
-    }, 120);
+    }, 150);
 
     return () => {
       clearTimeout(timeout);
     };
   }, []);
+
+  const hiddenUntilReady = heroReady
+    ? undefined
+    : {
+        opacity: 0,
+        transform: 'translate3d(0, 40px, 0)',
+        filter: 'blur(10px)',
+      };
+
+  const hiddenVisualUntilReady = heroReady
+    ? undefined
+    : {
+        opacity: 0,
+        transform: 'translate3d(48px, 20px, 0) scale(.98)',
+        filter: 'blur(12px)',
+      };
 
   return (
     <PageLayout>
@@ -184,31 +200,31 @@ export default function ServicesPage() {
           <Container size="wide">
             <div className={styles.servicesHeroGrid}>
               <div className={styles.servicesHeroCopy}>
-                <p className={styles.servicesPageEyebrow}>SERVIÇOS</p>
+                <p className={`${styles.servicesPageEyebrow} ${styles.heroEyebrow}`} style={hiddenUntilReady}>SERVIÇOS</p>
                 <h1 className={styles.servicesHeroTitle} id="services-page-title">
-                  <span>Soluções</span>
-                  <span>digitais para</span>
-                  <span>presença,</span>
-                  <span>conversão e</span>
-                  <span>evolução</span>
+                  <span className={styles.heroTitleLine} style={hiddenUntilReady}>Soluções</span>
+                  <span className={styles.heroTitleLine} style={hiddenUntilReady}>digitais para</span>
+                  <span className={styles.heroTitleLine} style={hiddenUntilReady}>presença,</span>
+                  <span className={styles.heroTitleLine} style={hiddenUntilReady}>conversão e</span>
+                  <span className={styles.heroTitleLine} style={hiddenUntilReady}>evolução</span>
                 </h1>
-                <p>
+                <p className={styles.heroDescription} style={hiddenUntilReady}>
                   Desenvolvimento de sites, landing pages, hospedagem e suporte técnico com foco em experiência, performance e crescimento.
                 </p>
-                <div className={styles.servicesHeroActions}>
+                <div className={`${styles.servicesHeroActions} ${styles.heroActions}`} style={hiddenUntilReady}>
                   <Button className={styles.servicesHeroPrimaryCta} href="#solucoes">Ver soluções</Button>
                   <Button className={styles.servicesHeroSecondaryCta} to={whatsappPath} variant="secondary">Iniciar projeto</Button>
                 </div>
               </div>
 
-              <div className={`${styles.heroImageVisual} ${styles.servicesHeroVisual}`} aria-hidden="true">
+              <div className={`${styles.heroImageVisual} ${styles.servicesHeroVisual}`} style={hiddenVisualUntilReady} aria-hidden="true">
                 <div className={styles.servicesHeroScene}>
                   <span className={styles.servicesHeroSceneGlow} />
                   <span className={styles.servicesHeroSceneGrid} />
 
-                  <img src={servicosHeroImage} alt="" loading="eager" />
+                  <img className={styles.servicesHeroPerson} style={hiddenVisualUntilReady} src={servicosHeroImage} alt="" loading="eager" />
 
-                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesFragmentLanding}`}>
+                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentLanding}`} style={hiddenUntilReady}>
                     <span className={styles.servicesFragmentLabel}>Landing Page estratégica</span>
                     <div className={styles.servicesMiniWireframe}>
                       <span />
@@ -219,7 +235,7 @@ export default function ServicesPage() {
                     </div>
                   </div>
 
-                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesFragmentSeo}`}>
+                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentSeo}`} style={hiddenUntilReady}>
                     <span className={styles.servicesFragmentLabel}>SEO técnico</span>
                     <ul>
                       <li>H1</li>
@@ -229,7 +245,7 @@ export default function ServicesPage() {
                     </ul>
                   </div>
 
-                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesFragmentPerformance}`}>
+                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentPerformance}`} style={hiddenUntilReady}>
                     <span className={styles.servicesFragmentLabel}>Core Web Vitals</span>
                     <div className={styles.servicesPerformanceLine}>
                       <span />
@@ -237,14 +253,14 @@ export default function ServicesPage() {
                     <strong>otimizado</strong>
                   </div>
 
-                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesFragmentStack}`}>
+                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentStack}`} style={hiddenUntilReady}>
                     <span>React</span>
                     <span>Figma</span>
                     <span>Hostinger</span>
                     <span>Analytics</span>
                   </div>
 
-                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesFragmentFlow}`}>
+                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentFlow}`} style={hiddenUntilReady}>
                     <span>Briefing</span>
                     <span>UI</span>
                     <span>Código</span>
