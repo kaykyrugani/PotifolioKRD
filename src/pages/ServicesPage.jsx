@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
@@ -154,28 +155,102 @@ function SectionIntro({ eyebrow, title, description }) {
 }
 
 export default function ServicesPage() {
+  const [heroReady, setHeroReady] = useState(false);
+
+  useEffect(() => {
+    if (import.meta.env.DEV) {
+      console.log('Hero ready:', false);
+    }
+
+    const timeout = setTimeout(() => {
+      setHeroReady(true);
+
+      if (import.meta.env.DEV) {
+        console.log('Hero ready:', true);
+      }
+    }, 120);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
+
   return (
     <PageLayout>
-      <section className={styles.servicesPage}>
+      <section className={`${styles.servicesPage} ${heroReady ? styles.servicesPageReady : ''}`}>
         <div className={styles.servicesPageTopAtmosphere} aria-hidden="true" />
 
-        <section className={styles.servicesPageHero} aria-labelledby="services-page-title">
+        <section className={`${styles.servicesPageHero} ${heroReady ? styles.heroReady : ''}`} aria-labelledby="services-page-title">
           <Container size="wide">
             <div className={styles.servicesHeroGrid}>
               <div className={styles.servicesHeroCopy}>
                 <p className={styles.servicesPageEyebrow}>SERVIÇOS</p>
-                <h1 id="services-page-title">Soluções digitais para presença, conversão e evolução</h1>
+                <h1 className={styles.servicesHeroTitle} id="services-page-title">
+                  <span>Soluções</span>
+                  <span>digitais para</span>
+                  <span>presença,</span>
+                  <span>conversão e</span>
+                  <span>evolução</span>
+                </h1>
                 <p>
                   Desenvolvimento de sites, landing pages, hospedagem e suporte técnico com foco em experiência, performance e crescimento.
                 </p>
                 <div className={styles.servicesHeroActions}>
-                  <Button href="#solucoes">Ver soluções</Button>
-                  <Button to={whatsappPath} variant="secondary">Iniciar projeto</Button>
+                  <Button className={styles.servicesHeroPrimaryCta} href="#solucoes">Ver soluções</Button>
+                  <Button className={styles.servicesHeroSecondaryCta} to={whatsappPath} variant="secondary">Iniciar projeto</Button>
                 </div>
               </div>
 
               <div className={`${styles.heroImageVisual} ${styles.servicesHeroVisual}`} aria-hidden="true">
-                <img src={servicosHeroImage} alt="" loading="eager" />
+                <div className={styles.servicesHeroScene}>
+                  <span className={styles.servicesHeroSceneGlow} />
+                  <span className={styles.servicesHeroSceneGrid} />
+
+                  <img src={servicosHeroImage} alt="" loading="eager" />
+
+                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesFragmentLanding}`}>
+                    <span className={styles.servicesFragmentLabel}>Landing Page estratégica</span>
+                    <div className={styles.servicesMiniWireframe}>
+                      <span />
+                      <strong />
+                      <i />
+                      <i />
+                      <em />
+                    </div>
+                  </div>
+
+                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesFragmentSeo}`}>
+                    <span className={styles.servicesFragmentLabel}>SEO técnico</span>
+                    <ul>
+                      <li>H1</li>
+                      <li>Meta</li>
+                      <li>Schema</li>
+                      <li>Semântico</li>
+                    </ul>
+                  </div>
+
+                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesFragmentPerformance}`}>
+                    <span className={styles.servicesFragmentLabel}>Core Web Vitals</span>
+                    <div className={styles.servicesPerformanceLine}>
+                      <span />
+                    </div>
+                    <strong>otimizado</strong>
+                  </div>
+
+                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesFragmentStack}`}>
+                    <span>React</span>
+                    <span>Figma</span>
+                    <span>Hostinger</span>
+                    <span>Analytics</span>
+                  </div>
+
+                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesFragmentFlow}`}>
+                    <span>Briefing</span>
+                    <span>UI</span>
+                    <span>Código</span>
+                    <span>Deploy</span>
+                  </div>
+                </div>
               </div>
             </div>
           </Container>
