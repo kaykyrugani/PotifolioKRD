@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
@@ -144,18 +144,210 @@ const faqs = [
   },
 ];
 
-function SectionIntro({ eyebrow, title, description }) {
+const revealSectionKeys = {
+  solutions: 'solutions',
+  ecosystem: 'ecosystem',
+  included: 'included',
+  plans: 'plans',
+  differentials: 'differentials',
+  faq: 'faq',
+  finalCta: 'finalCta',
+};
+
+const revealSectionKeyList = Object.values(revealSectionKeys);
+
+function useRevealOnScroll(sectionKeys) {
+  const sectionRefs = useRef({});
+  const visibleSectionsRef = useRef(new Set());
+  const hasUserIntentRef = useRef(false);
+  const pendingFrameRef = useRef(0);
+  const [visibleSections, setVisibleSections] = useState(() => new Set());
+
+  const setRevealSectionRef = useCallback((sectionKey, node) => {
+    if (node) {
+      sectionRefs.current[sectionKey] = node;
+      return;
+    }
+
+    delete sectionRefs.current[sectionKey];
+  }, []);
+
+  const markSectionVisible = useCallback((sectionKey, source) => {
+    if (visibleSectionsRef.current.has(sectionKey)) {
+      return;
+    }
+
+    if (source !== 'reducedMotion' && !hasUserIntentRef.current) {
+      if (import.meta.env.DEV) {
+        console.warn('[Services reveal blocked]', sectionKey, source);
+        console.trace();
+      }
+
+      return;
+    }
+
+    if (import.meta.env.DEV) {
+      console.log('[Services reveal]', sectionKey, source);
+    }
+
+    const nextVisibleSections = new Set(visibleSectionsRef.current);
+    nextVisibleSections.add(sectionKey);
+    visibleSectionsRef.current = nextVisibleSections;
+    setVisibleSections(nextVisibleSections);
+  }, []);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+      if (import.meta.env.DEV) {
+        console.log('[Services reveal] reduced motion active');
+      }
+
+      return undefined;
+    }
+
+    const checkSectionsVisibility = () => {
+      const activationLine = window.innerHeight * 0.68;
+
+      sectionKeys.forEach((sectionKey) => {
+        if (visibleSectionsRef.current.has(sectionKey)) {
+          return;
+        }
+
+        if (!hasUserIntentRef.current) {
+          return;
+        }
+
+        const node = sectionRefs.current[sectionKey];
+
+        if (!node) {
+          return;
+        }
+
+        const rect = node.getBoundingClientRect();
+
+        if (rect.top <= activationLine && rect.bottom >= 0) {
+          markSectionVisible(sectionKey, 'user');
+        }
+      });
+
+      if (visibleSectionsRef.current.size >= sectionKeys.length) {
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('resize', handleResize);
+        window.removeEventListener('wheel', handleUserIntent);
+        window.removeEventListener('touchmove', handleUserIntent);
+        window.removeEventListener('keydown', handleKeyDownIntent);
+
+        if (pendingFrameRef.current) {
+          window.cancelAnimationFrame(pendingFrameRef.current);
+          pendingFrameRef.current = 0;
+        }
+      }
+    };
+
+    const scheduleVisibilityCheck = () => {
+      if (pendingFrameRef.current) {
+        return;
+      }
+
+      pendingFrameRef.current = window.requestAnimationFrame(() => {
+        pendingFrameRef.current = 0;
+        checkSectionsVisibility();
+      });
+    };
+
+    const markUserIntent = () => {
+      if (hasUserIntentRef.current) {
+        return;
+      }
+
+      hasUserIntentRef.current = true;
+
+      if (import.meta.env.DEV) {
+        console.log('[Services reveal intent]');
+      }
+
+      scheduleVisibilityCheck();
+    };
+
+    const handleUserIntent = () => {
+      markUserIntent();
+    };
+
+    const handleKeyDownIntent = (event) => {
+      const intentKeys = new Set(['ArrowDown', 'PageDown', 'End']);
+
+      if (!intentKeys.has(event.key) && event.key !== ' ' && event.code !== 'Space') {
+        return;
+      }
+
+      markUserIntent();
+    };
+
+    const handleScroll = () => {
+      if (!hasUserIntentRef.current) {
+        return;
+      }
+
+      scheduleVisibilityCheck();
+    };
+
+    const handleResize = () => {
+      if (!hasUserIntentRef.current) {
+        return;
+      }
+
+      scheduleVisibilityCheck();
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('wheel', handleUserIntent, { passive: true });
+    window.addEventListener('touchmove', handleUserIntent, { passive: true });
+    window.addEventListener('keydown', handleKeyDownIntent);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('wheel', handleUserIntent);
+      window.removeEventListener('touchmove', handleUserIntent);
+      window.removeEventListener('keydown', handleKeyDownIntent);
+
+      if (pendingFrameRef.current) {
+        window.cancelAnimationFrame(pendingFrameRef.current);
+        pendingFrameRef.current = 0;
+      }
+    };
+  }, [markSectionVisible, sectionKeys]);
+
+  return {
+    setRevealSectionRef,
+    visibleSections,
+  };
+}
+
+function SectionIntro({ eyebrow, title, description, animateEyebrow = true }) {
   return (
     <div className={styles.servicesPageSectionIntro}>
-      <p>{eyebrow}</p>
-      <h2>{title}</h2>
-      {description && <span>{description}</span>}
+      <p className={animateEyebrow ? styles.revealEyebrow : undefined}>{eyebrow}</p>
+      <h2 className={styles.revealTitle}>{title}</h2>
+      {description && <span className={styles.revealDescription}>{description}</span>}
     </div>
   );
 }
 
 export default function ServicesPage() {
   const [showHeroContent, setShowHeroContent] = useState(false);
+  const { setRevealSectionRef, visibleSections } = useRevealOnScroll(revealSectionKeyList);
+
+  const getRevealSectionClassName = (baseClassName, sectionKey) => (
+    [
+      baseClassName,
+      styles.revealSection,
+      visibleSections.has(sectionKey) ? styles.revealSectionVisible : '',
+    ].filter(Boolean).join(' ')
+  );
 
   useEffect(() => {
     if (import.meta.env.DEV) {
@@ -265,7 +457,12 @@ export default function ServicesPage() {
           </Container>
         </section>
 
-        <section className={styles.servicesPageSection} id="solucoes" aria-labelledby="services-solutions-title">
+        <section
+          className={getRevealSectionClassName(styles.servicesPageSection, revealSectionKeys.solutions)}
+          id="solucoes"
+          ref={(node) => setRevealSectionRef(revealSectionKeys.solutions, node)}
+          aria-labelledby="services-solutions-title"
+        >
           <Container size="wide">
             <SectionIntro
               eyebrow="SOLUÇÕES PRINCIPAIS"
@@ -273,9 +470,9 @@ export default function ServicesPage() {
               description="Cada entrega combina estratégia, interface e desenvolvimento, mas cada solução tem uma prioridade diferente."
             />
 
-            <div className={styles.servicesSolutionsFlow}>
+            <div className={`${styles.servicesSolutionsFlow} ${styles.revealCardGrid}`}>
               {mainSolutions.map((solution, index) => (
-                <article className={styles.servicesSolutionRow} key={solution.title}>
+                <article className={`${styles.servicesSolutionRow} ${styles.revealCard}`} key={solution.title}>
                   <div className={styles.servicesSolutionCopy}>
                     <span>{String(index + 1).padStart(2, '0')}</span>
                     <h3>{solution.title}</h3>
@@ -298,7 +495,11 @@ export default function ServicesPage() {
           </Container>
         </section>
 
-        <section className={styles.servicesPageSection} aria-labelledby="services-ecosystem-title">
+        <section
+          className={getRevealSectionClassName(styles.servicesPageSection, revealSectionKeys.ecosystem)}
+          ref={(node) => setRevealSectionRef(revealSectionKeys.ecosystem, node)}
+          aria-labelledby="services-ecosystem-title"
+        >
           <Container size="wide">
             <SectionIntro
               eyebrow="ECOSSISTEMA DE ENTREGA"
@@ -306,7 +507,7 @@ export default function ServicesPage() {
               description="A entrega não é apenas uma tela pronta. Ela nasce da conexão entre design, tecnologia, performance e publicação."
             />
 
-            <div className={styles.servicesEcosystem} aria-label="Ecossistema técnico do projeto">
+            <div className={`${styles.servicesEcosystem} ${styles.revealCard}`} aria-label="Ecossistema técnico do projeto">
               <svg className={styles.servicesEcosystemLines} viewBox="0 0 940 520" aria-hidden="true">
                 <path d="M470 260L180 118" />
                 <path d="M470 260L470 72" />
@@ -329,7 +530,11 @@ export default function ServicesPage() {
           </Container>
         </section>
 
-        <section className={styles.servicesPageSection} aria-labelledby="services-included-title">
+        <section
+          className={getRevealSectionClassName(styles.servicesPageSection, revealSectionKeys.included)}
+          ref={(node) => setRevealSectionRef(revealSectionKeys.included, node)}
+          aria-labelledby="services-included-title"
+        >
           <Container size="wide">
             <SectionIntro
               eyebrow="O QUE ESTÁ INCLUSO"
@@ -337,9 +542,9 @@ export default function ServicesPage() {
               description="A composição muda conforme o projeto, mas estes pilares guiam a construção da presença digital."
             />
 
-            <div className={styles.servicesIncludedEditorial}>
+            <div className={`${styles.servicesIncludedEditorial} ${styles.revealCardGrid}`}>
               {includedGroups.map((group, index) => (
-                <article className={`${styles.servicesIncludedItem} ${styles[`servicesIncludedItem${index + 1}`]}`} key={group.title}>
+                <article className={`${styles.servicesIncludedItem} ${styles[`servicesIncludedItem${index + 1}`]} ${styles.revealCard}`} key={group.title}>
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   <div>
                     <h3>{group.title}</h3>
@@ -356,17 +561,22 @@ export default function ServicesPage() {
           </Container>
         </section>
 
-        <section className={styles.servicesPageSection} aria-labelledby="services-plans-title">
+        <section
+          className={getRevealSectionClassName(styles.servicesPageSection, revealSectionKeys.plans)}
+          ref={(node) => setRevealSectionRef(revealSectionKeys.plans, node)}
+          aria-labelledby="services-plans-title"
+        >
           <Container size="wide">
             <SectionIntro
               eyebrow="PLANOS / INVESTIMENTO"
               title="Pontos de partida para escolher a melhor solução."
               description="Os valores abaixo ajudam a orientar o primeiro passo. O escopo final é definido conforme necessidade, conteúdo e complexidade."
+              animateEyebrow={false}
             />
 
-            <div className={styles.servicesPlans}>
+            <div className={`${styles.servicesPlans} ${styles.revealCardGrid}`}>
               {plans.map((plan) => (
-                <article className={`${styles.servicesPlan} ${plan.featured ? styles.servicesPlanFeatured : ''}`} key={plan.title}>
+                <article className={`${styles.servicesPlan} ${plan.featured ? styles.servicesPlanFeatured : ''} ${styles.revealCard}`} key={plan.title}>
                   {plan.featured && <span className={styles.servicesPlanBadge}>Mais procurado</span>}
                   <h3>{plan.title}</h3>
                   <p>{plan.description}</p>
@@ -388,17 +598,22 @@ export default function ServicesPage() {
           </Container>
         </section>
 
-        <section className={styles.servicesPageSection} aria-labelledby="services-differentials-title">
+        <section
+          className={getRevealSectionClassName(styles.servicesPageSection, revealSectionKeys.differentials)}
+          ref={(node) => setRevealSectionRef(revealSectionKeys.differentials, node)}
+          aria-labelledby="services-differentials-title"
+        >
           <Container size="wide">
             <SectionIntro
               eyebrow="DIFERENCIAIS"
               title="Mais do que entrega: experiência e estrutura"
               description="A diferença está em unir estética, leitura, código e orientação comercial em uma experiência coerente."
+              animateEyebrow={false}
             />
 
-            <div className={styles.servicesDifferentials}>
+            <div className={`${styles.servicesDifferentials} ${styles.revealCardGrid}`}>
               {differentials.map((item, index) => (
-                <article className={styles.servicesDifferentialItem} key={item.title}>
+                <article className={`${styles.servicesDifferentialItem} ${styles.revealCard}`} key={item.title}>
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
@@ -408,7 +623,11 @@ export default function ServicesPage() {
           </Container>
         </section>
 
-        <section className={styles.servicesPageSection} aria-labelledby="services-faq-title">
+        <section
+          className={getRevealSectionClassName(styles.servicesPageSection, revealSectionKeys.faq)}
+          ref={(node) => setRevealSectionRef(revealSectionKeys.faq, node)}
+          aria-labelledby="services-faq-title"
+        >
           <Container>
             <SectionIntro
               eyebrow="FAQ"
@@ -416,9 +635,9 @@ export default function ServicesPage() {
               description="Respostas diretas para entender escopo, publicação, SEO, suporte e alterações."
             />
 
-            <div className={styles.servicesFaq}>
+            <div className={`${styles.servicesFaq} ${styles.revealCardGrid}`}>
               {faqs.map((item) => (
-                <details className={styles.servicesFaqItem} key={item.question}>
+                <details className={`${styles.servicesFaqItem} ${styles.revealCard}`} key={item.question}>
                   <summary>{item.question}</summary>
                   <p>{item.answer}</p>
                 </details>
@@ -427,7 +646,11 @@ export default function ServicesPage() {
           </Container>
         </section>
 
-        <section className={styles.servicesFinalCta} aria-labelledby="services-final-title">
+        <section
+          className={getRevealSectionClassName(styles.servicesFinalCta, revealSectionKeys.finalCta)}
+          ref={(node) => setRevealSectionRef(revealSectionKeys.finalCta, node)}
+          aria-labelledby="services-final-title"
+        >
           <Container>
             <div className={styles.servicesFinalCtaBox}>
               <div className={styles.servicesFinalCtaDecor} aria-hidden="true">
@@ -436,9 +659,9 @@ export default function ServicesPage() {
                 <span />
               </div>
               <div className={styles.servicesFinalCtaContent}>
-                <p className={styles.servicesPageEyebrow}>PRÓXIMO PASSO</p>
-                <h2 id="services-final-title">Vamos transformar sua ideia em presença digital</h2>
-                <p>Me conte seu projeto e vamos encontrar a melhor solução.</p>
+                <p className={`${styles.servicesPageEyebrow} ${styles.revealEyebrow}`}>PRÓXIMO PASSO</p>
+                <h2 className={styles.revealTitle} id="services-final-title">Vamos transformar sua ideia em presença digital</h2>
+                <p className={styles.revealDescription}>Me conte seu projeto e vamos encontrar a melhor solução.</p>
                 <div className={styles.servicesFinalActions}>
                   <Button to={whatsappPath}>Chamar no WhatsApp</Button>
                   <Button to="/projetos" variant="secondary">Ver portfólio</Button>
