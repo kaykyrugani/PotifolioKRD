@@ -156,12 +156,27 @@ const revealSectionKeys = {
 
 const revealSectionKeyList = Object.values(revealSectionKeys);
 
-function useRevealOnScroll(sectionKeys) {
+const createRevealItemKey = (groupKey, index) => `${groupKey}-${index}`;
+
+const revealItemKeyList = [
+  ...mainSolutions.map((_, index) => createRevealItemKey('solutions', index)),
+  'ecosystem-core',
+  ...ecosystemNodes.map((_, index) => createRevealItemKey('ecosystem-node', index)),
+  ...includedGroups.map((_, index) => createRevealItemKey('included', index)),
+  ...plans.map((_, index) => createRevealItemKey('plans', index)),
+  ...differentials.map((_, index) => createRevealItemKey('differentials', index)),
+  ...faqs.map((_, index) => createRevealItemKey('faq', index)),
+];
+
+function useRevealOnScroll(sectionKeys, itemKeys) {
   const sectionRefs = useRef({});
+  const revealItemRefs = useRef({});
   const visibleSectionsRef = useRef(new Set());
+  const visibleRevealItemsRef = useRef(new Set());
   const hasUserIntentRef = useRef(false);
   const pendingFrameRef = useRef(0);
   const [visibleSections, setVisibleSections] = useState(() => new Set());
+  const [visibleRevealItems, setVisibleRevealItems] = useState(() => new Set());
 
   const setRevealSectionRef = useCallback((sectionKey, node) => {
     if (node) {
@@ -170,6 +185,15 @@ function useRevealOnScroll(sectionKeys) {
     }
 
     delete sectionRefs.current[sectionKey];
+  }, []);
+
+  const setRevealItemRef = useCallback((itemKey, node) => {
+    if (node) {
+      revealItemRefs.current[itemKey] = node;
+      return;
+    }
+
+    delete revealItemRefs.current[itemKey];
   }, []);
 
   const markSectionVisible = useCallback((sectionKey, source) => {
@@ -187,13 +211,37 @@ function useRevealOnScroll(sectionKeys) {
     }
 
     if (import.meta.env.DEV) {
-      console.log('[Services reveal]', sectionKey, source);
+      console.log('[Services reveal section]', sectionKey);
     }
 
     const nextVisibleSections = new Set(visibleSectionsRef.current);
     nextVisibleSections.add(sectionKey);
     visibleSectionsRef.current = nextVisibleSections;
     setVisibleSections(nextVisibleSections);
+  }, []);
+
+  const markRevealItemVisible = useCallback((itemKey, source) => {
+    if (visibleRevealItemsRef.current.has(itemKey)) {
+      return;
+    }
+
+    if (source !== 'user' || !hasUserIntentRef.current) {
+      if (import.meta.env.DEV) {
+        console.warn('[Services reveal item blocked]', itemKey, source);
+        console.trace();
+      }
+
+      return;
+    }
+
+    if (import.meta.env.DEV) {
+      console.log('[Services reveal item]', itemKey);
+    }
+
+    const nextVisibleRevealItems = new Set(visibleRevealItemsRef.current);
+    nextVisibleRevealItems.add(itemKey);
+    visibleRevealItemsRef.current = nextVisibleRevealItems;
+    setVisibleRevealItems(nextVisibleRevealItems);
   }, []);
 
   useEffect(() => {
@@ -208,14 +256,15 @@ function useRevealOnScroll(sectionKeys) {
     }
 
     const checkSectionsVisibility = () => {
+      if (!hasUserIntentRef.current) {
+        return;
+      }
+
       const activationLine = window.innerHeight * 0.68;
+      const itemActivationLine = window.innerHeight * 0.78;
 
       sectionKeys.forEach((sectionKey) => {
         if (visibleSectionsRef.current.has(sectionKey)) {
-          return;
-        }
-
-        if (!hasUserIntentRef.current) {
           return;
         }
 
@@ -232,7 +281,28 @@ function useRevealOnScroll(sectionKeys) {
         }
       });
 
-      if (visibleSectionsRef.current.size >= sectionKeys.length) {
+      itemKeys.forEach((itemKey) => {
+        if (visibleRevealItemsRef.current.has(itemKey)) {
+          return;
+        }
+
+        const node = revealItemRefs.current[itemKey];
+
+        if (!node) {
+          return;
+        }
+
+        const rect = node.getBoundingClientRect();
+
+        if (rect.top <= itemActivationLine && rect.bottom >= 0) {
+          markRevealItemVisible(itemKey, 'user');
+        }
+      });
+
+      if (
+        visibleSectionsRef.current.size >= sectionKeys.length
+        && visibleRevealItemsRef.current.size >= itemKeys.length
+      ) {
         window.removeEventListener('scroll', handleScroll);
         window.removeEventListener('resize', handleResize);
         window.removeEventListener('wheel', handleUserIntent);
@@ -319,10 +389,12 @@ function useRevealOnScroll(sectionKeys) {
         pendingFrameRef.current = 0;
       }
     };
-  }, [markSectionVisible, sectionKeys]);
+  }, [itemKeys, markRevealItemVisible, markSectionVisible, sectionKeys]);
 
   return {
+    setRevealItemRef,
     setRevealSectionRef,
+    visibleRevealItems,
     visibleSections,
   };
 }
@@ -339,13 +411,26 @@ function SectionIntro({ eyebrow, title, description, animateEyebrow = true }) {
 
 export default function ServicesPage() {
   const [showHeroContent, setShowHeroContent] = useState(false);
-  const { setRevealSectionRef, visibleSections } = useRevealOnScroll(revealSectionKeyList);
+  const {
+    setRevealItemRef,
+    setRevealSectionRef,
+    visibleRevealItems,
+    visibleSections,
+  } = useRevealOnScroll(revealSectionKeyList, revealItemKeyList);
 
   const getRevealSectionClassName = (baseClassName, sectionKey) => (
     [
       baseClassName,
       styles.revealSection,
       visibleSections.has(sectionKey) ? styles.revealSectionVisible : '',
+    ].filter(Boolean).join(' ')
+  );
+
+  const getRevealItemClassName = (baseClassName, itemKey) => (
+    [
+      baseClassName,
+      styles.revealItem,
+      visibleRevealItems.has(itemKey) ? styles.revealItemVisible : '',
     ].filter(Boolean).join(' ')
   );
 
@@ -472,7 +557,11 @@ export default function ServicesPage() {
 
             <div className={`${styles.servicesSolutionsFlow} ${styles.revealCardGrid}`}>
               {mainSolutions.map((solution, index) => (
-                <article className={`${styles.servicesSolutionRow} ${styles.revealCard}`} key={solution.title}>
+                <article
+                  className={getRevealItemClassName(`${styles.servicesSolutionRow} ${styles.revealCard}`, createRevealItemKey('solutions', index))}
+                  key={solution.title}
+                  ref={(node) => setRevealItemRef(createRevealItemKey('solutions', index), node)}
+                >
                   <div className={styles.servicesSolutionCopy}>
                     <span>{String(index + 1).padStart(2, '0')}</span>
                     <h3>{solution.title}</h3>
@@ -507,7 +596,7 @@ export default function ServicesPage() {
               description="A entrega não é apenas uma tela pronta. Ela nasce da conexão entre design, tecnologia, performance e publicação."
             />
 
-            <div className={`${styles.servicesEcosystem} ${styles.revealCard}`} aria-label="Ecossistema técnico do projeto">
+            <div className={styles.servicesEcosystem} aria-label="Ecossistema técnico do projeto">
               <svg className={styles.servicesEcosystemLines} viewBox="0 0 940 520" aria-hidden="true">
                 <path d="M470 260L180 118" />
                 <path d="M470 260L470 72" />
@@ -517,12 +606,19 @@ export default function ServicesPage() {
                 <path d="M470 260L162 384" />
                 <path d="M470 260L714 262" />
               </svg>
-              <div className={styles.servicesEcosystemCore}>
+              <div
+                className={getRevealItemClassName(styles.servicesEcosystemCore, 'ecosystem-core')}
+                ref={(node) => setRevealItemRef('ecosystem-core', node)}
+              >
                 <span>centro</span>
                 <strong>PROJETO</strong>
               </div>
               {ecosystemNodes.map((node, index) => (
-                <span className={`${styles.servicesEcosystemNode} ${styles[`servicesEcosystemNode${index + 1}`]}`} key={node}>
+                <span
+                  className={getRevealItemClassName(`${styles.servicesEcosystemNode} ${styles[`servicesEcosystemNode${index + 1}`]}`, createRevealItemKey('ecosystem-node', index))}
+                  key={node}
+                  ref={(element) => setRevealItemRef(createRevealItemKey('ecosystem-node', index), element)}
+                >
                   {node}
                 </span>
               ))}
@@ -544,7 +640,11 @@ export default function ServicesPage() {
 
             <div className={`${styles.servicesIncludedEditorial} ${styles.revealCardGrid}`}>
               {includedGroups.map((group, index) => (
-                <article className={`${styles.servicesIncludedItem} ${styles[`servicesIncludedItem${index + 1}`]} ${styles.revealCard}`} key={group.title}>
+                <article
+                  className={getRevealItemClassName(`${styles.servicesIncludedItem} ${styles[`servicesIncludedItem${index + 1}`]} ${styles.revealCard}`, createRevealItemKey('included', index))}
+                  key={group.title}
+                  ref={(node) => setRevealItemRef(createRevealItemKey('included', index), node)}
+                >
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   <div>
                     <h3>{group.title}</h3>
@@ -575,8 +675,12 @@ export default function ServicesPage() {
             />
 
             <div className={`${styles.servicesPlans} ${styles.revealCardGrid}`}>
-              {plans.map((plan) => (
-                <article className={`${styles.servicesPlan} ${plan.featured ? styles.servicesPlanFeatured : ''} ${styles.revealCard}`} key={plan.title}>
+              {plans.map((plan, index) => (
+                <article
+                  className={getRevealItemClassName(`${styles.servicesPlan} ${plan.featured ? styles.servicesPlanFeatured : ''} ${styles.revealCard}`, createRevealItemKey('plans', index))}
+                  key={plan.title}
+                  ref={(node) => setRevealItemRef(createRevealItemKey('plans', index), node)}
+                >
                   {plan.featured && <span className={styles.servicesPlanBadge}>Mais procurado</span>}
                   <h3>{plan.title}</h3>
                   <p>{plan.description}</p>
@@ -613,7 +717,11 @@ export default function ServicesPage() {
 
             <div className={`${styles.servicesDifferentials} ${styles.revealCardGrid}`}>
               {differentials.map((item, index) => (
-                <article className={`${styles.servicesDifferentialItem} ${styles.revealCard}`} key={item.title}>
+                <article
+                  className={getRevealItemClassName(`${styles.servicesDifferentialItem} ${styles.revealCard}`, createRevealItemKey('differentials', index))}
+                  key={item.title}
+                  ref={(node) => setRevealItemRef(createRevealItemKey('differentials', index), node)}
+                >
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
@@ -636,8 +744,12 @@ export default function ServicesPage() {
             />
 
             <div className={`${styles.servicesFaq} ${styles.revealCardGrid}`}>
-              {faqs.map((item) => (
-                <details className={`${styles.servicesFaqItem} ${styles.revealCard}`} key={item.question}>
+              {faqs.map((item, index) => (
+                <details
+                  className={getRevealItemClassName(`${styles.servicesFaqItem} ${styles.revealCard}`, createRevealItemKey('faq', index))}
+                  key={item.question}
+                  ref={(node) => setRevealItemRef(createRevealItemKey('faq', index), node)}
+                >
                   <summary>{item.question}</summary>
                   <p>{item.answer}</p>
                 </details>
