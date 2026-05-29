@@ -155,7 +155,7 @@ function SectionIntro({ eyebrow, title, description }) {
 }
 
 export default function ServicesPage() {
-  const [heroReady, setHeroReady] = useState(false);
+  const [showHeroContent, setShowHeroContent] = useState(false);
 
   useEffect(() => {
     if (import.meta.env.DEV) {
@@ -163,7 +163,7 @@ export default function ServicesPage() {
     }
 
     const timeout = setTimeout(() => {
-      setHeroReady(true);
+      setShowHeroContent(true);
 
       if (import.meta.env.DEV) {
         console.log('Hero ready:', true);
@@ -175,99 +175,92 @@ export default function ServicesPage() {
     };
   }, []);
 
-  const hiddenUntilReady = heroReady
-    ? undefined
-    : {
-        opacity: 0,
-        transform: 'translate3d(0, 40px, 0)',
-        filter: 'blur(10px)',
-      };
-
-  const hiddenVisualUntilReady = heroReady
-    ? undefined
-    : {
-        opacity: 0,
-        transform: 'translate3d(48px, 20px, 0) scale(.98)',
-        filter: 'blur(12px)',
-      };
-
   return (
     <PageLayout>
-      <section className={`${styles.servicesPage} ${heroReady ? styles.servicesPageReady : ''}`}>
+      <section className={`${styles.servicesPage} ${showHeroContent ? styles.servicesPageReady : ''}`}>
         <div className={styles.servicesPageTopAtmosphere} aria-hidden="true" />
 
-        <section className={`${styles.servicesPageHero} ${heroReady ? styles.heroReady : ''}`} aria-labelledby="services-page-title">
+        <section className={`${styles.servicesPageHero} ${showHeroContent ? styles.heroReady : ''}`} aria-labelledby="services-page-title">
           <Container size="wide">
             <div className={styles.servicesHeroGrid}>
-              <div className={styles.servicesHeroCopy}>
-                <p className={`${styles.servicesPageEyebrow} ${styles.heroEyebrow}`} style={hiddenUntilReady}>SERVIÇOS</p>
-                <h1 className={styles.servicesHeroTitle} id="services-page-title">
-                  <span className={styles.heroTitleLine} style={hiddenUntilReady}>Soluções</span>
-                  <span className={styles.heroTitleLine} style={hiddenUntilReady}>digitais para</span>
-                  <span className={styles.heroTitleLine} style={hiddenUntilReady}>presença,</span>
-                  <span className={styles.heroTitleLine} style={hiddenUntilReady}>conversão e</span>
-                  <span className={styles.heroTitleLine} style={hiddenUntilReady}>evolução</span>
-                </h1>
-                <p className={styles.heroDescription} style={hiddenUntilReady}>
-                  Desenvolvimento de sites, landing pages, hospedagem e suporte técnico com foco em experiência, performance e crescimento.
-                </p>
-                <div className={`${styles.servicesHeroActions} ${styles.heroActions}`} style={hiddenUntilReady}>
-                  <Button className={styles.servicesHeroPrimaryCta} href="#solucoes">Ver soluções</Button>
-                  <Button className={styles.servicesHeroSecondaryCta} to={whatsappPath} variant="secondary">Iniciar projeto</Button>
-                </div>
-              </div>
-
-              <div className={`${styles.heroImageVisual} ${styles.servicesHeroVisual}`} style={hiddenVisualUntilReady} aria-hidden="true">
-                <div className={styles.servicesHeroScene}>
-                  <span className={styles.servicesHeroSceneGlow} />
-                  <span className={styles.servicesHeroSceneGrid} />
-
-                  <img className={styles.servicesHeroPerson} style={hiddenVisualUntilReady} src={servicosHeroImage} alt="" loading="eager" />
-
-                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentLanding}`} style={hiddenUntilReady}>
-                    <span className={styles.servicesFragmentLabel}>Landing Page estratégica</span>
-                    <div className={styles.servicesMiniWireframe}>
-                      <span />
-                      <strong />
-                      <i />
-                      <i />
-                      <em />
+              {showHeroContent ? (
+                <>
+                  <div className={styles.servicesHeroCopy}>
+                    <p className={`${styles.servicesPageEyebrow} ${styles.heroEyebrow}`}>SERVIÇOS</p>
+                    <h1 className={styles.servicesHeroTitle} id="services-page-title">
+                      <span className={styles.heroTitleLine}>Soluções</span>
+                      <span className={styles.heroTitleLine}>digitais para</span>
+                      <span className={styles.heroTitleLine}>presença,</span>
+                      <span className={styles.heroTitleLine}>conversão e</span>
+                      <span className={styles.heroTitleLine}>evolução</span>
+                    </h1>
+                    <p className={styles.heroDescription}>
+                      Desenvolvimento de sites, landing pages, hospedagem e suporte técnico com foco em experiência, performance e crescimento.
+                    </p>
+                    <div className={`${styles.servicesHeroActions} ${styles.heroActions}`}>
+                      <Button className={styles.servicesHeroPrimaryCta} href="#solucoes">Ver soluções</Button>
+                      <Button className={styles.servicesHeroSecondaryCta} to={whatsappPath} variant="secondary">Iniciar projeto</Button>
                     </div>
                   </div>
 
-                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentSeo}`} style={hiddenUntilReady}>
-                    <span className={styles.servicesFragmentLabel}>SEO técnico</span>
-                    <ul>
-                      <li>H1</li>
-                      <li>Meta</li>
-                      <li>Schema</li>
-                      <li>Semântico</li>
-                    </ul>
-                  </div>
+                  <div className={`${styles.heroImageVisual} ${styles.servicesHeroVisual}`} aria-hidden="true">
+                    <div className={styles.servicesHeroScene}>
+                      <span className={styles.servicesHeroSceneGlow} />
+                      <span className={styles.servicesHeroSceneGrid} />
 
-                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentPerformance}`} style={hiddenUntilReady}>
-                    <span className={styles.servicesFragmentLabel}>Core Web Vitals</span>
-                    <div className={styles.servicesPerformanceLine}>
-                      <span />
+                      <img className={styles.servicesHeroPerson} src={servicosHeroImage} alt="" loading="eager" />
+
+                      <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentLanding}`}>
+                        <span className={styles.servicesFragmentLabel}>Landing Page estratégica</span>
+                        <div className={styles.servicesMiniWireframe}>
+                          <span />
+                          <strong />
+                          <i />
+                          <i />
+                          <em />
+                        </div>
+                      </div>
+
+                      <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentSeo}`}>
+                        <span className={styles.servicesFragmentLabel}>SEO técnico</span>
+                        <ul>
+                          <li>H1</li>
+                          <li>Meta</li>
+                          <li>Schema</li>
+                          <li>Semântico</li>
+                        </ul>
+                      </div>
+
+                      <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentPerformance}`}>
+                        <span className={styles.servicesFragmentLabel}>Core Web Vitals</span>
+                        <div className={styles.servicesPerformanceLine}>
+                          <span />
+                        </div>
+                        <strong>otimizado</strong>
+                      </div>
+
+                      <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentStack}`}>
+                        <span>React</span>
+                        <span>Figma</span>
+                        <span>Hostinger</span>
+                        <span>Analytics</span>
+                      </div>
+
+                      <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentFlow}`}>
+                        <span>Briefing</span>
+                        <span>UI</span>
+                        <span>Código</span>
+                        <span>Deploy</span>
+                      </div>
                     </div>
-                    <strong>otimizado</strong>
                   </div>
-
-                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentStack}`} style={hiddenUntilReady}>
-                    <span>React</span>
-                    <span>Figma</span>
-                    <span>Hostinger</span>
-                    <span>Analytics</span>
-                  </div>
-
-                  <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentFlow}`} style={hiddenUntilReady}>
-                    <span>Briefing</span>
-                    <span>UI</span>
-                    <span>Código</span>
-                    <span>Deploy</span>
-                  </div>
-                </div>
-              </div>
+                </>
+              ) : (
+                <>
+                  <div className={styles.servicesHeroCopyReserve} aria-hidden="true" />
+                  <div className={styles.servicesHeroSceneReserve} aria-hidden="true" />
+                </>
+              )}
             </div>
           </Container>
         </section>
