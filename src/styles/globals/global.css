@@ -80,3 +80,8 @@ ul {
   outline: 2px solid var(--color-blue-cyan);
   outline-offset: 4px;
 }
+
+/* TEMP: global grid disabled for visual review */
+body::before {
+  display: none;
+}

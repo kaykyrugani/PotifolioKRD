@@ -190,3 +190,8 @@
     font-size: 0.68rem;
   }
 }
+
+/* TEMP: global grid disabled for visual review */
+.techHeroNetwork::before {
+  display: none;
+}

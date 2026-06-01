@@ -85,6 +85,8 @@
   position: absolute;
   inset: 0;
   content: "";
+  /* TEMP: global grid disabled for visual review */
+  display: none;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.016) 1px, transparent 1px),
@@ -7100,4 +7102,42 @@
   .projectsHeroConnections path {
     stroke-dashoffset: 0;
   }
+}
+
+/* TEMP: global grid disabled for visual review */
+.projectsPreviewFrame::before,
+.projectsFinalBox::before,
+.aboutPage::before,
+.aboutPortraitCard::before,
+.aboutSystemTransition::before,
+.aboutLowerAtmosphere::before,
+.aboutToolEcosystem::before,
+.aboutFinalCta::before,
+.servicesPage::before,
+.servicesHeroVisual::before,
+.servicesEcosystem::before,
+.servicesFinalCtaBox::before,
+.techPageBackground::before,
+.techHeroNetwork::before,
+.techEcosystemMap::before,
+.techVideoFrame::before,
+.techFinalBox::before,
+.techPageBackground span:nth-child(4),
+.techPerformanceRow em::before,
+.servicesHeroSceneGrid {
+  display: none;
+}
+
+.aboutPage::after {
+  /* TEMP: global grid disabled for visual review */
+  background:
+    radial-gradient(circle at 75% 18%, rgba(0, 194, 255, 0.12), transparent 18rem),
+    radial-gradient(circle at 88% 30%, rgba(139, 92, 246, 0.12), transparent 20rem);
+  background-size: auto;
+}
+
+.servicesPageTopAtmosphere {
+  /* TEMP: global grid disabled for visual review */
+  background: radial-gradient(circle at 62% 22%, rgba(0, 194, 255, 0.12), transparent 18rem);
+  background-size: auto;
 }

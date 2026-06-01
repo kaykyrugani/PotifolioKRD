@@ -600,3 +600,8 @@
     transition: none;
   }
 }
+
+/* TEMP: global grid disabled for visual review */
+.footer::before {
+  display: none;
+}

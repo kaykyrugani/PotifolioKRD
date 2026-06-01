@@ -197,3 +197,10 @@
     animation: none;
   }
 }
+
+/* TEMP: global grid disabled for visual review */
+.techAtmosphereBridge::before,
+.techAtmosphere::before,
+.techAtmosphere__mesh {
+  display: none;
+}

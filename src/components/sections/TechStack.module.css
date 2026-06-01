@@ -432,3 +432,8 @@
     transition: none;
   }
 }
+
+/* TEMP: global grid disabled for visual review */
+.section::before {
+  display: none;
+}
