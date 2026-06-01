@@ -3,6 +3,7 @@ import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
 import tecnologiaHeroImage from '../assets/images/tecnologiaIMG.png';
+import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 import { whatsappPath } from '../utils/contact';
 import styles from './Page.module.css';
 
@@ -203,12 +204,23 @@ const clientResults = [
   'Mais confiança para o usuário',
 ];
 
-function SectionIntro({ eyebrow, title, description, id }) {
+const revealSectionKeys = {
+  ecosystem: 'ecosystem',
+  roles: 'roles',
+  action: 'action',
+  infrastructure: 'infrastructure',
+  results: 'results',
+  finalCta: 'finalCta',
+};
+
+const revealSectionKeyList = Object.values(revealSectionKeys);
+
+function SectionIntro({ eyebrow, title, description, id, reveal = false }) {
   return (
     <div className={styles.techSectionIntro}>
-      <p className={styles.techEyebrow}>{eyebrow}</p>
-      <h2 id={id}>{title}</h2>
-      {description && <span>{description}</span>}
+      <p className={`${styles.techEyebrow} ${reveal ? styles.revealEyebrow : ''}`}>{eyebrow}</p>
+      <h2 className={reveal ? styles.revealTitle : undefined} id={id}>{title}</h2>
+      {description && <span className={reveal ? styles.revealDescription : undefined}>{description}</span>}
     </div>
   );
 }
@@ -465,6 +477,15 @@ function ActionVisual({ type }) {
 
 export default function TechnologiesPage() {
   const shouldReduceMotion = useReducedMotion();
+  const {
+    setRevealSectionRef,
+    getRevealSectionClassName,
+  } = useRevealOnScroll({
+    sectionKeys: revealSectionKeyList,
+    itemKeys: [],
+    styles,
+    debugLabel: 'Technologies',
+  });
 
   return (
     <PageLayout>
@@ -502,25 +523,36 @@ export default function TechnologiesPage() {
           </Container>
         </section>
 
-        <section className={styles.techSection} id="tecnologias-ecossistema" aria-labelledby="tech-ecosystem-title">
+        <section
+          className={getRevealSectionClassName(styles.techSection, revealSectionKeys.ecosystem)}
+          id="tecnologias-ecossistema"
+          ref={(node) => setRevealSectionRef(revealSectionKeys.ecosystem, node)}
+          aria-labelledby="tech-ecosystem-title"
+        >
           <Container size="wide">
             <SectionIntro
               eyebrow="ECOSSISTEMA TECNOLÓGICO"
               title="Não são ferramentas soltas. É um ecossistema de entrega."
               description="Cada camada tem uma função: planejar, construir, otimizar, publicar e manter a experiência funcionando com clareza."
               id="tech-ecosystem-title"
+              reveal
             />
             <EcosystemMap />
           </Container>
         </section>
 
-        <section className={styles.techSection} aria-labelledby="tech-roles-title">
+        <section
+          className={getRevealSectionClassName(styles.techSection, revealSectionKeys.roles)}
+          ref={(node) => setRevealSectionRef(revealSectionKeys.roles, node)}
+          aria-labelledby="tech-roles-title"
+        >
           <Container size="wide">
             <SectionIntro
               eyebrow="COMO CADA TECNOLOGIA ATUA"
               title="Cada escolha técnica precisa aparecer na experiência do usuário."
               description="A tecnologia entra como sistema de suporte para transformar planejamento, interface e publicação em uma entrega mais confiável."
               id="tech-roles-title"
+              reveal
             />
 
             <div className={styles.techRolesFlow}>
@@ -553,13 +585,18 @@ export default function TechnologiesPage() {
           </Container>
         </section>
 
-        <section className={styles.techActionSection} aria-labelledby="tech-action-title">
+        <section
+          className={getRevealSectionClassName(styles.techActionSection, revealSectionKeys.action)}
+          ref={(node) => setRevealSectionRef(revealSectionKeys.action, node)}
+          aria-labelledby="tech-action-title"
+        >
           <Container size="wide">
             <SectionIntro
               eyebrow="TECNOLOGIA EM AÇÃO"
               title="Não é sobre ferramentas. É sobre percepção."
               description="A camada técnica aparece quando o visitante sente velocidade, clareza, fluidez e confiança sem precisar entender o que está por trás."
               id="tech-action-title"
+              reveal
             />
 
             <div className={styles.techActionGrid}>
@@ -584,13 +621,18 @@ export default function TechnologiesPage() {
           </Container>
         </section>
 
-        <section className={styles.techInfrastructureSection} aria-labelledby="tech-infra-title">
+        <section
+          className={getRevealSectionClassName(styles.techInfrastructureSection, revealSectionKeys.infrastructure)}
+          ref={(node) => setRevealSectionRef(revealSectionKeys.infrastructure, node)}
+          aria-labelledby="tech-infra-title"
+        >
           <Container size="wide">
             <SectionIntro
               eyebrow="INFRAESTRUTURA E PUBLICAÇÃO"
               title="A experiência também depende de como o projeto vai para o ar."
               description="Hospedagem, SSL, domínio e deploy fazem parte do cuidado técnico para que a interface publicada continue confiável."
               id="tech-infra-title"
+              reveal
             />
 
             <ol className={styles.techInfrastructureFlow}>
@@ -613,13 +655,17 @@ export default function TechnologiesPage() {
           </Container>
         </section>
 
-        <section className={styles.techResultsSection} aria-labelledby="tech-results-title">
+        <section
+          className={getRevealSectionClassName(styles.techResultsSection, revealSectionKeys.results)}
+          ref={(node) => setRevealSectionRef(revealSectionKeys.results, node)}
+          aria-labelledby="tech-results-title"
+        >
           <Container size="wide">
             <div className={styles.techResultsComposition}>
               <div className={styles.techResultsCopy}>
-                <p className={styles.techEyebrow}>RESULTADO PARA O CLIENTE</p>
-                <h2 id="tech-results-title">O resultado não é tecnologia. É experiência.</h2>
-                <p>
+                <p className={`${styles.techEyebrow} ${styles.revealEyebrow}`}>RESULTADO PARA O CLIENTE</p>
+                <h2 className={styles.revealTitle} id="tech-results-title">O resultado não é tecnologia. É experiência.</h2>
+                <p className={styles.revealDescription}>
                   A pilha técnica só faz sentido quando melhora a forma como a marca é percebida e como o usuário entende o próximo passo.
                 </p>
               </div>
@@ -633,7 +679,11 @@ export default function TechnologiesPage() {
           </Container>
         </section>
 
-        <section className={styles.techFinalCta} aria-labelledby="tech-final-title">
+        <section
+          className={getRevealSectionClassName(styles.techFinalCta, revealSectionKeys.finalCta)}
+          ref={(node) => setRevealSectionRef(revealSectionKeys.finalCta, node)}
+          aria-labelledby="tech-final-title"
+        >
           <Container>
             <motion.div
               className={styles.techFinalBox}
@@ -642,9 +692,9 @@ export default function TechnologiesPage() {
               viewport={{ once: true, amount: 0.48 }}
               whileInView={{ opacity: 1, scale: shouldReduceMotion ? 1 : 1.02 }}
             >
-              <p className={styles.techEyebrow}>PRÓXIMO PASSO</p>
-              <h2 id="tech-final-title">Vamos transformar tecnologia em presença digital?</h2>
-              <p>
+              <p className={`${styles.techEyebrow} ${styles.revealEyebrow}`}>PRÓXIMO PASSO</p>
+              <h2 className={styles.revealTitle} id="tech-final-title">Vamos transformar tecnologia em presença digital?</h2>
+              <p className={styles.revealDescription}>
                 Cada ferramenta deve servir a um objetivo: criar uma experiência mais clara, rápida e confiável para o seu público.
               </p>
               <div className={styles.techFinalActions}>

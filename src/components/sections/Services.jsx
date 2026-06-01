@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion';
 import { services } from '../../data/siteContent';
 import Button from '../ui/Button';
@@ -207,9 +207,10 @@ function AnimatedServiceCard({ activeIndex, children, index, total, scrollYProgr
   );
 }
 
-export default function Services() {
+export default function Services({ reveal }) {
   const sectionRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const sectionKey = 'services';
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end end'],
@@ -222,8 +223,17 @@ export default function Services() {
     setActiveIndex((currentIndex) => (currentIndex === nextIndex ? currentIndex : nextIndex));
   });
 
+  const setSectionRefs = useCallback((node) => {
+    sectionRef.current = node;
+    reveal?.setRevealSectionRef(sectionKey, node);
+  }, [reveal, sectionKey]);
+
   return (
-    <section id="servicos" className={styles.servicesScrollArea} ref={sectionRef}>
+    <section
+      id="servicos"
+      className={reveal?.getRevealSectionClassName(styles.servicesScrollArea, sectionKey) ?? styles.servicesScrollArea}
+      ref={setSectionRefs}
+    >
       <div className={styles.servicesSticky}>
         <ServicesOrbitBackground
           activeIndex={activeIndex}
@@ -234,12 +244,12 @@ export default function Services() {
           <div className={styles.servicesContent}>
             <div className={styles.servicesIntro}>
               <div className={styles.servicesHeader}>
-                <span className={styles.eyebrow}>Serviços</span>
-                <h2>Soluções digitais para presença, performance e conversão.</h2>
+                <span className={`${styles.eyebrow} ${reveal?.styles.revealEyebrow ?? ''}`}>Serviços</span>
+                <h2 className={reveal?.styles.revealTitle}>Soluções digitais para presença, performance e conversão.</h2>
               </div>
 
               <div className={styles.servicesCopy}>
-                <p>
+                <p className={reveal?.styles.revealDescription}>
                   Desenvolvimento de sites, landing pages, hospedagem e manutenção com foco em clareza,
                   velocidade e resultado comercial. Cada solução é pensada para fortalecer sua presença digital
                   e transformar visitantes em oportunidades reais.

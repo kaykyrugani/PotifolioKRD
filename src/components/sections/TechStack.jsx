@@ -61,9 +61,15 @@ const techStack = [
   },
 ];
 
-export default function TechStack() {
+export default function TechStack({ reveal }) {
+  const sectionKey = 'techStack';
+
   return (
-    <section id="tecnologias" className={styles.section}>
+    <section
+      id="tecnologias"
+      className={reveal?.getRevealSectionClassName(styles.section, sectionKey) ?? styles.section}
+      ref={(node) => reveal?.setRevealSectionRef(sectionKey, node)}
+    >
       <svg className={styles.orbit} viewBox="0 0 300 300" aria-hidden="true">
         <circle cx="150" cy="150" r="116" />
         <circle cx="150" cy="150" r="78" />
@@ -79,9 +85,9 @@ export default function TechStack() {
 
       <div className={styles.inner}>
         <header className={styles.header}>
-          <span>Stack</span>
-          <h2>Tecnologias que sustentam sites rápidos, modernos e escaláveis</h2>
-          <p>
+          <span className={reveal?.styles.revealEyebrow}>Stack</span>
+          <h2 className={reveal?.styles.revealTitle}>Tecnologias que sustentam sites rápidos, modernos e escaláveis</h2>
+          <p className={reveal?.styles.revealDescription}>
             Uma base técnica pensada para criar interfaces profissionais, otimizadas para SEO,
             performance e evolução contínua.
           </p>

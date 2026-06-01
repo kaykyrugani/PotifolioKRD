@@ -8,11 +8,53 @@ import Hero from '../components/sections/Hero';
 import Projects from '../components/sections/Projects';
 import Services from '../components/sections/Services';
 import TechStack from '../components/sections/TechStack';
+import { benefits, differentials, projectPreviews } from '../data/siteContent';
+import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 import '../styles/tech-atmosphere.css';
 import styles from './Home.module.css';
+import revealStyles from './Page.module.css';
+
+const revealSectionKeys = {
+  services: 'services',
+  benefits: 'benefits',
+  transitionIntro: 'transitionIntro',
+  techStack: 'techStack',
+  differentials: 'differentials',
+  projects: 'projects',
+  cta: 'cta',
+};
+
+const revealSectionKeyList = Object.values(revealSectionKeys);
+
+const createRevealItemKey = (groupKey, index) => `${groupKey}-${index}`;
+
+const revealItemKeyList = [
+  ...benefits.map((_, index) => createRevealItemKey('benefits', index)),
+  ...differentials.map((_, index) => createRevealItemKey('differentials', index)),
+  ...projectPreviews.map((_, index) => createRevealItemKey('projects', index)),
+  'cta-box',
+];
 
 export default function Home() {
   const horizontalRef = useRef(null);
+  const {
+    setRevealSectionRef,
+    getRevealSectionClassName,
+    setRevealItemRef,
+    getRevealItemClassName,
+  } = useRevealOnScroll({
+    sectionKeys: revealSectionKeyList,
+    itemKeys: revealItemKeyList,
+    styles: revealStyles,
+    debugLabel: 'Home',
+  });
+  const reveal = {
+    setRevealSectionRef,
+    getRevealSectionClassName,
+    setRevealItemRef,
+    getRevealItemClassName,
+    styles: revealStyles,
+  };
   const { scrollYProgress } = useScroll({
     target: horizontalRef,
     offset: ['start start', 'end end'],
@@ -25,8 +67,8 @@ export default function Home() {
   return (
     <PageLayout>
       <Hero />
-      <Services />
-      <Benefits />
+      <Services reveal={reveal} />
+      <Benefits reveal={reveal} />
       <section className={styles.horizontalTransition} ref={horizontalRef}>
         <motion.div
           className="techAtmosphereBridge"
@@ -49,17 +91,20 @@ export default function Home() {
         <div className={styles.horizontalSticky}>
           <motion.div className={styles.horizontalTrack} style={{ x }}>
             <motion.div className={styles.horizontalPanel} style={{ opacity: leftOpacity }}>
-              <div className={styles.transitionIntro}>
-                <span>Tecnologias</span>
-                <h2>Estrutura moderna para performance, escalabilidade e experiência premium</h2>
-                <p>
+              <div
+                className={getRevealSectionClassName(styles.transitionIntro, revealSectionKeys.transitionIntro)}
+                ref={(node) => setRevealSectionRef(revealSectionKeys.transitionIntro, node)}
+              >
+                <span className={revealStyles.revealEyebrow}>Tecnologias</span>
+                <h2 className={revealStyles.revealTitle}>Estrutura moderna para performance, escalabilidade e experiência premium</h2>
+                <p className={revealStyles.revealDescription}>
                   Desenvolvimento com tecnologias modernas, foco em velocidade, SEO técnico,
                   manutenção simples e experiência fluida.
                 </p>
               </div>
             </motion.div>
             <motion.div className={styles.horizontalPanel} style={{ opacity: rightOpacity }}>
-              <TechStack />
+              <TechStack reveal={reveal} />
             </motion.div>
           </motion.div>
         </div>
@@ -84,9 +129,9 @@ export default function Home() {
           <path d="M54 274c90-84 177-126 262-126 62 0 112 20 150 60" />
           <path d="M84 332c74-36 148-54 222-54 58 0 104 12 138 36" />
         </svg>
-        <Differentials />
-        <Projects />
-        <CTA />
+        <Differentials reveal={reveal} />
+        <Projects reveal={reveal} />
+        <CTA reveal={reveal} />
       </div>
     </PageLayout>
   );

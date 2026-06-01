@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
 import servicosHeroImage from '../assets/images/servicosIMG.png';
+import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 import { whatsappPath } from '../utils/contact';
 import styles from './Page.module.css';
 
@@ -168,237 +169,6 @@ const revealItemKeyList = [
   ...faqs.map((_, index) => createRevealItemKey('faq', index)),
 ];
 
-function useRevealOnScroll(sectionKeys, itemKeys) {
-  const sectionRefs = useRef({});
-  const revealItemRefs = useRef({});
-  const visibleSectionsRef = useRef(new Set());
-  const visibleRevealItemsRef = useRef(new Set());
-  const hasUserIntentRef = useRef(false);
-  const pendingFrameRef = useRef(0);
-  const [visibleSections, setVisibleSections] = useState(() => new Set());
-  const [visibleRevealItems, setVisibleRevealItems] = useState(() => new Set());
-
-  const setRevealSectionRef = useCallback((sectionKey, node) => {
-    if (node) {
-      sectionRefs.current[sectionKey] = node;
-      return;
-    }
-
-    delete sectionRefs.current[sectionKey];
-  }, []);
-
-  const setRevealItemRef = useCallback((itemKey, node) => {
-    if (node) {
-      revealItemRefs.current[itemKey] = node;
-      return;
-    }
-
-    delete revealItemRefs.current[itemKey];
-  }, []);
-
-  const markSectionVisible = useCallback((sectionKey, source) => {
-    if (visibleSectionsRef.current.has(sectionKey)) {
-      return;
-    }
-
-    if (source !== 'reducedMotion' && !hasUserIntentRef.current) {
-      if (import.meta.env.DEV) {
-        console.warn('[Services reveal blocked]', sectionKey, source);
-        console.trace();
-      }
-
-      return;
-    }
-
-    if (import.meta.env.DEV) {
-      console.log('[Services reveal section]', sectionKey);
-    }
-
-    const nextVisibleSections = new Set(visibleSectionsRef.current);
-    nextVisibleSections.add(sectionKey);
-    visibleSectionsRef.current = nextVisibleSections;
-    setVisibleSections(nextVisibleSections);
-  }, []);
-
-  const markRevealItemVisible = useCallback((itemKey, source) => {
-    if (visibleRevealItemsRef.current.has(itemKey)) {
-      return;
-    }
-
-    if (source !== 'user' || !hasUserIntentRef.current) {
-      if (import.meta.env.DEV) {
-        console.warn('[Services reveal item blocked]', itemKey, source);
-        console.trace();
-      }
-
-      return;
-    }
-
-    if (import.meta.env.DEV) {
-      console.log('[Services reveal item]', itemKey);
-    }
-
-    const nextVisibleRevealItems = new Set(visibleRevealItemsRef.current);
-    nextVisibleRevealItems.add(itemKey);
-    visibleRevealItemsRef.current = nextVisibleRevealItems;
-    setVisibleRevealItems(nextVisibleRevealItems);
-  }, []);
-
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (prefersReducedMotion) {
-      if (import.meta.env.DEV) {
-        console.log('[Services reveal] reduced motion active');
-      }
-
-      return undefined;
-    }
-
-    const checkSectionsVisibility = () => {
-      if (!hasUserIntentRef.current) {
-        return;
-      }
-
-      const activationLine = window.innerHeight * 0.68;
-      const itemActivationLine = window.innerHeight * 0.78;
-
-      sectionKeys.forEach((sectionKey) => {
-        if (visibleSectionsRef.current.has(sectionKey)) {
-          return;
-        }
-
-        const node = sectionRefs.current[sectionKey];
-
-        if (!node) {
-          return;
-        }
-
-        const rect = node.getBoundingClientRect();
-
-        if (rect.top <= activationLine && rect.bottom >= 0) {
-          markSectionVisible(sectionKey, 'user');
-        }
-      });
-
-      itemKeys.forEach((itemKey) => {
-        if (visibleRevealItemsRef.current.has(itemKey)) {
-          return;
-        }
-
-        const node = revealItemRefs.current[itemKey];
-
-        if (!node) {
-          return;
-        }
-
-        const rect = node.getBoundingClientRect();
-
-        if (rect.top <= itemActivationLine && rect.bottom >= 0) {
-          markRevealItemVisible(itemKey, 'user');
-        }
-      });
-
-      if (
-        visibleSectionsRef.current.size >= sectionKeys.length
-        && visibleRevealItemsRef.current.size >= itemKeys.length
-      ) {
-        window.removeEventListener('scroll', handleScroll);
-        window.removeEventListener('resize', handleResize);
-        window.removeEventListener('wheel', handleUserIntent);
-        window.removeEventListener('touchmove', handleUserIntent);
-        window.removeEventListener('keydown', handleKeyDownIntent);
-
-        if (pendingFrameRef.current) {
-          window.cancelAnimationFrame(pendingFrameRef.current);
-          pendingFrameRef.current = 0;
-        }
-      }
-    };
-
-    const scheduleVisibilityCheck = () => {
-      if (pendingFrameRef.current) {
-        return;
-      }
-
-      pendingFrameRef.current = window.requestAnimationFrame(() => {
-        pendingFrameRef.current = 0;
-        checkSectionsVisibility();
-      });
-    };
-
-    const markUserIntent = () => {
-      if (hasUserIntentRef.current) {
-        return;
-      }
-
-      hasUserIntentRef.current = true;
-
-      if (import.meta.env.DEV) {
-        console.log('[Services reveal intent]');
-      }
-
-      scheduleVisibilityCheck();
-    };
-
-    const handleUserIntent = () => {
-      markUserIntent();
-    };
-
-    const handleKeyDownIntent = (event) => {
-      const intentKeys = new Set(['ArrowDown', 'PageDown', 'End']);
-
-      if (!intentKeys.has(event.key) && event.key !== ' ' && event.code !== 'Space') {
-        return;
-      }
-
-      markUserIntent();
-    };
-
-    const handleScroll = () => {
-      if (!hasUserIntentRef.current) {
-        return;
-      }
-
-      scheduleVisibilityCheck();
-    };
-
-    const handleResize = () => {
-      if (!hasUserIntentRef.current) {
-        return;
-      }
-
-      scheduleVisibilityCheck();
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('wheel', handleUserIntent, { passive: true });
-    window.addEventListener('touchmove', handleUserIntent, { passive: true });
-    window.addEventListener('keydown', handleKeyDownIntent);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('wheel', handleUserIntent);
-      window.removeEventListener('touchmove', handleUserIntent);
-      window.removeEventListener('keydown', handleKeyDownIntent);
-
-      if (pendingFrameRef.current) {
-        window.cancelAnimationFrame(pendingFrameRef.current);
-        pendingFrameRef.current = 0;
-      }
-    };
-  }, [itemKeys, markRevealItemVisible, markSectionVisible, sectionKeys]);
-
-  return {
-    setRevealItemRef,
-    setRevealSectionRef,
-    visibleRevealItems,
-    visibleSections,
-  };
-}
-
 function SectionIntro({ eyebrow, title, description, animateEyebrow = true }) {
   return (
     <div className={styles.servicesPageSectionIntro}>
@@ -412,27 +182,16 @@ function SectionIntro({ eyebrow, title, description, animateEyebrow = true }) {
 export default function ServicesPage() {
   const [showHeroContent, setShowHeroContent] = useState(false);
   const {
-    setRevealItemRef,
     setRevealSectionRef,
-    visibleRevealItems,
-    visibleSections,
-  } = useRevealOnScroll(revealSectionKeyList, revealItemKeyList);
-
-  const getRevealSectionClassName = (baseClassName, sectionKey) => (
-    [
-      baseClassName,
-      styles.revealSection,
-      visibleSections.has(sectionKey) ? styles.revealSectionVisible : '',
-    ].filter(Boolean).join(' ')
-  );
-
-  const getRevealItemClassName = (baseClassName, itemKey) => (
-    [
-      baseClassName,
-      styles.revealItem,
-      visibleRevealItems.has(itemKey) ? styles.revealItemVisible : '',
-    ].filter(Boolean).join(' ')
-  );
+    getRevealSectionClassName,
+    setRevealItemRef,
+    getRevealItemClassName,
+  } = useRevealOnScroll({
+    sectionKeys: revealSectionKeyList,
+    itemKeys: revealItemKeyList,
+    styles,
+    debugLabel: 'Services',
+  });
 
   useEffect(() => {
     if (import.meta.env.DEV) {

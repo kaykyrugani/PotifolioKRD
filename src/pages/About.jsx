@@ -2,6 +2,7 @@ import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
 import aboutPhoto from '../assets/images/KaykyRuagani.png';
+import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 import { whatsappPath } from '../utils/contact';
 import styles from './Page.module.css';
 
@@ -101,7 +102,38 @@ const trustItems = [
 const heroChips = ['UI', 'SEO', 'Performance', 'Front-end'];
 const trustSignals = ['SEO técnico', 'Deploy orientado', 'Responsividade', 'Performance'];
 
+const revealSectionKeys = {
+  positioning: 'positioning',
+  method: 'method',
+  stack: 'stack',
+  principles: 'principles',
+  trust: 'trust',
+  finalCta: 'finalCta',
+};
+
+const revealSectionKeyList = Object.values(revealSectionKeys);
+
+const createRevealItemKey = (groupKey, index) => `${groupKey}-${index}`;
+
+const revealItemKeyList = [
+  ...positioningCards.map((_, index) => createRevealItemKey('positioning', index)),
+  ...principles.map((_, index) => createRevealItemKey('principles', index)),
+  'trust-card',
+];
+
 export default function About() {
+  const {
+    setRevealSectionRef,
+    getRevealSectionClassName,
+    setRevealItemRef,
+    getRevealItemClassName,
+  } = useRevealOnScroll({
+    sectionKeys: revealSectionKeyList,
+    itemKeys: revealItemKeyList,
+    styles,
+    debugLabel: 'About',
+  });
+
   return (
     <PageLayout>
       <section className={styles.aboutPage}>
@@ -145,18 +177,26 @@ export default function About() {
             </div>
           </div>
 
-          <section className={styles.aboutSection} aria-labelledby="about-positioning-title">
+          <section
+            className={getRevealSectionClassName(styles.aboutSection, revealSectionKeys.positioning)}
+            ref={(node) => setRevealSectionRef(revealSectionKeys.positioning, node)}
+            aria-labelledby="about-positioning-title"
+          >
             <div className={styles.aboutPositioningEditorial}>
               <div className={styles.aboutPositioningCopy}>
-                <p className={styles.aboutSectionKicker}>POSICIONAMENTO</p>
-                <h2 id="about-positioning-title">Mais do que código: construção de presença digital.</h2>
-                <p>
+                <p className={`${styles.aboutSectionKicker} ${styles.revealEyebrow}`}>POSICIONAMENTO</p>
+                <h2 className={styles.revealTitle} id="about-positioning-title">Mais do que código: construção de presença digital.</h2>
+                <p className={styles.revealDescription}>
                   O trabalho começa antes da interface: entender contexto, organizar mensagens e transformar uma ideia em uma experiência digital clara. O código entra como execução de uma estratégia visual, comercial e técnica.
                 </p>
               </div>
               <div className={styles.aboutPositioningPanels}>
                 {positioningCards.map((card, index) => (
-                  <article className={styles.aboutPositioningPanel} key={card.title}>
+                  <article
+                    className={getRevealItemClassName(styles.aboutPositioningPanel, createRevealItemKey('positioning', index))}
+                    key={card.title}
+                    ref={(node) => setRevealItemRef(createRevealItemKey('positioning', index), node)}
+                  >
                     <span>{String(index + 1).padStart(2, '0')}</span>
                     <h3>{card.title}</h3>
                     <p>{card.description}</p>
@@ -166,10 +206,14 @@ export default function About() {
             </div>
           </section>
 
-          <section className={styles.aboutSection} aria-labelledby="about-method-title">
+          <section
+            className={getRevealSectionClassName(styles.aboutSection, revealSectionKeys.method)}
+            ref={(node) => setRevealSectionRef(revealSectionKeys.method, node)}
+            aria-labelledby="about-method-title"
+          >
             <div className={styles.aboutSectionHeader}>
-              <p className={styles.aboutSectionKicker}>MÉTODO DE TRABALHO</p>
-              <h2 id="about-method-title">Um processo pensado para transformar briefing em resultado.</h2>
+              <p className={`${styles.aboutSectionKicker} ${styles.revealEyebrow}`}>MÉTODO DE TRABALHO</p>
+              <h2 className={styles.revealTitle} id="about-method-title">Um processo pensado para transformar briefing em resultado.</h2>
             </div>
             <div className={styles.aboutMethodTimeline}>
               {methodSteps.map((step) => (
@@ -201,10 +245,14 @@ export default function About() {
 
         <div className={styles.aboutLowerAtmosphere}>
           <Container size="wide">
-            <section className={styles.aboutSection} aria-labelledby="about-stack-title">
+            <section
+              className={getRevealSectionClassName(styles.aboutSection, revealSectionKeys.stack)}
+              ref={(node) => setRevealSectionRef(revealSectionKeys.stack, node)}
+              aria-labelledby="about-stack-title"
+            >
             <div className={styles.aboutSectionHeader}>
-              <p className={styles.aboutSectionKicker}>STACK E FERRAMENTAS</p>
-              <h2 id="about-stack-title">Ferramentas que sustentam o processo.</h2>
+              <p className={`${styles.aboutSectionKicker} ${styles.revealEyebrow}`}>STACK E FERRAMENTAS</p>
+              <h2 className={styles.revealTitle} id="about-stack-title">Ferramentas que sustentam o processo.</h2>
             </div>
             <div className={styles.aboutToolEcosystem}>
               <div className={styles.aboutEcosystemCore} aria-hidden="true">
@@ -230,14 +278,22 @@ export default function About() {
             </div>
           </section>
 
-          <section className={styles.aboutSection} aria-labelledby="about-principles-title">
+          <section
+            className={getRevealSectionClassName(styles.aboutSection, revealSectionKeys.principles)}
+            ref={(node) => setRevealSectionRef(revealSectionKeys.principles, node)}
+            aria-labelledby="about-principles-title"
+          >
             <div className={styles.aboutSectionHeader}>
-              <p className={styles.aboutSectionKicker}>PRINCÍPIOS</p>
-              <h2 id="about-principles-title">Princípios que guiam cada entrega.</h2>
+              <p className={`${styles.aboutSectionKicker} ${styles.revealEyebrow}`}>PRINCÍPIOS</p>
+              <h2 className={styles.revealTitle} id="about-principles-title">Princípios que guiam cada entrega.</h2>
             </div>
             <ol className={styles.aboutPrinciplesList}>
               {principles.map((principle, index) => (
-                <li className={styles.aboutPrincipleItem} key={principle.title}>
+                <li
+                  className={getRevealItemClassName(styles.aboutPrincipleItem, createRevealItemKey('principles', index))}
+                  key={principle.title}
+                  ref={(node) => setRevealItemRef(createRevealItemKey('principles', index), node)}
+                >
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   <div>
                     <h3>{principle.title}</h3>
@@ -248,11 +304,18 @@ export default function About() {
             </ol>
           </section>
 
-          <section className={styles.aboutSection} aria-labelledby="about-trust-title">
-            <div className={styles.aboutTrustCard}>
+          <section
+            className={getRevealSectionClassName(styles.aboutSection, revealSectionKeys.trust)}
+            ref={(node) => setRevealSectionRef(revealSectionKeys.trust, node)}
+            aria-labelledby="about-trust-title"
+          >
+            <div
+              className={getRevealItemClassName(styles.aboutTrustCard, 'trust-card')}
+              ref={(node) => setRevealItemRef('trust-card', node)}
+            >
               <div className={styles.aboutTrustCopy}>
-                <p className={styles.aboutSectionKicker}>CONFIANÇA</p>
-                <h2 id="about-trust-title">O que você pode esperar ao trabalhar comigo.</h2>
+                <p className={`${styles.aboutSectionKicker} ${styles.revealEyebrow}`}>CONFIANÇA</p>
+                <h2 className={styles.revealTitle} id="about-trust-title">O que você pode esperar ao trabalhar comigo.</h2>
                 <div className={styles.aboutTrustSignals} aria-label="Indicadores técnicos de entrega">
                   {trustSignals.map((signal) => (
                     <span key={signal}>{signal}</span>
@@ -270,16 +333,20 @@ export default function About() {
             </div>
           </section>
 
-          <section className={styles.aboutFinalCta} aria-labelledby="about-final-cta-title">
+          <section
+            className={getRevealSectionClassName(styles.aboutFinalCta, revealSectionKeys.finalCta)}
+            ref={(node) => setRevealSectionRef(revealSectionKeys.finalCta, node)}
+            aria-labelledby="about-final-cta-title"
+          >
             <div className={styles.aboutFinalDecor} aria-hidden="true">
               <span />
               <span />
               <span />
             </div>
             <div className={styles.aboutFinalContent}>
-              <p className={styles.aboutSectionKicker}>PRÓXIMO PASSO</p>
-              <h2 id="about-final-cta-title">Vamos construir uma presença digital com mais clareza e impacto?</h2>
-              <p>
+              <p className={`${styles.aboutSectionKicker} ${styles.revealEyebrow}`}>PRÓXIMO PASSO</p>
+              <h2 className={styles.revealTitle} id="about-final-cta-title">Vamos construir uma presença digital com mais clareza e impacto?</h2>
+              <p className={styles.revealDescription}>
                 Me conte sobre seu projeto e eu te ajudo a entender o melhor caminho para tirar sua ideia do papel com estratégia, design e desenvolvimento.
               </p>
               <div className={styles.aboutFinalActions}>
