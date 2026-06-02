@@ -99,7 +99,6 @@ const trustItems = [
   'Atenção aos detalhes visuais e técnicos.',
 ];
 
-const heroChips = ['UI', 'SEO', 'Performance', 'Front-end'];
 const trustSignals = ['SEO técnico', 'Deploy orientado', 'Responsividade', 'Performance'];
 
 const revealSectionKeys = {
@@ -117,6 +116,7 @@ const createRevealItemKey = (groupKey, index) => `${groupKey}-${index}`;
 
 const revealItemKeyList = [
   ...positioningCards.map((_, index) => createRevealItemKey('positioning', index)),
+  ...methodSteps.map((_, index) => createRevealItemKey('method', index)),
   ...principles.map((_, index) => createRevealItemKey('principles', index)),
   'trust-card',
 ];
@@ -140,39 +140,28 @@ export default function About() {
         <Container size="wide">
           <div className={styles.aboutHero}>
             <div className={styles.aboutHeroCopy}>
-              <p className={styles.aboutEyebrow}>SOBRE O DESENVOLVEDOR</p>
-              <h1>Desenvolvimento web com estratégia, estética premium e execução técnica.</h1>
-              <p>
+              <p className={`${styles.aboutEyebrow} ${styles.aboutHeroEyebrow}`}>SOBRE O DESENVOLVEDOR</p>
+              <h1>
+                <span className={styles.aboutHeroTitleLine}>Conheça quem está</span>
+                <span className={styles.aboutHeroTitleLine}>por trás dos projetos.</span>
+              </h1>
+              <p className={styles.aboutHeroDescription}>
                 Sou Kayky Rugani, desenvolvedor focado em criar sites, landing pages e experiências digitais que unem design, performance, SEO técnico e clareza comercial. Meu trabalho combina prototipação, desenvolvimento front-end, otimização e suporte para transformar ideias em presença digital profissional.
               </p>
-              <div className={styles.aboutHeroActions}>
+              <div className={`${styles.aboutHeroActions} ${styles.aboutHeroActionsReveal}`}>
                 <Button to="/servicos">Ver serviços</Button>
                 <Button to={whatsappPath} variant="secondary">Iniciar conversa</Button>
               </div>
             </div>
 
             <div className={styles.aboutPortraitCard}>
-              <div className={styles.aboutPortraitSystem} aria-hidden="true">
-                <span className={`${styles.aboutSystemLine} ${styles.aboutSystemLineOne}`} />
-                <span className={`${styles.aboutSystemLine} ${styles.aboutSystemLineTwo}`} />
-                <span className={`${styles.aboutSystemNode} ${styles.aboutSystemNodeOne}`} />
-                <span className={`${styles.aboutSystemNode} ${styles.aboutSystemNodeTwo}`} />
-                <span className={`${styles.aboutSystemTag} ${styles.aboutSystemTagOne}`}>semantic</span>
-                <span className={`${styles.aboutSystemTag} ${styles.aboutSystemTagTwo}`}>deploy</span>
-              </div>
               <span className={styles.aboutPortraitLabel}>FRONT-END DEV</span>
-              <div className={styles.aboutPortraitOrbit} aria-hidden="true" />
               <div className={styles.aboutPortraitMedia}>
                 <img
                   src={aboutPhoto}
                   alt="Retrato de Kayky Rugani, desenvolvedor front-end."
                   loading="eager"
                 />
-              </div>
-              <div className={styles.aboutHeroChips} aria-label="Especialidades técnicas">
-                {heroChips.map((chip) => (
-                  <span key={chip}>{chip}</span>
-                ))}
               </div>
             </div>
           </div>
@@ -216,20 +205,34 @@ export default function About() {
               <h2 className={styles.revealTitle} id="about-method-title">Um processo pensado para transformar briefing em resultado.</h2>
             </div>
             <div className={styles.aboutMethodTimeline}>
-              {methodSteps.map((step) => (
-                <article className={styles.aboutMethodStep} key={step.number}>
-                  <span className={styles.aboutMethodNumber}>{step.number}</span>
-                  <div className={styles.aboutMethodContent}>
-                    <h3>{step.title}</h3>
-                    <p>{step.description}</p>
-                    <ul>
-                      {step.items.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </article>
-              ))}
+              {methodSteps.map((step, index) => {
+                const methodItemKey = createRevealItemKey('method', index);
+                const methodSideClassName = index % 2 === 0
+                  ? styles.aboutMethodStepRight
+                  : styles.aboutMethodStepLeft;
+
+                return (
+                  <article
+                    className={getRevealItemClassName(
+                      `${styles.aboutMethodStep} ${styles.aboutMethodStepReveal} ${methodSideClassName}`,
+                      methodItemKey,
+                    )}
+                    key={step.number}
+                    ref={(node) => setRevealItemRef(methodItemKey, node)}
+                  >
+                    <span className={styles.aboutMethodNumber}>{step.number}</span>
+                    <div className={styles.aboutMethodContent}>
+                      <h3>{step.title}</h3>
+                      <p>{step.description}</p>
+                      <ul>
+                        {step.items.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </section>
         </Container>

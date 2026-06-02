@@ -1238,6 +1238,23 @@
   overflow-wrap: break-word;
 }
 
+.aboutHeroTitleLine {
+  display: block;
+  opacity: 0;
+  filter: blur(10px);
+  clip-path: inset(0 100% 0 0);
+  transform: translate3d(0, 32px, 0);
+  animation: aboutHeroTitleLineIn 900ms ease-out both;
+}
+
+.aboutHeroTitleLine:nth-child(1) {
+  animation-delay: 300ms;
+}
+
+.aboutHeroTitleLine:nth-child(2) {
+  animation-delay: 420ms;
+}
+
 .aboutHeroCopy h1::after {
   display: block;
   width: min(100%, 420px);
@@ -1245,6 +1262,27 @@
   margin-top: var(--space-6);
   content: "";
   background: linear-gradient(90deg, rgba(0, 194, 255, 0.58), rgba(124, 58, 237, 0.28), transparent);
+}
+
+.aboutHeroEyebrow,
+.aboutHeroDescription,
+.aboutHeroActionsReveal {
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate3d(0, 28px, 0);
+  animation: aboutHeroFadeUp 760ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.aboutHeroEyebrow {
+  animation-delay: 150ms;
+}
+
+.aboutHeroDescription {
+  animation-delay: 700ms;
+}
+
+.aboutHeroActionsReveal {
+  animation-delay: 860ms;
 }
 
 .aboutHeroCopy p:not(.aboutEyebrow) {
@@ -1268,29 +1306,36 @@
   position: relative;
   min-height: 500px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.11);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 30px;
   background:
-    radial-gradient(circle at 28% 12%, rgba(0, 194, 255, 0.18), transparent 20rem),
-    radial-gradient(circle at 82% 14%, rgba(124, 58, 237, 0.24), transparent 18rem),
-    linear-gradient(150deg, rgba(13, 21, 39, 0.88), rgba(8, 12, 23, 0.94));
+    radial-gradient(circle at 54% 27%, rgba(0, 194, 255, 0.24), transparent 16rem),
+    radial-gradient(circle at 64% 38%, rgba(139, 92, 246, 0.24), transparent 18rem),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+    linear-gradient(150deg, rgba(12, 20, 38, 0.92), rgba(6, 10, 20, 0.98));
   box-shadow:
-    0 34px 110px rgba(0, 0, 0, 0.42),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 34px 110px rgba(0, 0, 0, 0.44),
+    0 0 46px rgba(0, 194, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.11),
+    inset 0 0 72px rgba(0, 194, 255, 0.055);
   backdrop-filter: blur(18px);
+  opacity: 0;
+  filter: blur(12px);
+  transform: translate3d(40px, 18px, 0) scale(0.98);
+  animation: aboutPortraitCardIn 1000ms 1040ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .aboutPortraitCard::before {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   content: "";
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.052) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.038) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(circle at 72% 24%, black, transparent 72%);
-  opacity: 0.28;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 52% 20%, rgba(0, 194, 255, 0.18), transparent 14rem),
+    radial-gradient(circle at 58% 35%, rgba(139, 92, 246, 0.18), transparent 18rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 42%);
+  opacity: 0.74;
 }
 
 .aboutPortraitCard::after {
@@ -1303,86 +1348,10 @@
   border-radius: 29px;
 }
 
-.aboutPortraitSystem {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.aboutSystemLine {
-  position: absolute;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0, 194, 255, 0.36), rgba(139, 92, 246, 0.2), transparent);
-  opacity: 0.72;
-  transform-origin: center;
-}
-
-.aboutSystemLineOne {
-  top: 18%;
-  right: 7%;
-  width: 42%;
-  transform: rotate(-12deg);
-}
-
-.aboutSystemLineTwo {
-  right: 8%;
-  bottom: 22%;
-  width: 54%;
-  transform: rotate(8deg);
-}
-
-.aboutSystemNode {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border: 1px solid rgba(0, 194, 255, 0.55);
-  border-radius: var(--radius-full);
-  background: rgba(7, 11, 20, 0.86);
-  box-shadow: 0 0 18px rgba(0, 194, 255, 0.26);
-}
-
-.aboutSystemNodeOne {
-  top: 17%;
-  right: 29%;
-}
-
-.aboutSystemNodeTwo {
-  right: 17%;
-  bottom: 21%;
-}
-
-.aboutSystemTag {
-  position: absolute;
-  display: inline-flex;
-  align-items: center;
-  min-height: 28px;
-  padding: 0 0.65rem;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: var(--radius-full);
-  color: rgba(255, 255, 255, 0.68);
-  background: rgba(5, 10, 20, 0.48);
-  font-family: var(--font-heading);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0;
-  backdrop-filter: blur(12px);
-}
-
-.aboutSystemTagOne {
-  top: 28%;
-  left: 7%;
-}
-
-.aboutSystemTagTwo {
-  right: 8%;
-  bottom: 11%;
-}
-
 .aboutPortraitLabel {
   position: absolute;
-  top: var(--space-5);
-  left: var(--space-5);
+  top: var(--space-4);
+  left: var(--space-4);
   z-index: 5;
   display: inline-flex;
   align-items: center;
@@ -1399,46 +1368,19 @@
   backdrop-filter: blur(14px);
 }
 
-.aboutPortraitOrbit {
-  position: absolute;
-  top: 11%;
-  right: -6%;
-  z-index: 1;
-  width: 214px;
-  aspect-ratio: 1;
-  border: 1px solid rgba(0, 194, 255, 0.14);
-  border-radius: var(--radius-full);
-  opacity: 0.58;
-}
-
-.aboutPortraitOrbit::before,
-.aboutPortraitOrbit::after {
-  position: absolute;
-  content: "";
-  border-radius: var(--radius-full);
-}
-
-.aboutPortraitOrbit::before {
-  inset: 34px;
-  border: 1px solid rgba(139, 92, 246, 0.16);
-}
-
-.aboutPortraitOrbit::after {
-  top: 34px;
-  left: 34px;
-  width: 7px;
-  height: 7px;
-  background: var(--color-blue-cyan);
-  box-shadow: 0 0 18px rgba(0, 194, 255, 0.42);
-}
-
 .aboutPortraitMedia {
   position: absolute;
-  inset: 72px 18px 0;
+  inset: 58px 12px 0;
   z-index: 2;
   overflow: hidden;
   border-radius: 24px 24px 0 0;
-  background: rgba(255, 255, 255, 0.04);
+  background:
+    radial-gradient(circle at 50% 18%, rgba(0, 194, 255, 0.13), transparent 17rem),
+    rgba(255, 255, 255, 0.035);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    inset 0 0 46px rgba(139, 92, 246, 0.05);
+  animation: aboutPortraitBreathe 6.8s 2200ms ease-in-out infinite;
 }
 
 .aboutPortraitMedia::after {
@@ -1455,21 +1397,12 @@
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  filter: saturate(0.98) contrast(1.03);
+  filter:
+    saturate(1.02)
+    contrast(1.04)
+    drop-shadow(0 30px 46px rgba(0, 0, 0, 0.36));
 }
 
-.aboutHeroChips {
-  position: absolute;
-  right: var(--space-4);
-  bottom: var(--space-4);
-  left: var(--space-4);
-  z-index: 6;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.aboutHeroChips span,
 .aboutStackChips span,
 .aboutMethodStep li,
 .aboutTrustSignals span {
@@ -1760,6 +1693,31 @@
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr);
   gap: var(--space-4);
+}
+
+.aboutMethodStepReveal {
+  --method-from-x: 0;
+}
+
+.aboutMethodStepReveal.revealItem {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+.aboutMethodStepReveal.revealItem .aboutMethodContent {
+  opacity: 0;
+  filter: blur(12px);
+  transform: translate3d(var(--method-from-x), 36px, 0) scale(0.97);
+  will-change: opacity, filter, transform;
+}
+
+.aboutMethodStepReveal.revealItemVisible {
+  animation: none;
+}
+
+.aboutMethodStepReveal.revealItemVisible .aboutMethodContent {
+  animation: aboutMethodStepBranchIn 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .aboutMethodNumber {
@@ -2235,8 +2193,8 @@
 
 @media (min-width: 980px) {
   .aboutHero {
-    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.72fr);
-    gap: var(--space-16);
+    grid-template-columns: minmax(0, 0.94fr) minmax(420px, 0.86fr);
+    gap: var(--space-14);
   }
 
   .aboutHeroCopy h1 {
@@ -2245,36 +2203,6 @@
 
   .aboutPortraitCard {
     min-height: 610px;
-  }
-
-  .aboutHeroChips {
-    inset: 0;
-    display: block;
-    pointer-events: none;
-  }
-
-  .aboutHeroChips span {
-    position: absolute;
-  }
-
-  .aboutHeroChips span:nth-child(1) {
-    top: 24%;
-    left: var(--space-4);
-  }
-
-  .aboutHeroChips span:nth-child(2) {
-    top: 13%;
-    right: var(--space-5);
-  }
-
-  .aboutHeroChips span:nth-child(3) {
-    right: var(--space-4);
-    bottom: 24%;
-  }
-
-  .aboutHeroChips span:nth-child(4) {
-    bottom: 14%;
-    left: var(--space-5);
   }
 }
 
@@ -2292,6 +2220,14 @@
     grid-template-columns: minmax(0, 1fr) 74px minmax(0, 1fr);
     gap: var(--space-6);
     align-items: start;
+  }
+
+  .aboutMethodStepLeft {
+    --method-from-x: 90px;
+  }
+
+  .aboutMethodStepRight {
+    --method-from-x: -90px;
   }
 
   .aboutMethodStep:nth-child(odd) .aboutMethodNumber {
@@ -2367,11 +2303,6 @@
   .aboutPortraitMedia {
     inset: 70px 14px 0;
     border-radius: 18px 18px 0 0;
-  }
-
-  .aboutSystemTag,
-  .aboutSystemLineTwo {
-    display: none;
   }
 
   .aboutSection {
@@ -6687,6 +6618,13 @@
   .revealItem,
   .revealItemVisible,
   .servicesEcosystemLines,
+  .aboutMethodStepReveal.revealItemVisible,
+  .aboutHeroEyebrow,
+  .aboutHeroTitleLine,
+  .aboutHeroDescription,
+  .aboutHeroActionsReveal,
+  .aboutPortraitCard,
+  .aboutPortraitMedia,
   .heroEyebrow,
   .heroTitleLine,
   .heroDescription,
@@ -6703,6 +6641,13 @@
   .revealSection .revealDescription,
   .revealItem,
   .servicesEcosystemLines,
+  .aboutMethodStepReveal.revealItem,
+  .aboutHeroEyebrow,
+  .aboutHeroTitleLine,
+  .aboutHeroDescription,
+  .aboutHeroActionsReveal,
+  .aboutPortraitCard,
+  .aboutPortraitMedia,
   .heroEyebrow,
   .heroTitleLine,
   .heroDescription,
@@ -6721,6 +6666,14 @@
 
   .servicesEcosystemLines {
     opacity: 0.6;
+  }
+
+  .aboutMethodStepReveal.revealItem .aboutMethodContent,
+  .aboutMethodStepReveal.revealItemVisible .aboutMethodContent {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
   }
 
   .servicesFragmentSeo {
@@ -6821,6 +6774,75 @@
   to {
     opacity: 0.6;
     transform: scale(1);
+  }
+}
+
+@keyframes aboutHeroFadeUp {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translate3d(0, 28px, 0);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes aboutHeroTitleLineIn {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translate3d(0, 32px, 0);
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes aboutPortraitCardIn {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translate3d(40px, 18px, 0) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes aboutPortraitBreathe {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -3px, 0);
+  }
+}
+
+@keyframes aboutMethodStepBranchIn {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translate3d(var(--method-from-x), 28px, 0) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
@@ -7108,7 +7130,6 @@
 .projectsPreviewFrame::before,
 .projectsFinalBox::before,
 .aboutPage::before,
-.aboutPortraitCard::before,
 .aboutSystemTransition::before,
 .aboutLowerAtmosphere::before,
 .aboutToolEcosystem::before,
