@@ -1,5 +1,6 @@
 .hero {
   position: relative;
+  isolation: isolate;
   min-height: calc(100svh - 80px);
   padding: clamp(4.75rem, 8vh, 5.75rem) var(--space-4) clamp(2rem, 5vh, 3.5rem);
   overflow: hidden;
@@ -8,6 +9,21 @@
     radial-gradient(circle at 72% 45%, rgba(59, 130, 246, 0.16), transparent 34%),
     radial-gradient(circle at 82% 72%, rgba(124, 58, 237, 0.16), transparent 38%),
     #070b14;
+}
+
+.hero::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(116deg, transparent 52%, rgba(0, 194, 255, 0.055) 61%, transparent 72%),
+    linear-gradient(116deg, transparent 64%, rgba(124, 58, 237, 0.045) 74%, transparent 86%);
+  opacity: 0;
+  filter: blur(1px);
+  transform: translateX(-18px);
+  animation: heroBackgroundWake 1.25s 80ms ease-out both;
 }
 
 .hero::after {
@@ -50,6 +66,10 @@
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate3d(0, 28px, 0);
+  animation: heroTextFadeUp 700ms 150ms ease-out both;
 }
 
 .eyebrow::before {
@@ -71,13 +91,34 @@
   font-weight: 800;
   line-height: 0.98;
   letter-spacing: -0.055em;
+  opacity: 0;
+  filter: blur(10px);
+  clip-path: inset(0 100% 0 0);
+  transform: translate3d(0, 32px, 0);
+  animation: heroTitleIn 900ms 300ms ease-out both;
 }
 
-.heroTitle span {
+.heroTitleHighlight {
+  position: relative;
+  display: inline-block;
+  width: 8ch;
+  min-width: 8ch;
   color: transparent;
-  background: var(--gradient-text);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.96), rgba(0, 194, 255, 0.96), rgba(139, 92, 246, 0.94), rgba(255, 255, 255, 0.92)),
+    var(--gradient-text);
+  background-position: 0 50%;
+  background-size: 220% 100%, 100% 100%;
   background-clip: text;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
   text-shadow: 0 0 36px rgba(59, 130, 246, 0.18);
+  vertical-align: baseline;
+  white-space: nowrap;
+  isolation: isolate;
+  animation: heroTitleHighlightIn 1250ms 620ms ease-out both;
+  cursor: default;
 }
 
 .heroTextBlock {
@@ -91,6 +132,10 @@
   color: var(--color-text-muted);
   font-size: 1.05rem;
   line-height: 1.65;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate3d(0, 28px, 0);
+  animation: heroTextFadeUp 800ms 860ms ease-out both;
 }
 
 .actions {
@@ -98,6 +143,10 @@
   flex-wrap: wrap;
   gap: var(--space-3);
   margin-top: var(--space-6);
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate3d(0, 28px, 0);
+  animation: heroTextFadeUp 800ms 1020ms ease-out both;
 }
 
 .quickBenefits {
@@ -122,6 +171,22 @@
   background: rgba(10, 15, 28, 0.78);
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.26);
   backdrop-filter: blur(16px);
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate3d(0, 22px, 0) scale(0.98);
+  animation: quickBenefitIn 680ms 2020ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.quickBenefits li:nth-child(2) {
+  animation-delay: 2120ms;
+}
+
+.quickBenefits li:nth-child(3) {
+  animation-delay: 2220ms;
+}
+
+.quickBenefits li:nth-child(4) {
+  animation-delay: 2320ms;
 }
 
 .benefitIcon {
@@ -205,76 +270,264 @@
 }
 
 .heroImageArea img {
+  position: relative;
+  z-index: 2;
   width: min(112vw, 720px);
   max-width: none;
   margin-left: auto;
   object-fit: contain;
   object-position: right bottom;
-  filter: drop-shadow(0 36px 70px rgba(0, 0, 0, 0.46));
+  opacity: 0;
+  filter: drop-shadow(0 36px 70px rgba(0, 0, 0, 0.46)) blur(12px);
+  transform: translate3d(34px, 20px, 0) scale(0.98);
+  animation: heroImageIn 960ms 1160ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.floatingBadges {
+.monitorFragments {
   display: none;
 }
 
-.floatingBadge {
+.monitorFragments::before,
+.monitorFragments::after {
   position: absolute;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: 0.62rem 0.88rem;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.045);
-  color: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 0 30px rgba(59, 130, 246, 0.08);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-  opacity: 0.84;
-  backdrop-filter: blur(12px);
-  animation: floatBadge 6s ease-in-out infinite;
-}
-
-.floatingBadge::before {
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
+  z-index: 2;
+  height: 1px;
   content: "";
-  background: linear-gradient(135deg, #00c2ff, #7c3aed);
-  box-shadow: 0 0 12px rgba(0, 194, 255, 0.5);
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(0, 194, 255, 0), rgba(0, 194, 255, 0.32), rgba(139, 92, 246, 0.16));
+  opacity: 0;
+  filter: blur(0.2px);
+  transform-origin: left center;
+  animation: monitorConnectionIn 680ms 1500ms ease-out both;
 }
 
-.floatingBadge:nth-child(2) {
-  animation-delay: 0.8s;
+.monitorFragments::before {
+  --connection-rotate: -10deg;
+  top: 36%;
+  left: 43%;
+  width: 190px;
+  transform: rotate(var(--connection-rotate)) scaleX(0);
 }
 
-.floatingBadge:nth-child(3) {
-  animation-delay: 1.4s;
+.monitorFragments::after {
+  --connection-rotate: 16deg;
+  top: 43%;
+  left: 45%;
+  width: 156px;
+  transform: rotate(var(--connection-rotate)) scaleX(0);
+  animation-delay: 1600ms;
 }
 
-.floatingBadge:nth-child(4) {
-  animation-delay: 2s;
+.monitorFragment {
+  --fragment-delay: 1600ms;
+  --fragment-from-x: -34px;
+  --fragment-from-y: 20px;
+  position: absolute;
+  z-index: 3;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.024)),
+    rgba(5, 10, 20, 0.62);
+  box-shadow:
+    0 18px 54px rgba(0, 0, 0, 0.3),
+    0 0 28px rgba(0, 194, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate3d(var(--fragment-from-x), var(--fragment-from-y), 0) scale(0.9);
+  animation:
+    monitorFragmentIn 720ms var(--fragment-delay) cubic-bezier(0.16, 1, 0.3, 1) both,
+    monitorFragmentFloat 6.8s calc(var(--fragment-delay) + 850ms) ease-in-out infinite;
 }
 
-.floatingBadge:nth-child(5) {
-  animation-delay: 2.6s;
+.codeFragment {
+  top: 29%;
+  left: 58%;
+  width: 186px;
+  padding: 0.75rem;
+  border-radius: 17px;
 }
 
-.floatingBadge:nth-child(6) {
-  animation-delay: 3.2s;
+.fragmentTopbar {
+  display: flex;
+  gap: 0.32rem;
+  margin-bottom: 0.65rem;
 }
 
-@keyframes floatBadge {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
+.fragmentTopbar i {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.24);
+}
 
-  50% {
-    transform: translateY(-8px);
-  }
+.fragmentTopbar i:first-child {
+  background: rgba(0, 194, 255, 0.7);
+  box-shadow: 0 0 14px rgba(0, 194, 255, 0.34);
+}
+
+.codeFragment code {
+  display: grid;
+  gap: 0.35rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  line-height: 1.2;
+}
+
+.codeFragment code span {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.codeFragment code span:nth-child(1) {
+  width: 72%;
+  color: rgba(0, 194, 255, 0.82);
+}
+
+.codeFragment code span:nth-child(2) {
+  width: 100%;
+}
+
+.codeFragment code span:nth-child(3) {
+  width: 66%;
+  color: rgba(139, 92, 246, 0.8);
+}
+
+.layoutFragment {
+  --fragment-delay: 1700ms;
+  --fragment-from-x: -28px;
+  --fragment-from-y: 36px;
+  top: 18%;
+  left: 70%;
+  display: grid;
+  width: 128px;
+  gap: 0.45rem;
+  padding: 0.68rem;
+  border-radius: 16px;
+}
+
+.layoutFragment span,
+.layoutFragment strong,
+.layoutFragment i {
+  display: block;
+  border-radius: var(--radius-full);
+}
+
+.layoutFragment span {
+  width: 38%;
+  height: 6px;
+  background: rgba(0, 194, 255, 0.5);
+}
+
+.layoutFragment strong {
+  width: 86%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.layoutFragment i {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.layoutFragment i:last-child {
+  width: 58%;
+}
+
+.cursorFragment {
+  --fragment-delay: 1800ms;
+  --fragment-from-x: -42px;
+  --fragment-from-y: 16px;
+  top: 42%;
+  left: 68%;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.cursorFragment::before {
+  position: absolute;
+  inset: 4px auto auto 5px;
+  width: 0;
+  height: 0;
+  content: "";
+  border-top: 22px solid rgba(255, 255, 255, 0.88);
+  border-right: 12px solid transparent;
+  filter:
+    drop-shadow(0 0 12px rgba(0, 194, 255, 0.36))
+    drop-shadow(5px 8px 0 rgba(0, 0, 0, 0.22));
+  transform: rotate(-12deg);
+}
+
+.nodesFragment {
+  --fragment-delay: 1900ms;
+  --fragment-from-x: -22px;
+  --fragment-from-y: 44px;
+  top: 18%;
+  left: 53%;
+  width: 118px;
+  height: 76px;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.nodesFragment::before,
+.nodesFragment::after {
+  position: absolute;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, rgba(0, 194, 255, 0.1), rgba(0, 194, 255, 0.48), rgba(139, 92, 246, 0.22));
+  transform-origin: left center;
+}
+
+.nodesFragment::before {
+  top: 19px;
+  left: 22px;
+  width: 74px;
+  transform: rotate(14deg);
+}
+
+.nodesFragment::after {
+  top: 51px;
+  left: 18px;
+  width: 82px;
+  transform: rotate(-20deg);
+}
+
+.nodesFragment span {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(0, 194, 255, 0.36);
+  border-radius: var(--radius-full);
+  background: rgba(0, 194, 255, 0.42);
+  box-shadow: 0 0 18px rgba(0, 194, 255, 0.34);
+}
+
+.nodesFragment span:nth-child(1) {
+  top: 12px;
+  left: 12px;
+}
+
+.nodesFragment span:nth-child(2) {
+  top: 30px;
+  right: 16px;
+  background: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 18px rgba(139, 92, 246, 0.34);
+}
+
+.nodesFragment span:nth-child(3) {
+  bottom: 10px;
+  left: 34px;
 }
 
 @media (min-width: 720px) {
@@ -310,47 +563,6 @@
   .heroImageArea img {
     width: 100%;
   }
-
-  .floatingBadges {
-    position: absolute;
-    top: clamp(1.6rem, 5vh, 3.5rem);
-    right: clamp(1.25rem, 5vw, 4rem);
-    z-index: 2;
-    display: block;
-    width: min(420px, 32vw);
-    height: 250px;
-    pointer-events: none;
-  }
-
-  .floatingBadge:nth-child(1) {
-    top: 0;
-    right: 2.5rem;
-  }
-
-  .floatingBadge:nth-child(2) {
-    top: 3.6rem;
-    right: 9.4rem;
-  }
-
-  .floatingBadge:nth-child(3) {
-    top: 7rem;
-    right: 1.2rem;
-  }
-
-  .floatingBadge:nth-child(4) {
-    top: 10.8rem;
-    right: 7.5rem;
-  }
-
-  .floatingBadge:nth-child(5) {
-    top: 14rem;
-    right: 0;
-  }
-
-  .floatingBadge:nth-child(6) {
-    top: 2.2rem;
-    right: 0;
-  }
 }
 
 @media (min-width: 1180px) {
@@ -369,9 +581,17 @@
     width: clamp(980px, 66vw, 1280px);
   }
 
-  .floatingBadges {
-    top: clamp(2rem, 6vh, 4.6rem);
-    right: clamp(2.5rem, 8vw, 7.5rem);
+  .monitorFragments {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: block;
+    pointer-events: none;
+  }
+
+  .nodesFragment,
+  .cursorFragment {
+    display: block;
   }
 }
 
@@ -415,8 +635,172 @@
   }
 }
 
+@keyframes heroBackgroundWake {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes heroTextFadeUp {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translate3d(0, 28px, 0);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroTitleIn {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    clip-path: inset(0 100% 0 0);
+    transform: translate3d(0, 32px, 0);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    clip-path: inset(0 0 0 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroTitleHighlightIn {
+  0% {
+    opacity: 0.78;
+    filter: blur(5px);
+    background-position: 100% 50%, 0 0;
+    text-shadow: 0 0 10px rgba(0, 194, 255, 0.08);
+  }
+
+  45% {
+    opacity: 1;
+    filter: blur(0);
+    background-position: 32% 50%, 0 0;
+    text-shadow:
+      0 0 34px rgba(0, 194, 255, 0.24),
+      0 0 18px rgba(139, 92, 246, 0.16);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    background-position: 0 50%, 0 0;
+    text-shadow: 0 0 36px rgba(59, 130, 246, 0.18);
+  }
+}
+
+@keyframes heroImageIn {
+  from {
+    opacity: 0;
+    filter: drop-shadow(0 36px 70px rgba(0, 0, 0, 0.46)) blur(12px);
+    transform: translate3d(34px, 20px, 0) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    filter: drop-shadow(0 36px 70px rgba(0, 0, 0, 0.46)) blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes monitorConnectionIn {
+  from {
+    opacity: 0;
+    transform: rotate(var(--connection-rotate, 0deg)) scaleX(0);
+  }
+
+  to {
+    opacity: 0.72;
+    transform: rotate(var(--connection-rotate, 0deg)) scaleX(1);
+  }
+}
+
+@keyframes monitorFragmentIn {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translate3d(var(--fragment-from-x), var(--fragment-from-y), 0) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes monitorFragmentFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+@keyframes quickBenefitIn {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translate3d(0, 22px, 0) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .floatingBadge {
+  .hero::before,
+  .eyebrow,
+  .heroTitle,
+  .subtitle,
+  .actions,
+  .heroTitleHighlight,
+  .heroImageArea img,
+  .monitorFragments::before,
+  .monitorFragments::after,
+  .monitorFragment,
+  .quickBenefits li {
     animation: none;
+  }
+
+  .hero::before,
+  .eyebrow,
+  .heroTitle,
+  .subtitle,
+  .actions,
+  .heroTitleHighlight,
+  .heroImageArea img,
+  .monitorFragments::before,
+  .monitorFragments::after,
+  .monitorFragment,
+  .quickBenefits li {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    clip-path: none;
+  }
+
+  .monitorFragments::before,
+  .monitorFragments::after {
+    transform: rotate(var(--connection-rotate, 0deg)) scaleX(1);
   }
 }
