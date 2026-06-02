@@ -110,25 +110,6 @@ export default function Home() {
         </div>
       </section>
       <div className="techAtmosphere">
-        <div className="techAtmosphere__mesh" aria-hidden="true" />
-        <svg className="techAtmosphere__constellation techAtmosphere__constellation--one" viewBox="0 0 520 420" aria-hidden="true">
-          <circle cx="88" cy="126" r="5" />
-          <circle cx="206" cy="76" r="4" />
-          <circle cx="338" cy="156" r="6" />
-          <circle cx="438" cy="86" r="4" />
-          <circle cx="392" cy="290" r="5" />
-          <circle cx="160" cy="314" r="4" />
-          <path d="M88 126 206 76 338 156 438 86" />
-          <path d="M338 156 392 290 160 314 88 126" />
-          <path d="M206 76 392 290" />
-        </svg>
-        <svg className="techAtmosphere__constellation techAtmosphere__constellation--two" viewBox="0 0 520 420" aria-hidden="true">
-          <circle cx="124" cy="98" r="110" />
-          <circle cx="124" cy="98" r="68" />
-          <circle cx="382" cy="258" r="126" />
-          <path d="M54 274c90-84 177-126 262-126 62 0 112 20 150 60" />
-          <path d="M84 332c74-36 148-54 222-54 58 0 104 12 138 36" />
-        </svg>
         <Differentials reveal={reveal} />
         <Projects reveal={reveal} />
         <CTA reveal={reveal} />

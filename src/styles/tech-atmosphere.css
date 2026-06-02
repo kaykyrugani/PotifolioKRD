@@ -67,89 +67,6 @@
   isolation: isolate;
 }
 
-.techAtmosphere::before,
-.techAtmosphere::after {
-  position: absolute;
-  z-index: -1;
-  content: "";
-  pointer-events: none;
-}
-
-.techAtmosphere::before {
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 88px 88px;
-  mask-image:
-    radial-gradient(circle at 72% 22%, black, transparent 38%),
-    linear-gradient(to bottom, black, transparent 92%);
-  opacity: 0.26;
-}
-
-.techAtmosphere::after {
-  top: 18%;
-  left: -220px;
-  width: 520px;
-  height: 520px;
-  border: 1px solid rgba(0, 194, 255, 0.1);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 194, 255, 0.12), transparent 64%);
-}
-
-.techAtmosphere__mesh {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 46% 22%, rgba(255, 255, 255, 0.12) 1px, transparent 1.5px) 0 0 / 48px 48px,
-    linear-gradient(118deg, transparent 0 45%, rgba(0, 194, 255, 0.07) 45.1% 45.5%, transparent 45.7%),
-    linear-gradient(62deg, transparent 0 64%, rgba(124, 58, 237, 0.08) 64.1% 64.5%, transparent 64.7%);
-  mask-image: radial-gradient(ellipse at 62% 34%, black, transparent 72%);
-  opacity: 0.34;
-}
-
-.techAtmosphere__constellation {
-  position: absolute;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.techAtmosphere__constellation circle,
-.techAtmosphere__constellation path {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.28);
-  stroke-width: 1;
-}
-
-.techAtmosphere__constellation circle {
-  fill: rgba(0, 194, 255, 0.54);
-  stroke: rgba(0, 194, 255, 0.18);
-  stroke-width: 8;
-}
-
-.techAtmosphere__constellation--one {
-  top: 7%;
-  right: -90px;
-  width: min(520px, 42vw);
-  opacity: 0.32;
-}
-
-.techAtmosphere__constellation--two {
-  right: 4%;
-  bottom: 9%;
-  width: min(560px, 46vw);
-  opacity: 0.18;
-}
-
-.techAtmosphere__constellation--two circle,
-.techAtmosphere__constellation--two path {
-  fill: none;
-  stroke: rgba(204, 251, 241, 0.32);
-  stroke-width: 1;
-}
-
 @keyframes techAtmosphereDrift {
   to {
     transform: rotate(360deg);
@@ -168,28 +85,6 @@
       linear-gradient(165deg, #07111f 0%, #0b1020 48%, #100b24 100%);
   }
 
-  .techAtmosphere::before,
-  .techAtmosphere__mesh {
-    opacity: 0.18;
-  }
-
-  .techAtmosphere::after,
-  .techAtmosphere__constellation--two {
-    display: none;
-  }
-
-  .techAtmosphere__constellation--one {
-    top: 3%;
-    right: -160px;
-    width: 360px;
-    opacity: 0.18;
-  }
-}
-
-@media (max-width: 560px) {
-  .techAtmosphere__constellation--one {
-    display: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -198,9 +93,6 @@
   }
 }
 
-/* TEMP: global grid disabled for visual review */
-.techAtmosphereBridge::before,
-.techAtmosphere::before,
-.techAtmosphere__mesh {
+.techAtmosphereBridge::before {
   display: none;
 }

@@ -25,39 +25,40 @@ const quickBenefits = [
 
 const clientWord = 'clientes';
 
-const clientWordScrambleFrames = [
-  'clx9t4es',
-  'cl13ntes',
-  'cxi8ntes',
-  'cli7nt5s',
-  'clx9t4es',
-];
+const clientScrambleCharacters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+
+const createClientScrambleWord = () => (
+  Array.from({ length: clientWord.length }, () => (
+    clientScrambleCharacters[Math.floor(Math.random() * clientScrambleCharacters.length)]
+  )).join('')
+);
 
 export default function Hero() {
   const [highlightWord, setHighlightWord] = useState(clientWord);
-  const scrambleTimers = useRef([]);
+  const scrambleInterval = useRef(null);
 
   useEffect(() => () => {
-    scrambleTimers.current.forEach((timer) => clearTimeout(timer));
+    if (scrambleInterval.current) {
+      clearInterval(scrambleInterval.current);
+    }
   }, []);
 
-  const handleHighlightMouseEnter = () => {
-    scrambleTimers.current.forEach((timer) => clearTimeout(timer));
-    scrambleTimers.current = [];
+  const startHighlightScramble = () => {
+    if (scrambleInterval.current) return;
 
-    clientWordScrambleFrames.forEach((frame, index) => {
-      scrambleTimers.current.push(
-        setTimeout(() => {
-          setHighlightWord(frame);
-        }, index * 70),
-      );
-    });
+    setHighlightWord(createClientScrambleWord());
+    scrambleInterval.current = setInterval(() => {
+      setHighlightWord(createClientScrambleWord());
+    }, 80);
+  };
 
-    scrambleTimers.current.push(
-      setTimeout(() => {
-        setHighlightWord(clientWord);
-      }, 470),
-    );
+  const stopHighlightScramble = () => {
+    if (scrambleInterval.current) {
+      clearInterval(scrambleInterval.current);
+      scrambleInterval.current = null;
+    }
+
+    setHighlightWord(clientWord);
   };
 
   return (
@@ -70,7 +71,8 @@ export default function Hero() {
             <span
               className={styles.heroTitleHighlight}
               data-text={highlightWord}
-              onMouseEnter={handleHighlightMouseEnter}
+              onMouseEnter={startHighlightScramble}
+              onMouseLeave={stopHighlightScramble}
             >
               {highlightWord}
             </span>

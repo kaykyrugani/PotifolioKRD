@@ -4,8 +4,72 @@ import { services } from '../../data/siteContent';
 import Button from '../ui/Button';
 import styles from './Services.module.css';
 
-function formatServiceIndex(index) {
-  return String(index + 1).padStart(2, '0');
+const processFlow = [
+  'Estratégia',
+  'Design',
+  'Desenvolvimento',
+  'Resultado',
+];
+
+const serviceNarratives = {
+  'Sites Institucionais': {
+    category: 'Presença digital',
+    title: 'Sites institucionais para fortalecer presença digital',
+    description: 'Uma estrutura institucional clara para apresentar marca, serviços e diferenciais com autoridade, leitura fluida e base técnica preparada para busca.',
+    benefits: [
+      'Estrutura preparada para mecanismos de busca',
+      'Experiência consistente em qualquer dispositivo',
+      'Arquitetura de páginas com leitura objetiva',
+      'Base semântica preparada para crescimento futuro',
+    ],
+    result: 'Uma presença digital profissional, organizada e pronta para gerar confiança.',
+  },
+  'Landing Pages': {
+    category: 'Conversão',
+    title: 'Landing pages para transformar campanhas em oportunidades',
+    description: 'Páginas focadas em oferta, hierarquia visual e ação para apoiar campanhas, lançamentos e captação de leads com menos atrito.',
+    benefits: [
+      'Mensagem organizada por prioridade de decisão',
+      'CTAs posicionados para orientar o próximo passo',
+      'Carregamento rápido e navegação fluida',
+      'Estrutura preparada para leitura e mensuração',
+    ],
+    result: 'Uma página objetiva para converter tráfego em contatos qualificados.',
+  },
+  Hospedagem: {
+    category: 'Publicação',
+    title: 'Hospedagem e publicação para colocar o site em operação',
+    description: 'Preparação do ambiente, configuração inicial e publicação com atenção a estabilidade, segurança disponível e boas práticas de entrega.',
+    benefits: [
+      'Deploy orientado para reduzir riscos na publicação',
+      'Configuração inicial alinhada ao projeto',
+      'Boas práticas para estabilidade e acesso',
+      'Ambiente preparado para manutenção futura',
+    ],
+    result: 'Um site publicado com base técnica organizada para operar com consistência.',
+  },
+  Manutenção: {
+    category: 'Evolução',
+    title: 'Manutenção para manter o site claro, atual e saudável',
+    description: 'Ajustes, melhorias visuais e evolução contínua para preservar qualidade, atualizar conteúdo e manter a experiência alinhada ao negócio.',
+    benefits: [
+      'Correções pontuais com foco em estabilidade',
+      'Melhorias visuais sem perder consistência',
+      'Conteúdo atualizado com manutenção simples',
+      'Acompanhamento técnico para evolução contínua',
+    ],
+    result: 'Um site mais confiável, atualizado e preparado para continuar evoluindo.',
+  },
+};
+
+function getServiceNarrative(service) {
+  return serviceNarratives[service.title] ?? {
+    category: 'Solução digital',
+    title: service.title,
+    description: service.description,
+    benefits: service.items,
+    result: 'Uma solução digital mais clara, rápida e preparada para evoluir.',
+  };
 }
 
 function getActiveServiceIndex(progress, total) {
@@ -184,20 +248,23 @@ function AnimatedServiceCard({ activeIndex, children, index, total, scrollYProgr
   }
 
   const opacity = useTransform(scrollYProgress, inputRange, opacityRange);
+  const visibleOpacity = useTransform(opacity, (value) => (isActive ? Math.max(value, 0.98) : value));
   const yRaw = useTransform(scrollYProgress, inputRange, yRange);
   const scaleRaw = useTransform(scrollYProgress, inputRange, scaleRange);
   const y = useSpring(yRaw, { stiffness: 96, damping: 30, mass: 0.72 });
   const scale = useSpring(scaleRaw, { stiffness: 120, damping: 32, mass: 0.72 });
+  const blur = useTransform(opacity, (value) => (isActive ? 'blur(0px)' : `blur(${Math.max(0, (1 - value) * 10)}px)`));
   const visibility = useTransform(opacity, (value) => value > 0.01 ? 'visible' : 'hidden');
 
   return (
     <motion.div
-      className={styles.animatedCard}
+      className={`${styles.animatedCard} ${isActive ? styles.animatedCardActive : ''}`}
       style={{
-        opacity,
+        opacity: visibleOpacity,
         y,
         scale,
-        visibility,
+        filter: blur,
+        visibility: isActive ? 'visible' : visibility,
         zIndex: zIndexValue,
         pointerEvents: isActive ? 'auto' : 'none',
       }}
@@ -216,6 +283,7 @@ export default function Services({ reveal }) {
     offset: ['start start', 'end end'],
   });
   const activeService = services[activeIndex] ?? services[0];
+  const activeNarrative = getServiceNarrative(activeService);
   const serviceProgress = services.length > 0 ? ((activeIndex + 1) / services.length) * 100 : 0;
 
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
@@ -256,39 +324,74 @@ export default function Services({ reveal }) {
                 </p>
               </div>
 
+              <ol className={styles.processFlow} aria-label="Fluxo de construção da solução digital">
+                {processFlow.map((step, index) => (
+                  <li key={step} style={{ '--flow-delay': `${520 + index * 90}ms` }}>
+                    <span aria-hidden="true" />
+                    <strong>{step}</strong>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div className={styles.servicesSystem}>
+              <div className={styles.servicesCardsStage}>
+                {services.map((service, index) => {
+                  const narrative = getServiceNarrative(service);
+
+                  return (
+                    <AnimatedServiceCard
+                      activeIndex={activeIndex}
+                      index={index}
+                      key={service.title}
+                      scrollYProgress={scrollYProgress}
+                      total={services.length}
+                    >
+                      <article className={styles.card}>
+                        <span className={styles.cardCategory}>{narrative.category}</span>
+                        <h3>{narrative.title}</h3>
+                        <p>{narrative.description}</p>
+
+                        <div className={styles.cardBenefits}>
+                          <span>Benefícios da solução</span>
+                          <ul>
+                            {narrative.benefits.map((item) => (
+                              <li key={item}>{item}</li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className={styles.serviceResult}>
+                          <span>Resultado esperado</span>
+                          <strong>{narrative.result}</strong>
+                        </div>
+
+                        <Button to="/contato" variant="secondary">{getServiceCtaLabel(service)}</Button>
+                      </article>
+                    </AnimatedServiceCard>
+                  );
+                })}
+              </div>
+
               <div className={styles.serviceProgressPanel} aria-live="polite">
                 <div className={styles.serviceProgressMeta}>
-                  <span>{formatServiceIndex(activeIndex)} / {formatServiceIndex(services.length - 1)}</span>
-                  <strong>{activeService.title}</strong>
+                  <span>Sistema em execução</span>
+                  <strong>{activeNarrative.category}</strong>
                 </div>
                 <div className={styles.serviceProgressTrack} aria-hidden="true">
                   <span style={{ width: `${serviceProgress}%` }} />
                 </div>
+                <ol className={styles.serviceProgressSteps} aria-label="Serviço ativo">
+                  {services.map((service, index) => (
+                    <li
+                      className={`${index === activeIndex ? styles.serviceProgressStepActive : ''} ${index < activeIndex ? styles.serviceProgressStepDone : ''}`}
+                      key={service.title}
+                    >
+                      {index + 1}
+                    </li>
+                  ))}
+                </ol>
               </div>
-            </div>
-
-            <div className={styles.servicesCardsStage}>
-              {services.map((service, index) => (
-                <AnimatedServiceCard
-                  activeIndex={activeIndex}
-                  index={index}
-                  key={service.title}
-                  scrollYProgress={scrollYProgress}
-                  total={services.length}
-                >
-                  <article className={styles.card}>
-                    <span className={styles.cardBadge}>ACTIVE · {formatServiceIndex(index)}</span>
-                    <h3>{service.title}</h3>
-                    <p>{service.description}</p>
-                    <ul>
-                      {service.items.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                    <Button to="/contato" variant="secondary">{getServiceCtaLabel(service)}</Button>
-                  </article>
-                </AnimatedServiceCard>
-              ))}
             </div>
           </div>
         </div>
