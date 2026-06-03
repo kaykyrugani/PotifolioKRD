@@ -696,6 +696,16 @@ function getFigmaPhase(progress) {
   return 'intro';
 }
 
+function isFigmaToolActive(item, phase) {
+  const activeToolsByPhase = {
+    flow: new Set(['Wireframes', 'Protótipos']),
+    interface: new Set(['Componentes', 'Protótipos']),
+    responsive: new Set(['Versão desktop/mobile', 'UI Design']),
+  };
+
+  return activeToolsByPhase[phase]?.has(item) ?? false;
+}
+
 function FigmaRoleVisual({ role, visualClassName, progress, phase, shouldReduceMotion }) {
   const cardOpacity = useTransform(progress, [0, 0.15], [0.72, 1]);
   const cardY = useTransform(progress, [0, 0.15], [18, 0]);
@@ -801,11 +811,20 @@ function FigmaRoleStory({ role, index }) {
           <h3>{role.title}</h3>
           <p>{role.description}</p>
           <ul>
-            {role.items.map((item, itemIndex) => (
-              <motion.li custom={itemIndex} key={item} variants={tagReveal}>
-                {item}
-              </motion.li>
-            ))}
+            {role.items.map((item, itemIndex) => {
+              const shouldActivateTool = !shouldReduceMotion && isFigmaToolActive(item, phase);
+
+              return (
+                <motion.li
+                  className={shouldActivateTool ? styles.techFigmaToolActive : undefined}
+                  custom={itemIndex}
+                  key={item}
+                  variants={tagReveal}
+                >
+                  {item}
+                </motion.li>
+              );
+            })}
           </ul>
         </div>
         <FigmaRoleVisual

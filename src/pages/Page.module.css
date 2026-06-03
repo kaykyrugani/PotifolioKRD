@@ -5409,6 +5409,18 @@
   font-weight: 700;
 }
 
+.techRoleCopy li.techFigmaToolActive {
+  border-color: rgba(0, 194, 255, 0.3);
+  color: var(--color-text);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(0, 194, 255, 0.14), transparent 7rem),
+    rgba(0, 194, 255, 0.07);
+  box-shadow:
+    0 0 18px rgba(0, 194, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.065);
+  animation: techFigmaToolFloat 2.8s linear infinite;
+}
+
 .techRoleVisual {
   position: relative;
   isolation: isolate;
@@ -7058,6 +7070,17 @@
   }
 }
 
+@keyframes techFigmaToolFloat {
+  0%,
+  100% {
+    transform: translate3d(0, -2px, 0);
+  }
+
+  50% {
+    transform: translate3d(0, 3px, 0);
+  }
+}
+
 @keyframes techEcosystemCorePulse {
   0%,
   100% {
@@ -7182,6 +7205,7 @@
   .techHeroOrbitLines path,
   .techAppliedAmbient,
   .techMovingChip,
+  .techFigmaToolActive,
   .techEcosystemCore,
   .techEcosystemLines path,
   .techEcosystemNodeInner {
@@ -7219,6 +7243,7 @@
   .techPipelineStep,
   .techResultPanel,
   .techBuildResultStep,
+  .techFigmaToolActive,
   .techEcosystemNodeInner {
     transform: none;
   }
