@@ -187,6 +187,28 @@ const figmaResultItems = [
   'Mobile',
 ];
 
+const reactArchitectureModules = [
+  { key: 'interface', title: 'Interface', className: 'Interface', level: 1 },
+  { key: 'components', title: 'Componentes', className: 'Components', level: 2 },
+  { key: 'states', title: 'Estados', className: 'States', level: 3 },
+  { key: 'reuse', title: 'Reutilização', className: 'Reuse', level: 4 },
+  { key: 'scale', title: 'Escalabilidade', className: 'Scale', level: 5 },
+];
+
+const reactArchitectureModuleReveal = {
+  hidden: { opacity: 0, y: 18, scale: 0.96 },
+  visible: (index = 0) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.55,
+      delay: 0.42 + index * 0.13,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
+
 const movingStackChips = [
   { id: 'figma', label: 'Figma', start: 0.12, end: 0.28, y: -112 },
   { id: 'react', label: 'React', start: 0.32, end: 0.5, y: -32 },
@@ -849,23 +871,48 @@ function RoleVisual({ role, index }) {
 
   if (role.kind === 'react') {
     return (
-      <motion.div
-        className={visualClassName}
-        aria-hidden="true"
-        initial="hidden"
-        whileInView="visible"
-        viewport={revealViewport}
-      >
-        <span>{role.label}</span>
-        <strong>Arquitetura visual</strong>
-        <ol className={styles.techArchitectureFlow}>
-          {['Interface', 'Componentes', 'Estados', 'Reutilização', 'Escalabilidade'].map((item, itemIndex) => (
-            <motion.li custom={itemIndex} key={item} variants={flowStepReveal}>
-              {item}
-            </motion.li>
+      <>
+        <motion.div
+          className={`${visualClassName} ${styles.techReactMobileVisual}`}
+          aria-hidden="true"
+          initial="hidden"
+          whileInView="visible"
+          viewport={revealViewport}
+        >
+          <span>{role.label}</span>
+          <strong>Arquitetura visual</strong>
+          <ol className={styles.techArchitectureFlow}>
+            {['Interface', 'Componentes', 'Estados', 'Reutilização', 'Escalabilidade'].map((item, itemIndex) => (
+              <motion.li custom={itemIndex} key={item} variants={flowStepReveal}>
+                {item}
+              </motion.li>
+            ))}
+          </ol>
+        </motion.div>
+
+        <motion.div
+          className={styles.techReactArchitecturePanel}
+          aria-hidden="true"
+        >
+          {reactArchitectureModules.map((module, moduleIndex) => (
+            <motion.span
+              className={`${styles.techReactArchitectureNode} ${styles[`techReactArchitectureNode${module.className}`]}`}
+              custom={moduleIndex}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.22 }}
+              key={module.key}
+              variants={reactArchitectureModuleReveal}
+            >
+              <i
+                className={`${styles.techReactArchitectureIcon} ${styles[`techReactArchitectureIcon${module.className}`]}`}
+                aria-hidden="true"
+              />
+              <strong>{module.title}</strong>
+            </motion.span>
           ))}
-        </ol>
-      </motion.div>
+        </motion.div>
+      </>
     );
   }
 
@@ -1150,7 +1197,11 @@ export default function TechnologiesPage() {
 
                 return (
                   <motion.article
-                    className={`${styles.techRoleBlock} ${index % 2 === 1 ? styles.techRoleBlockReverse : ''}`}
+                    className={[
+                      styles.techRoleBlock,
+                      index % 2 === 1 ? styles.techRoleBlockReverse : '',
+                      role.kind === 'react' ? styles.techRoleBlockReact : '',
+                    ].filter(Boolean).join(' ')}
                     custom={index}
                     initial="hidden"
                     key={role.title}

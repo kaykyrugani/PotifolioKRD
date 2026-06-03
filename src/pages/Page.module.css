@@ -5500,6 +5500,10 @@
     rgba(255, 255, 255, 0.035);
 }
 
+.techReactArchitecturePanel {
+  display: none;
+}
+
 .techFigmaVisual {
   --figma-card-glow: 0.16;
 
@@ -6261,6 +6265,210 @@
     order: 1;
   }
 
+  .techRoleBlockReact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(3rem, 5vw, 4.75rem);
+  }
+
+  .techRoleBlockReact .techRoleCopy {
+    order: 1;
+    max-width: 760px;
+  }
+
+  .techRoleBlockReact .techReactArchitecturePanel {
+    order: 2;
+  }
+
+  .techRoleBlockReact .techReactMobileVisual {
+    display: none;
+  }
+
+  .techReactArchitecturePanel {
+    position: relative;
+    isolation: isolate;
+    display: block;
+    min-height: 390px;
+    overflow: hidden;
+    padding: var(--space-7);
+    border: 1px solid rgba(255, 255, 255, 0.085);
+    border-radius: 24px;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.046), rgba(255, 255, 255, 0.016)),
+      radial-gradient(circle at 82% 8%, rgba(0, 194, 255, 0.07), transparent 18rem),
+      rgba(8, 13, 24, 0.72);
+    box-shadow:
+      0 24px 78px rgba(0, 0, 0, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.055);
+    backdrop-filter: blur(14px);
+  }
+
+  .techReactArchitecturePanel::before {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    content: "";
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px);
+    background-size: 62px 62px;
+    mask-image: radial-gradient(circle at 50% 50%, black, transparent 76%);
+    opacity: 0.58;
+    pointer-events: none;
+  }
+
+  .techReactArchitectureNode {
+    position: absolute;
+    z-index: 2;
+    display: grid;
+    min-width: 138px;
+    min-height: 96px;
+    align-content: center;
+    justify-content: center;
+    gap: 0.62rem;
+    padding: 0.82rem 0.92rem;
+    border: 1px solid rgba(0, 194, 255, 0.18);
+    border-radius: 17px;
+    color: rgba(255, 255, 255, 0.86);
+    background:
+      radial-gradient(circle at 50% 0%, rgba(0, 194, 255, 0.12), transparent 6rem),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.035)),
+      rgba(9, 17, 32, 0.9);
+    box-shadow:
+      0 16px 42px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    font-family: var(--font-heading);
+    font-size: 0.86rem;
+    font-weight: 850;
+    line-height: 1;
+    white-space: nowrap;
+    backdrop-filter: blur(12px);
+    will-change: opacity, transform;
+  }
+
+  .techReactArchitectureIcon {
+    position: relative;
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-self: center;
+    place-items: center;
+    border: 1px solid rgba(0, 194, 255, 0.22);
+    border-radius: 12px;
+    background: rgba(0, 194, 255, 0.055);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .techReactArchitectureIcon::before,
+  .techReactArchitectureIcon::after {
+    position: absolute;
+    content: "";
+  }
+
+  .techReactArchitectureIconInterface::before {
+    width: 18px;
+    height: 13px;
+    border: 1px solid rgba(0, 194, 255, 0.78);
+    border-radius: 4px;
+  }
+
+  .techReactArchitectureIconInterface::after {
+    bottom: 7px;
+    width: 10px;
+    height: 1px;
+    background: rgba(0, 194, 255, 0.72);
+  }
+
+  .techReactArchitectureIconComponents::before {
+    width: 17px;
+    height: 17px;
+    background:
+      linear-gradient(90deg, transparent 45%, rgba(0, 194, 255, 0.65) 45% 55%, transparent 55%),
+      linear-gradient(transparent 45%, rgba(0, 194, 255, 0.65) 45% 55%, transparent 55%);
+    border: 1px solid rgba(0, 194, 255, 0.65);
+    border-radius: 5px;
+  }
+
+  .techReactArchitectureIconStates::before {
+    width: 17px;
+    height: 17px;
+    border: 1px solid rgba(0, 194, 255, 0.68);
+    border-radius: 50%;
+  }
+
+  .techReactArchitectureIconStates::after {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(0, 194, 255, 0.68);
+  }
+
+  .techReactArchitectureIconReuse::before {
+    width: 18px;
+    height: 18px;
+    border: 1px solid rgba(0, 194, 255, 0.68);
+    border-right-color: transparent;
+    border-radius: 50%;
+  }
+
+  .techReactArchitectureIconReuse::after {
+    top: 8px;
+    right: 6px;
+    width: 6px;
+    height: 6px;
+    border-top: 1px solid rgba(0, 194, 255, 0.78);
+    border-right: 1px solid rgba(0, 194, 255, 0.78);
+    transform: rotate(45deg);
+  }
+
+  .techReactArchitectureIconScale::before {
+    width: 16px;
+    height: 16px;
+    border-top: 1px solid rgba(0, 194, 255, 0.75);
+    border-right: 1px solid rgba(0, 194, 255, 0.75);
+    transform: translateY(3px) rotate(-45deg);
+  }
+
+  .techReactArchitectureIconScale::after {
+    bottom: 8px;
+    width: 18px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(0, 194, 255, 0.18), rgba(0, 194, 255, 0.72));
+    transform: rotate(-28deg);
+  }
+
+  .techReactArchitectureNode strong {
+    color: var(--color-text);
+    font-family: var(--font-heading);
+    font-size: 0.86rem;
+    font-weight: 850;
+    line-height: 1;
+  }
+
+  .techReactArchitectureNodeInterface {
+    bottom: 13%;
+    left: 5%;
+  }
+
+  .techReactArchitectureNodeComponents {
+    bottom: 29%;
+    left: 24%;
+  }
+
+  .techReactArchitectureNodeStates {
+    top: 43%;
+    left: 45%;
+  }
+
+  .techReactArchitectureNodeReuse {
+    top: 25%;
+    right: 23%;
+  }
+
+  .techReactArchitectureNodeScale {
+    top: 10%;
+    right: 5%;
+  }
+
   .techRoleVisual {
     min-height: 340px;
     padding: var(--space-8);
@@ -6368,6 +6576,41 @@
   .techRoleCopy h3 {
     font-size: 2.85rem;
   }
+}
+
+@media (min-width: 900px) and (max-width: 1080px) {
+  .techReactArchitecturePanel {
+    min-height: 360px;
+    padding: var(--space-5);
+  }
+
+  .techReactArchitectureNode {
+    min-width: 118px;
+    min-height: 88px;
+    padding: 0.72rem 0.7rem;
+  }
+
+  .techReactArchitectureNodeInterface {
+    left: 4%;
+  }
+
+  .techReactArchitectureNodeComponents {
+    left: 20%;
+  }
+
+  .techReactArchitectureNodeReuse {
+    right: 19%;
+  }
+
+  .techReactArchitectureNode strong {
+    font-size: 0.78rem;
+  }
+
+  .techReactArchitectureIcon {
+    width: 29px;
+    height: 29px;
+  }
+
 }
 
 @media (max-width: 640px) {
