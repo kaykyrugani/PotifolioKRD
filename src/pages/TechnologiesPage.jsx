@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { useCallback, useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
@@ -31,38 +32,6 @@ const tagReveal = {
       duration: 0.46,
       delay: 0.18 + index * 0.045,
       ease: 'easeOut',
-    },
-  }),
-};
-
-const lineReveal = {
-  hidden: { opacity: 0.08, pathLength: 0 },
-  visible: (index = 0) => ({
-    opacity: 1,
-    pathLength: 1,
-    transition: {
-      opacity: { duration: 0.3, delay: 0.1 + index * 0.12 },
-      pathLength: { duration: 1, delay: 0.1 + index * 0.12, ease: [0.22, 1, 0.36, 1] },
-    },
-  }),
-};
-
-const ecosystemNodeReveal = {
-  hidden: { opacity: 0.48, scale: 1, y: 0 },
-  visible: (index = 0) => ({
-    opacity: 1,
-    scale: [1, 1.03, 1],
-    y: [-2, 2, -2],
-    transition: {
-      opacity: { duration: 0.36, delay: 1.05 + index * 0.08 },
-      scale: { duration: 0.9, delay: 1.05 + index * 0.08, ease: 'easeInOut' },
-      y: {
-        duration: 6 + index * 0.28,
-        delay: 1.5 + index * 0.12,
-        repeat: Infinity,
-        repeatType: 'mirror',
-        ease: 'easeInOut',
-      },
     },
   }),
 };
@@ -104,15 +73,101 @@ const verticalReveal = {
   }),
 };
 
-const ecosystemNodes = [
-  'Figma',
-  'React',
-  'SEO',
-  'IA',
+const heroTechBadges = [
+  { id: 'JavaScript', mark: 'JS', label: 'JavaScript', mobile: true },
+  { id: 'React', mark: '⚛', label: 'React', mobile: true },
+  { id: 'Vite', mark: 'V', label: 'Vite', mobile: false },
+  { id: 'Html', mark: '<>', label: 'HTML', mobile: false },
+  { id: 'Api', mark: 'API', label: '', mobile: false },
+  { id: 'Css', mark: '#', label: 'CSS', mobile: true },
+  { id: 'Seo', mark: 'SEO', label: '', mobile: true },
+  { id: 'Vercel', mark: '▲', label: 'Vercel', mobile: true },
+];
+
+const stackKitChips = [
+  { id: 'figma', label: 'Figma', activeFrom: 0.12, activeTo: 0.28 },
+  { id: 'react', label: 'React', activeFrom: 0.3, activeTo: 0.52 },
+  { id: 'typescript', label: 'TypeScript', activeFrom: 0.3, activeTo: 0.52 },
+  { id: 'css', label: 'CSS', activeFrom: 0.3, activeTo: 0.52 },
+  { id: 'seo', label: 'SEO', activeFrom: 0.7, activeTo: 0.86 },
+  { id: 'api', label: 'API', activeFrom: 0.52, activeTo: 0.68 },
+  { id: 'vercel', label: 'Vercel', activeFrom: 0.88, activeTo: 1 },
+];
+
+const pipelineStages = [
+  {
+    id: 'strategy',
+    step: '01',
+    title: 'Estratégia',
+    items: ['Objetivo claro', 'Arquitetura da solução', 'Direção visual'],
+    activeFrom: 0,
+    activePeak: 0.08,
+    activeTo: 0.18,
+  },
+  {
+    id: 'design',
+    step: '02',
+    title: 'Design',
+    items: ['Clareza visual', 'Hierarquia', 'Interface premium'],
+    activeFrom: 0.14,
+    activePeak: 0.23,
+    activeTo: 0.34,
+  },
+  {
+    id: 'development',
+    step: '03',
+    title: 'Desenvolvimento',
+    items: ['Responsividade', 'Componentização', 'Interatividade'],
+    activeFrom: 0.32,
+    activePeak: 0.42,
+    activeTo: 0.54,
+  },
+  {
+    id: 'integrations',
+    step: '04',
+    title: 'Integrações',
+    items: ['APIs conectadas', 'Fluxos inteligentes', 'Dados em movimento'],
+    activeFrom: 0.52,
+    activePeak: 0.61,
+    activeTo: 0.72,
+  },
+  {
+    id: 'optimization',
+    step: '05',
+    title: 'Otimização',
+    items: ['SEO técnico', 'Performance', 'Indexação'],
+    activeFrom: 0.7,
+    activePeak: 0.79,
+    activeTo: 0.9,
+  },
+  {
+    id: 'publish',
+    step: '06',
+    title: 'Publicação',
+    items: ['Deploy', 'Escalabilidade', 'Disponibilidade'],
+    activeFrom: 0.88,
+    activePeak: 0.96,
+    activeTo: 1,
+  },
+];
+
+const experienceBenefits = [
   'Performance',
-  'Hostinger',
-  'Deploy',
+  'SEO Técnico',
+  'Conversão',
   'Responsividade',
+  'Escalabilidade',
+  'Experiência Digital',
+];
+
+const movingStackChips = [
+  { id: 'figma', label: 'Figma', start: 0.12, end: 0.28, y: -112 },
+  { id: 'react', label: 'React', start: 0.32, end: 0.5, y: -32 },
+  { id: 'typescript', label: 'TypeScript', start: 0.34, end: 0.52, y: 18 },
+  { id: 'css', label: 'CSS', start: 0.36, end: 0.54, y: 68 },
+  { id: 'api', label: 'API', start: 0.56, end: 0.7, y: -4 },
+  { id: 'seo', label: 'SEO', start: 0.74, end: 0.86, y: -72 },
+  { id: 'vercel', label: 'Vercel', start: 0.88, end: 1, y: 92 },
 ];
 
 const technologyRoles = [
@@ -225,61 +280,364 @@ function SectionIntro({ eyebrow, title, description, id, reveal = false }) {
   );
 }
 
-function EcosystemMap() {
-  const shouldReduceMotion = useReducedMotion();
-  const ecosystemPaths = [
-    'M490 300L180 124',
-    'M490 300L490 76',
-    'M490 300L800 126',
-    'M490 300L850 302',
-    'M490 300L790 470',
-    'M490 300L490 524',
-    'M490 300L186 474',
-    'M490 300L130 302',
-  ];
+function StackKitChip({ chip, progress, shouldReduceMotion }) {
+  const chipCenter = (chip.activeFrom + chip.activeTo) / 2;
+  const opacity = useTransform(
+    progress,
+    [chip.activeFrom, chipCenter, chip.activeTo],
+    shouldReduceMotion ? [1, 1, 1] : [0.5, 1, 0.5],
+  );
+  const scale = useTransform(
+    progress,
+    [chip.activeFrom, chipCenter, chip.activeTo],
+    shouldReduceMotion ? [1, 1, 1] : [0.96, 1.03, 0.98],
+  );
+  const borderGlow = useTransform(
+    progress,
+    [chip.activeFrom, chipCenter, chip.activeTo],
+    shouldReduceMotion ? [1, 1, 1] : [0.22, 1, 0.35],
+  );
+  const chipClassName = [
+    styles.techStackChip,
+    shouldReduceMotion ? styles.techStackChipActive : '',
+  ].filter(Boolean).join(' ');
+
+  return (
+    <motion.li
+      className={chipClassName}
+      style={shouldReduceMotion ? undefined : {
+        opacity,
+        scale,
+        '--chip-glow': borderGlow,
+      }}
+    >
+      {chip.label}
+    </motion.li>
+  );
+}
+
+function PipelineStage({ stage, progress, shouldReduceMotion }) {
+  const opacity = useTransform(
+    progress,
+    [stage.activeFrom, stage.activePeak, stage.activeTo],
+    shouldReduceMotion ? [1, 1, 1] : [0.28, 1, 0.28],
+  );
+  const scale = useTransform(
+    progress,
+    [stage.activeFrom, stage.activePeak, stage.activeTo],
+    shouldReduceMotion ? [1, 1, 1] : [0.98, 1.04, 0.98],
+  );
+  const borderGlow = useTransform(
+    progress,
+    [stage.activeFrom, stage.activePeak, stage.activeTo],
+    shouldReduceMotion ? [1, 1, 1] : [0.18, 1, 0.18],
+  );
+  const stageClassName = [
+    styles.techPipelineStep,
+    shouldReduceMotion ? styles.techPipelineStepActive : '',
+  ].filter(Boolean).join(' ');
+
+  return (
+    <motion.li
+      className={stageClassName}
+      style={shouldReduceMotion ? undefined : {
+        opacity,
+        scale,
+        '--step-glow': borderGlow,
+      }}
+    >
+      <span className={styles.techPipelineStepIndex}>{stage.step}</span>
+      <div className={styles.techPipelineStepBody}>
+        <strong>{stage.title}</strong>
+      </div>
+    </motion.li>
+  );
+}
+
+function MovingStackChip({ chip, progress, shouldReduceMotion }) {
+  const travelStart = chip.start;
+  const travelMiddle = Math.min(chip.start + (chip.end - chip.start) * 0.5, 0.96);
+  const travelEnd = chip.end;
+  const opacity = useTransform(
+    progress,
+    [travelStart, travelMiddle, travelEnd],
+    shouldReduceMotion ? [0, 0, 0] : [0, 1, 0],
+  );
+  const x = useTransform(
+    progress,
+    [travelStart, travelEnd],
+    shouldReduceMotion ? [0, 0] : [0, 420],
+  );
+  const y = useTransform(
+    progress,
+    [travelStart, travelMiddle, travelEnd],
+    shouldReduceMotion ? [0, 0, 0] : [chip.y * 0.35, chip.y, chip.y * 0.15],
+  );
+  const scale = useTransform(
+    progress,
+    [travelStart, travelMiddle, travelEnd],
+    shouldReduceMotion ? [1, 1, 1] : [0.86, 1.08, 0.9],
+  );
+
+  return (
+    <motion.span
+      className={`${styles.techMovingChip} ${styles[`techMovingChip-${chip.id}`]}`}
+      style={shouldReduceMotion ? undefined : { opacity, x, y, scale }}
+      aria-hidden="true"
+    >
+      {chip.label}
+    </motion.span>
+  );
+}
+
+function ResultBenefit({ benefit, index, progress, shouldReduceMotion }) {
+  const activeAt = [0.18, 0.28, 0.44, 0.58, 0.78, 0.94][index] ?? 1;
+  const opacity = useTransform(progress, [Math.max(activeAt - 0.08, 0), activeAt], [0.34, 1]);
+  const scale = useTransform(progress, [Math.max(activeAt - 0.08, 0), activeAt], [0.98, 1]);
+  const glow = useTransform(progress, [Math.max(activeAt - 0.08, 0), activeAt], [0, 1]);
+
+  return (
+    <motion.li
+      style={shouldReduceMotion ? undefined : { opacity, scale, '--result-glow': glow }}
+    >
+      {benefit}
+    </motion.li>
+  );
+}
+
+function ResultPanel({ progress, shouldReduceMotion }) {
+  const finalOpacity = useTransform(progress, [0.82, 1], [0.32, 1]);
+  const finalScale = useTransform(progress, [0.82, 1], [0.98, 1.02]);
+
+  return (
+    <motion.section
+      className={styles.techResultPanel}
+      style={shouldReduceMotion ? undefined : { opacity: finalOpacity, scale: finalScale }}
+      aria-label="Resultado"
+    >
+      <p className={styles.techStackKitLabel}>RESULTADO</p>
+      <ul className={styles.techResultBenefitList}>
+        {experienceBenefits.map((benefit, index) => (
+          <ResultBenefit
+            benefit={benefit}
+            index={index}
+            key={benefit}
+            progress={progress}
+            shouldReduceMotion={shouldReduceMotion}
+          />
+        ))}
+      </ul>
+      <strong>Experiência Digital Completa</strong>
+    </motion.section>
+  );
+}
+
+function ResultConstruction({ progress, shouldReduceMotion }) {
+  return (
+    <section className={styles.techBuildResult} aria-label="Resultado em construção">
+      <p className={styles.techPipelineLabel}>RESULTADO EM CONSTRUÇÃO</p>
+      <div className={styles.techBuildResultStack}>
+        {pipelineStages.map((stage) => (
+          <PipelineStageDetails
+            key={stage.id}
+            progress={progress}
+            shouldReduceMotion={shouldReduceMotion}
+            stage={stage}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function PipelineStageDetails({ stage, progress, shouldReduceMotion }) {
+  const opacity = useTransform(
+    progress,
+    [stage.activeFrom, stage.activePeak, stage.activeTo],
+    shouldReduceMotion ? [1, 1, 1] : [0, 1, 0],
+  );
+  const y = useTransform(
+    progress,
+    [stage.activeFrom, stage.activePeak, stage.activeTo],
+    shouldReduceMotion ? [0, 0, 0] : [14, 0, -10],
+  );
 
   return (
     <motion.div
-      className={styles.techEcosystemMap}
-      aria-label="Ecossistema técnico conectado ao projeto"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.42 }}
+      className={styles.techBuildResultStep}
+      style={shouldReduceMotion ? undefined : { opacity, y }}
     >
-      <svg className={styles.techEcosystemLines} viewBox="0 0 980 600" aria-hidden="true">
-        {ecosystemPaths.map((path, index) => (
-          <motion.path
-            custom={index}
-            d={path}
-            key={path}
-            variants={shouldReduceMotion ? undefined : lineReveal}
-          />
+      <strong>{stage.title}</strong>
+      <ul>
+        {stage.items.map((item) => (
+          <li key={item}>{item}</li>
         ))}
-      </svg>
-
-      <motion.div
-        className={styles.techEcosystemCore}
-        variants={{
-          hidden: { opacity: 0.78 },
-          visible: { opacity: 1, transition: { duration: 0.45 } },
-        }}
-      >
-        <span>centro</span>
-        <strong>Projeto</strong>
-      </motion.div>
-
-      {ecosystemNodes.map((node, index) => (
-        <span className={`${styles.techEcosystemNode} ${styles[`techEcosystemNode${index + 1}`]}`} key={node}>
-          <motion.span
-            className={styles.techEcosystemNodeInner}
-            custom={index}
-            variants={shouldReduceMotion ? undefined : ecosystemNodeReveal}
-          >
-            {node}
-          </motion.span>
-        </span>
-      ))}
+      </ul>
     </motion.div>
+  );
+}
+
+function AppliedTechnologyStory({ className, setSectionRef }) {
+  const shouldReduceMotion = useReducedMotion();
+  const scrollTrackRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: scrollTrackRef,
+    offset: ['start start', 'end end'],
+  });
+
+  const flowProgress = useTransform(scrollYProgress, [0.08, 0.88], [0, 1]);
+  const ambientGlow = useTransform(scrollYProgress, [0, 0.5, 1], [0.35, 0.62, 0.95]);
+  const pipelineDim = useTransform(scrollYProgress, [0.82, 0.96], [1, 0.72]);
+
+  const handleSectionRef = useCallback((node) => {
+    setSectionRef(node);
+  }, [setSectionRef]);
+
+  const handleScrollTrackRef = useCallback((node) => {
+    scrollTrackRef.current = node;
+  }, []);
+
+  return (
+    <section
+      className={className}
+      id="tecnologias-ecossistema"
+      ref={handleSectionRef}
+      aria-labelledby="tech-applied-title"
+    >
+      <Container size="wide">
+        <header className={styles.techAppliedHeader}>
+          <p className={`${styles.techEyebrow} ${styles.revealEyebrow}`}>TECNOLOGIA APLICADA</p>
+          <h2 className={styles.revealTitle} id="tech-applied-title">
+            Da estratégia à publicação.
+            <span>Cada tecnologia possui uma função.</span>
+          </h2>
+          <p className={styles.revealDescription}>
+            Design, desenvolvimento, otimização e publicação trabalhando juntos para transformar ideias em experiências digitais rápidas, escaláveis e memoráveis.
+          </p>
+        </header>
+      </Container>
+
+      <div
+        className={styles.techAppliedScrollTrack}
+        ref={handleScrollTrackRef}
+      >
+        <div className={styles.techAppliedSticky}>
+          <Container size="wide">
+            <div className={styles.techAppliedStage}>
+              <motion.div
+                className={styles.techAppliedAmbient}
+                style={shouldReduceMotion ? undefined : { opacity: ambientGlow }}
+                aria-hidden="true"
+              />
+              <motion.div
+                className={styles.techAppliedFlowLine}
+                style={shouldReduceMotion ? undefined : { scaleX: flowProgress }}
+                aria-hidden="true"
+              />
+              <div className={styles.techMovingLayer} aria-hidden="true">
+                {movingStackChips.map((chip) => (
+                  <MovingStackChip
+                    chip={chip}
+                    key={chip.id}
+                    progress={scrollYProgress}
+                    shouldReduceMotion={shouldReduceMotion}
+                  />
+                ))}
+              </div>
+
+              <aside className={styles.techStackColumn} aria-label="Ferramentas e resultado">
+                <section className={styles.techStackKit}>
+                  <p className={styles.techStackKitLabel}>STACK KIT</p>
+                  <ul className={styles.techStackChipList}>
+                    {stackKitChips.map((chip) => (
+                      <StackKitChip
+                        chip={chip}
+                        key={chip.id}
+                        progress={scrollYProgress}
+                        shouldReduceMotion={shouldReduceMotion}
+                      />
+                    ))}
+                  </ul>
+                </section>
+
+                <ResultPanel
+                  progress={scrollYProgress}
+                  shouldReduceMotion={shouldReduceMotion}
+                />
+              </aside>
+
+              <motion.div
+                className={styles.techProcessColumn}
+                style={shouldReduceMotion ? undefined : { opacity: pipelineDim }}
+              >
+                <section className={styles.techPipelineWrap} aria-label="Processo">
+                  <p className={styles.techPipelineLabel}>PROCESSO</p>
+                  <ol className={styles.techPipelineList}>
+                    {pipelineStages.map((stage) => (
+                      <PipelineStage
+                        key={stage.id}
+                        progress={scrollYProgress}
+                        shouldReduceMotion={shouldReduceMotion}
+                        stage={stage}
+                      />
+                    ))}
+                  </ol>
+                </section>
+
+                <ResultConstruction
+                  progress={scrollYProgress}
+                  shouldReduceMotion={shouldReduceMotion}
+                />
+              </motion.div>
+            </div>
+          </Container>
+        </div>
+      </div>
+
+      <Container size="wide">
+        <div className={styles.techAppliedMobile}>
+          <section className={styles.techStackKitMobile} aria-label="Stack Kit">
+            <p className={styles.techStackKitLabel}>STACK KIT</p>
+            <ul className={styles.techStackChipList}>
+              {stackKitChips.map((chip) => (
+                <li className={styles.techStackChip} key={chip.id}>{chip.label}</li>
+              ))}
+            </ul>
+          </section>
+
+          {pipelineStages.map((stage) => (
+            <motion.section
+              className={styles.techPipelineMobileStep}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 28 }}
+              key={stage.id}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              viewport={{ once: true, amount: 0.35 }}
+              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            >
+              <span>{stage.step}</span>
+              <h3>{stage.title}</h3>
+              <p>{stage.items.join(' / ')}</p>
+            </motion.section>
+          ))}
+
+          <motion.article
+            className={`${styles.techResultPanel} ${styles.techResultPanelActive}`}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 32 }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true, amount: 0.35 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+          >
+            <p className={styles.techStackKitLabel}>RESULTADO</p>
+            <ul className={styles.techResultBenefitList}>
+              {experienceBenefits.map((benefit) => (
+                <li key={benefit}>{benefit}</li>
+              ))}
+            </ul>
+            <strong>Experiência Digital Completa</strong>
+          </motion.article>
+        </div>
+      </Container>
+    </section>
   );
 }
 
@@ -503,43 +861,74 @@ export default function TechnologiesPage() {
           <Container size="wide">
             <div className={styles.techHeroGrid}>
               <div className={styles.techHeroCopy}>
-                <p className={styles.techEyebrow}>TECNOLOGIAS</p>
+                <p className={`${styles.techEyebrow} ${styles.techHeroEyebrowReveal}`}>TECNOLOGIAS</p>
                 <h1 id="technologies-page-title">
-                  Tecnologia aplicada para criar experiências rápidas, inteligentes e memoráveis.
+                  <span className={styles.techHeroTitleLine}>Tecnologia</span>
+                  <span className={styles.techHeroTitleLine}>aplicada para</span>
+                  <span className={styles.techHeroTitleLine}>criar</span>
+                  <span className={styles.techHeroTitleLine}>experiências</span>
+                  <span className={styles.techHeroTitleLine}>rápidas, inteligentes e</span>
+                  <span className={styles.techHeroTitleLine}>memoráveis.</span>
                 </h1>
-                <p>
+                <p className={styles.techHeroDescriptionReveal}>
                   Ferramentas, otimização e infraestrutura trabalhando juntas para transformar design em produto digital com performance, clareza e presença profissional.
                 </p>
                 <div className={styles.techHeroActions}>
-                  <Button href="#tecnologias-ecossistema">Explorar tecnologias</Button>
-                  <Button to={whatsappPath} variant="secondary">Iniciar projeto</Button>
+                  <span className={styles.techHeroPrimaryActionReveal}>
+                    <Button href="#tecnologias-ecossistema">Explorar tecnologias</Button>
+                  </span>
+                  <span className={styles.techHeroSecondaryActionReveal}>
+                    <Button to={whatsappPath} variant="secondary">Iniciar projeto</Button>
+                  </span>
                 </div>
               </div>
 
-              <div className={`${styles.heroImageVisual} ${styles.techHeroImageVisual}`} aria-hidden="true">
-                <img src={tecnologiaHeroImage} alt="" loading="eager" />
+              <div className={styles.techHeroEcosystemVisual} aria-hidden="true">
+                <div className={styles.techHeroGlowField} />
+                <svg className={styles.techHeroOrbitLines} viewBox="0 0 760 760" focusable="false">
+                  <path d="M382 426L374 118" />
+                  <path d="M382 426L132 368" />
+                  <path d="M382 426L548 214" />
+                  <path d="M382 426L130 476" />
+                  <path d="M382 426L640 420" />
+                  <path d="M382 426L250 642" />
+                  <path d="M382 426L548 594" />
+                  <path d="M382 426L648 654" />
+                </svg>
+
+                <div className={styles.techHeroCoreBadge}>
+                  <span>TECH</span>
+                </div>
+
+                {heroTechBadges.map((badge) => (
+                  <span
+                    className={[
+                      styles.techHeroOrbitBadge,
+                      styles[`techHeroBadge${badge.id}`],
+                      badge.mobile ? styles.techHeroBadgeMobileVisible : styles.techHeroBadgeMobileHidden,
+                    ].filter(Boolean).join(' ')}
+                    key={badge.id}
+                  >
+                    <strong>{badge.mark}</strong>
+                    {badge.label && <span>{badge.label}</span>}
+                  </span>
+                ))}
+
+                <img
+                  className={styles.techHeroPerson}
+                  src={tecnologiaHeroImage}
+                  alt=""
+                  loading="eager"
+                />
               </div>
             </div>
           </Container>
         </section>
 
-        <section
-          className={getRevealSectionClassName(styles.techSection, revealSectionKeys.ecosystem)}
-          id="tecnologias-ecossistema"
-          ref={(node) => setRevealSectionRef(revealSectionKeys.ecosystem, node)}
-          aria-labelledby="tech-ecosystem-title"
-        >
-          <Container size="wide">
-            <SectionIntro
-              eyebrow="ECOSSISTEMA TECNOLÓGICO"
-              title="Não são ferramentas soltas. É um ecossistema de entrega."
-              description="Cada camada tem uma função: planejar, construir, otimizar, publicar e manter a experiência funcionando com clareza."
-              id="tech-ecosystem-title"
-              reveal
-            />
-            <EcosystemMap />
-          </Container>
-        </section>
+        <AppliedTechnologyStory
+          className={getRevealSectionClassName(styles.techAppliedSection, revealSectionKeys.ecosystem)}
+          setSectionRef={(node) => setRevealSectionRef(revealSectionKeys.ecosystem, node)}
+        />
 
         <section
           className={getRevealSectionClassName(styles.techSection, revealSectionKeys.roles)}

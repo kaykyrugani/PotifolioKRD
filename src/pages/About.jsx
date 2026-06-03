@@ -56,18 +56,36 @@ const methodSteps = [
   },
 ];
 
-const stackGroups = [
+const buildSteps = [
   {
-    title: 'Design e estratégia',
-    items: ['Figma', 'Arquitetura de informação', 'Referências visuais', 'Copy orientada à conversão'],
+    number: '01',
+    title: 'Estratégia',
+    description: 'Entendimento do negócio, objetivos e estrutura da solução.',
+    items: ['Pesquisa', 'Arquitetura', 'Planejamento'],
   },
   {
+    number: '02',
+    title: 'Design',
+    description: 'Criação da experiência visual, identidade e fluxo de navegação.',
+    items: ['Figma', 'UX', 'UI'],
+  },
+  {
+    number: '03',
     title: 'Desenvolvimento',
-    items: ['React', 'Next.js', 'JavaScript', 'HTML semântico', 'CSS Modules'],
+    description: 'Transformação do projeto em uma aplicação rápida e escalável.',
+    items: ['React', 'JavaScript', 'Vite'],
   },
   {
-    title: 'Performance e publicação',
-    items: ['Vercel', 'Hospedagem', 'SEO técnico', 'Otimização responsiva'],
+    number: '04',
+    title: 'Publicação',
+    description: 'Configuração, deploy e validação final.',
+    items: ['Vercel', 'SEO', 'Performance'],
+  },
+  {
+    number: '05',
+    title: 'Evolução',
+    description: 'Melhorias contínuas, ajustes e crescimento da solução.',
+    items: ['Otimização', 'Suporte', 'Escalabilidade'],
   },
 ];
 
@@ -117,6 +135,9 @@ const createRevealItemKey = (groupKey, index) => `${groupKey}-${index}`;
 const revealItemKeyList = [
   ...positioningCards.map((_, index) => createRevealItemKey('positioning', index)),
   ...methodSteps.map((_, index) => createRevealItemKey('method', index)),
+  'build-track',
+  ...buildSteps.map((_, index) => createRevealItemKey('build', index)),
+  'build-cta',
   ...principles.map((_, index) => createRevealItemKey('principles', index)),
   'trust-card',
 ];
@@ -253,33 +274,49 @@ export default function About() {
               ref={(node) => setRevealSectionRef(revealSectionKeys.stack, node)}
               aria-labelledby="about-stack-title"
             >
-            <div className={styles.aboutSectionHeader}>
-              <p className={`${styles.aboutSectionKicker} ${styles.revealEyebrow}`}>STACK E FERRAMENTAS</p>
-              <h2 className={styles.revealTitle} id="about-stack-title">Ferramentas que sustentam o processo.</h2>
-            </div>
-            <div className={styles.aboutToolEcosystem}>
-              <div className={styles.aboutEcosystemCore} aria-hidden="true">
-                <span>processo</span>
-                <strong>Design + código + publicação</strong>
+              <div className={styles.aboutSectionHeader}>
+                <p className={`${styles.aboutSectionKicker} ${styles.revealEyebrow}`}>COMO EU CONSTRUO CADA PROJETO</p>
+                <h2 className={styles.revealTitle} id="about-stack-title">Transformando ideias em experiências digitais</h2>
+                <p className={styles.revealDescription}>
+                  Uma jornada clara conecta estratégia, design, desenvolvimento, publicação e evolução para transformar uma ideia em presença digital profissional.
+                </p>
               </div>
-              {stackGroups.map((group, index) => (
-                <article
-                  className={`${styles.aboutEcosystemCluster} ${styles[`aboutEcosystemCluster${index + 1}`]}`}
-                  key={group.title}
+              <div className={styles.aboutBuildJourney}>
+                <div
+                  className={getRevealItemClassName(styles.aboutBuildTrack, 'build-track')}
+                  ref={(node) => setRevealItemRef('build-track', node)}
+                  aria-hidden="true"
                 >
-                  <h3>{group.title}</h3>
-                  <div className={styles.aboutStackChips}>
-                    {group.items.map((item) => (
-                      <span key={item}>{item}</span>
-                    ))}
-                  </div>
-                </article>
-              ))}
-              <span className={`${styles.aboutEcosystemLine} ${styles.aboutEcosystemLineOne}`} aria-hidden="true" />
-              <span className={`${styles.aboutEcosystemLine} ${styles.aboutEcosystemLineTwo}`} aria-hidden="true" />
-              <span className={`${styles.aboutEcosystemLine} ${styles.aboutEcosystemLineThree}`} aria-hidden="true" />
-            </div>
-          </section>
+                  <span className={styles.aboutBuildCore}>PROJETO</span>
+                </div>
+                <div className={styles.aboutBuildSteps}>
+                  {buildSteps.map((step, index) => (
+                    <article
+                      className={getRevealItemClassName(styles.aboutBuildStep, createRevealItemKey('build', index))}
+                      key={step.title}
+                      ref={(node) => setRevealItemRef(createRevealItemKey('build', index), node)}
+                      style={{ '--build-step-delay': `${index * 90}ms` }}
+                    >
+                      <span className={styles.aboutBuildNumber}>{step.number}</span>
+                      <h3>{step.title}</h3>
+                      <p>{step.description}</p>
+                      <div className={styles.aboutBuildBadges}>
+                        {step.items.map((item) => (
+                          <span key={item}>{item}</span>
+                        ))}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+                <div
+                  className={getRevealItemClassName(styles.aboutBuildCta, 'build-cta')}
+                  ref={(node) => setRevealItemRef('build-cta', node)}
+                >
+                  <p>Quer construir um projeto seguindo esse processo?</p>
+                  <Button to={whatsappPath}>Iniciar conversa</Button>
+                </div>
+              </div>
+            </section>
 
           <section
             className={getRevealSectionClassName(styles.aboutSection, revealSectionKeys.principles)}
