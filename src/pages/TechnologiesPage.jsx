@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
@@ -202,6 +202,24 @@ const reactArchitectureModuleRanges = [
   [0.4, 0.54],
   [0.54, 0.68],
 ];
+
+function useDesktopTimeline() {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 900px)');
+    const updateMatches = () => setMatches(mediaQuery.matches);
+
+    updateMatches();
+    mediaQuery.addEventListener('change', updateMatches);
+
+    return () => {
+      mediaQuery.removeEventListener('change', updateMatches);
+    };
+  }, []);
+
+  return matches;
+}
 
 const movingStackChips = [
   { id: 'figma', label: 'Figma', start: 0.12, end: 0.28, y: -112 },
@@ -928,18 +946,27 @@ function ReactRoleVisual({ isComplete, role, index, progress, shouldReduceMotion
   );
 }
 
-function ReactRoleStory({ role, index }) {
+function ReactSeoTransitionStory({ reactRole, reactIndex, seoRole, seoIndex }) {
   const shouldReduceMotion = useReducedMotion();
+  const isDesktopTimeline = useDesktopTimeline();
   const storyRef = useRef(null);
   const [isComplete, setIsComplete] = useState(false);
   const { scrollYProgress } = useScroll({
     target: storyRef,
     offset: ['start start', 'end end'],
   });
+  const shouldAnimateTransition = isDesktopTimeline && !shouldReduceMotion;
+  const reactProgress = useTransform(scrollYProgress, [0, 0.5], [0, 1], { clamp: true });
+  const reactX = useTransform(scrollYProgress, [0, 0.62, 0.72, 1], ['0%', '0%', '-110%', '-110%'], { clamp: true });
+  const reactOpacity = useTransform(scrollYProgress, [0, 0.62, 0.72, 1], [1, 1, 0, 0], { clamp: true });
+  const seoX = useTransform(scrollYProgress, [0, 0.74, 0.84, 1], ['110%', '110%', '0%', '0%'], { clamp: true });
+  const seoOpacity = useTransform(scrollYProgress, [0, 0.74, 0.84, 1], [0, 0, 1, 1], { clamp: true });
+  const reactPanelStyle = shouldAnimateTransition ? { x: reactX, opacity: reactOpacity } : undefined;
+  const seoPanelStyle = shouldAnimateTransition ? { x: seoX, opacity: seoOpacity } : undefined;
 
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
     setIsComplete((currentValue) => {
-      if (latest >= 0.68) {
+      if (latest >= 0.5) {
         return true;
       }
 
@@ -952,22 +979,31 @@ function ReactRoleStory({ role, index }) {
   });
 
   return (
-    <section className={styles.techRoleReactStory} ref={storyRef}>
+    <section
+      className={[
+        styles.techRoleReactSeoStory,
+        shouldAnimateTransition ? styles.techRoleReactSeoStoryAnimated : '',
+      ].filter(Boolean).join(' ')}
+      ref={storyRef}
+    >
+      <div className={styles.techReactSeoSticky}>
+      <div className={styles.techReactSeoStaticLayer} aria-hidden="true" />
       <motion.article
-        className={`${styles.techRoleBlock} ${styles.techRoleBlockReact} ${styles.techRoleReactSticky}`}
-        custom={index}
+        className={`${styles.techRoleBlock} ${styles.techRoleBlockReact} ${styles.techReactSeoPanel} ${styles.techReactSeoPanelReact}`}
+        custom={reactIndex}
         initial="hidden"
-        key={role.title}
+        key={reactRole.title}
+        style={reactPanelStyle}
         variants={cardReveal}
         viewport={revealViewport}
         whileInView="visible"
       >
         <div className={styles.techRoleCopy}>
-          <span>{role.label}</span>
-          <h3>{role.title}</h3>
-          <p>{role.description}</p>
+          <span>{reactRole.label}</span>
+          <h3>{reactRole.title}</h3>
+          <p>{reactRole.description}</p>
           <ul>
-            {role.items.map((item, itemIndex) => (
+            {reactRole.items.map((item, itemIndex) => (
               <motion.li custom={itemIndex} key={item} variants={tagReveal}>
                 {item}
               </motion.li>
@@ -976,12 +1012,38 @@ function ReactRoleStory({ role, index }) {
         </div>
         <ReactRoleVisual
           isComplete={isComplete}
-          index={index}
-          progress={scrollYProgress}
-          role={role}
+          index={reactIndex}
+          progress={reactProgress}
+          role={reactRole}
           shouldReduceMotion={shouldReduceMotion}
         />
       </motion.article>
+
+      <motion.article
+        className={`${styles.techRoleBlock} ${styles.techReactSeoPanel} ${styles.techReactSeoPanelSeo}`}
+        custom={seoIndex}
+        initial="hidden"
+        key={seoRole.title}
+        style={seoPanelStyle}
+        variants={cardReveal}
+        viewport={revealViewport}
+        whileInView="visible"
+      >
+        <div className={styles.techRoleCopy}>
+          <span>{seoRole.label}</span>
+          <h3>{seoRole.title}</h3>
+          <p>{seoRole.description}</p>
+          <ul>
+            {seoRole.items.map((item, itemIndex) => (
+              <motion.li custom={itemIndex} key={item} variants={tagReveal}>
+                {item}
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+        <RoleVisual role={seoRole} index={seoIndex} />
+      </motion.article>
+      </div>
     </section>
   );
 }
@@ -1274,7 +1336,23 @@ export default function TechnologiesPage() {
                 }
 
                 if (role.kind === 'react') {
-                  return <ReactRoleStory index={index} key={role.title} role={role} />;
+                  const seoRole = technologyRoles[index + 1];
+
+                  if (seoRole?.kind === 'seo-ai') {
+                    return (
+                      <ReactSeoTransitionStory
+                        key={`${role.title}-${seoRole.title}`}
+                        reactIndex={index}
+                        reactRole={role}
+                        seoIndex={index + 1}
+                        seoRole={seoRole}
+                      />
+                    );
+                  }
+                }
+
+                if (role.kind === 'seo-ai' && technologyRoles[index - 1]?.kind === 'react') {
+                  return null;
                 }
 
                 return (

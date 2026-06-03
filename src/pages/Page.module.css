@@ -5335,9 +5335,22 @@
   min-width: 0;
 }
 
-.techRoleReactStory {
+.techRoleReactSeoStory {
   position: relative;
   min-width: 0;
+}
+
+.techReactSeoSticky {
+  display: grid;
+  gap: var(--space-10);
+}
+
+.techReactSeoPanel {
+  min-width: 0;
+}
+
+.techReactSeoStaticLayer {
+  display: none;
 }
 
 .techRoleBlock {
@@ -6251,8 +6264,8 @@
     min-height: 280vh;
   }
 
-  .techRoleReactStory {
-    min-height: 185vh;
+  .techRoleReactSeoStoryAnimated {
+    min-height: 360vh;
   }
 
   .techRoleSticky {
@@ -6262,11 +6275,26 @@
     align-content: center;
   }
 
-  .techRoleReactSticky {
+  .techRoleReactSeoStoryAnimated .techReactSeoSticky {
     position: sticky;
     top: 84px;
+    display: block;
+    height: calc(100vh - 84px);
     min-height: calc(100vh - 84px);
-    align-content: center;
+    overflow: hidden;
+  }
+
+  .techRoleReactSeoStoryAnimated .techReactSeoStaticLayer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 72% 18%, rgba(0, 194, 255, 0.055), transparent 20rem),
+      radial-gradient(circle at 28% 76%, rgba(124, 58, 237, 0.05), transparent 24rem),
+      rgba(4, 8, 18, 0.32);
+    transform: none;
   }
 
   .techRoleBlockReverse {
@@ -6284,6 +6312,25 @@
   .techRoleBlockReact {
     grid-template-columns: minmax(0, 1fr);
     gap: clamp(3rem, 5vw, 4.75rem);
+  }
+
+  .techRoleReactSeoStoryAnimated .techReactSeoPanel {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: calc(100vh - 84px);
+    min-height: calc(100vh - 84px);
+    align-content: center;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  .techRoleReactSeoStoryAnimated .techReactSeoPanelReact {
+    z-index: 1;
+  }
+
+  .techRoleReactSeoStoryAnimated .techReactSeoPanelSeo {
+    z-index: 2;
   }
 
   .techRoleBlockReact .techRoleCopy {
