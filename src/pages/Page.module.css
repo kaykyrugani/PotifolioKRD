@@ -5335,6 +5335,11 @@
   min-width: 0;
 }
 
+.techRoleReactStory {
+  position: relative;
+  min-width: 0;
+}
+
 .techRoleBlock {
   position: relative;
   display: grid;
@@ -6246,7 +6251,18 @@
     min-height: 280vh;
   }
 
+  .techRoleReactStory {
+    min-height: 185vh;
+  }
+
   .techRoleSticky {
+    position: sticky;
+    top: 84px;
+    min-height: calc(100vh - 84px);
+    align-content: center;
+  }
+
+  .techRoleReactSticky {
     position: sticky;
     top: 84px;
     min-height: calc(100vh - 84px);

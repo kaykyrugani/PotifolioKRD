@@ -195,19 +195,13 @@ const reactArchitectureModules = [
   { key: 'scale', title: 'Escalabilidade', className: 'Scale', level: 5 },
 ];
 
-const reactArchitectureModuleReveal = {
-  hidden: { opacity: 0, y: 18, scale: 0.96 },
-  visible: (index = 0) => ({
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.55,
-      delay: 0.42 + index * 0.13,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-};
+const reactArchitectureModuleRanges = [
+  [0, 0.12],
+  [0.12, 0.26],
+  [0.26, 0.4],
+  [0.4, 0.54],
+  [0.54, 0.68],
+];
 
 const movingStackChips = [
   { id: 'figma', label: 'Figma', start: 0.12, end: 0.28, y: -112 },
@@ -861,7 +855,33 @@ function FigmaRoleStory({ role, index }) {
   );
 }
 
-function RoleVisual({ role, index }) {
+function ReactArchitectureNode({ isComplete, module, moduleIndex, progress, shouldReduceMotion }) {
+  const [start, end] = reactArchitectureModuleRanges[moduleIndex];
+  const opacity = useTransform(progress, [start, end], [0, 1], { clamp: true });
+  const y = useTransform(progress, [start, end], [24, 0], { clamp: true });
+  const scale = useTransform(progress, [start, end], [0.96, 1], { clamp: true });
+  const blur = useTransform(progress, [start, end], [5, 0], { clamp: true });
+  const filter = useTransform(blur, (value) => `blur(${value}px)`);
+  const style = shouldReduceMotion || isComplete
+    ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
+    : { opacity, y, scale, filter };
+
+  return (
+    <motion.span
+      className={`${styles.techReactArchitectureNode} ${styles[`techReactArchitectureNode${module.className}`]}`}
+      key={module.key}
+      style={style}
+    >
+      <i
+        className={`${styles.techReactArchitectureIcon} ${styles[`techReactArchitectureIcon${module.className}`]}`}
+        aria-hidden="true"
+      />
+      <strong>{module.title}</strong>
+    </motion.span>
+  );
+}
+
+function ReactRoleVisual({ isComplete, role, index, progress, shouldReduceMotion }) {
   const shouldFrame = index % 2 === 0;
   const visualClassName = [
     styles.techRoleVisual,
@@ -869,52 +889,110 @@ function RoleVisual({ role, index }) {
     shouldFrame ? styles.techRoleVisualFramed : '',
   ].filter(Boolean).join(' ');
 
-  if (role.kind === 'react') {
-    return (
-      <>
-        <motion.div
-          className={`${visualClassName} ${styles.techReactMobileVisual}`}
-          aria-hidden="true"
-          initial="hidden"
-          whileInView="visible"
-          viewport={revealViewport}
-        >
+  return (
+    <>
+      <motion.div
+        className={`${visualClassName} ${styles.techReactMobileVisual}`}
+        aria-hidden="true"
+        initial="hidden"
+        whileInView="visible"
+        viewport={revealViewport}
+      >
+        <span>{role.label}</span>
+        <strong>Arquitetura visual</strong>
+        <ol className={styles.techArchitectureFlow}>
+          {['Interface', 'Componentes', 'Estados', 'Reutilização', 'Escalabilidade'].map((item, itemIndex) => (
+            <motion.li custom={itemIndex} key={item} variants={flowStepReveal}>
+              {item}
+            </motion.li>
+          ))}
+        </ol>
+      </motion.div>
+
+      <motion.div
+        className={styles.techReactArchitecturePanel}
+        aria-hidden="true"
+      >
+        {reactArchitectureModules.map((module, moduleIndex) => (
+          <ReactArchitectureNode
+            isComplete={isComplete}
+            key={module.key}
+            module={module}
+            moduleIndex={moduleIndex}
+            progress={progress}
+            shouldReduceMotion={shouldReduceMotion}
+          />
+        ))}
+      </motion.div>
+    </>
+  );
+}
+
+function ReactRoleStory({ role, index }) {
+  const shouldReduceMotion = useReducedMotion();
+  const storyRef = useRef(null);
+  const [isComplete, setIsComplete] = useState(false);
+  const { scrollYProgress } = useScroll({
+    target: storyRef,
+    offset: ['start start', 'end end'],
+  });
+
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    setIsComplete((currentValue) => {
+      if (latest >= 0.68) {
+        return true;
+      }
+
+      if (latest <= 0.04) {
+        return false;
+      }
+
+      return currentValue;
+    });
+  });
+
+  return (
+    <section className={styles.techRoleReactStory} ref={storyRef}>
+      <motion.article
+        className={`${styles.techRoleBlock} ${styles.techRoleBlockReact} ${styles.techRoleReactSticky}`}
+        custom={index}
+        initial="hidden"
+        key={role.title}
+        variants={cardReveal}
+        viewport={revealViewport}
+        whileInView="visible"
+      >
+        <div className={styles.techRoleCopy}>
           <span>{role.label}</span>
-          <strong>Arquitetura visual</strong>
-          <ol className={styles.techArchitectureFlow}>
-            {['Interface', 'Componentes', 'Estados', 'Reutilização', 'Escalabilidade'].map((item, itemIndex) => (
-              <motion.li custom={itemIndex} key={item} variants={flowStepReveal}>
+          <h3>{role.title}</h3>
+          <p>{role.description}</p>
+          <ul>
+            {role.items.map((item, itemIndex) => (
+              <motion.li custom={itemIndex} key={item} variants={tagReveal}>
                 {item}
               </motion.li>
             ))}
-          </ol>
-        </motion.div>
+          </ul>
+        </div>
+        <ReactRoleVisual
+          isComplete={isComplete}
+          index={index}
+          progress={scrollYProgress}
+          role={role}
+          shouldReduceMotion={shouldReduceMotion}
+        />
+      </motion.article>
+    </section>
+  );
+}
 
-        <motion.div
-          className={styles.techReactArchitecturePanel}
-          aria-hidden="true"
-        >
-          {reactArchitectureModules.map((module, moduleIndex) => (
-            <motion.span
-              className={`${styles.techReactArchitectureNode} ${styles[`techReactArchitectureNode${module.className}`]}`}
-              custom={moduleIndex}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.22 }}
-              key={module.key}
-              variants={reactArchitectureModuleReveal}
-            >
-              <i
-                className={`${styles.techReactArchitectureIcon} ${styles[`techReactArchitectureIcon${module.className}`]}`}
-                aria-hidden="true"
-              />
-              <strong>{module.title}</strong>
-            </motion.span>
-          ))}
-        </motion.div>
-      </>
-    );
-  }
+function RoleVisual({ role, index }) {
+  const shouldFrame = index % 2 === 0;
+  const visualClassName = [
+    styles.techRoleVisual,
+    styles[`techRoleVisual-${role.kind}`],
+    shouldFrame ? styles.techRoleVisualFramed : '',
+  ].filter(Boolean).join(' ');
 
   if (role.kind === 'seo-ai') {
     return (
@@ -1195,12 +1273,15 @@ export default function TechnologiesPage() {
                   return <FigmaRoleStory index={index} key={role.title} role={role} />;
                 }
 
+                if (role.kind === 'react') {
+                  return <ReactRoleStory index={index} key={role.title} role={role} />;
+                }
+
                 return (
                   <motion.article
                     className={[
                       styles.techRoleBlock,
                       index % 2 === 1 ? styles.techRoleBlockReverse : '',
-                      role.kind === 'react' ? styles.techRoleBlockReact : '',
                     ].filter(Boolean).join(' ')}
                     custom={index}
                     initial="hidden"
