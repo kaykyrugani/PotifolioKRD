@@ -1,5 +1,5 @@
-import { useCallback, useRef } from 'react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { useCallback, useRef, useState } from 'react';
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
@@ -158,6 +158,33 @@ const experienceBenefits = [
   'Responsividade',
   'Escalabilidade',
   'Experiência Digital',
+];
+
+const figmaStoryboardItems = [
+  {
+    key: 'flow',
+    label: 'Fluxo',
+    description: 'Define a organização das informações para conduzir o usuário até a ação mais importante da página.',
+  },
+  {
+    key: 'interface',
+    label: 'Interface',
+    description: 'Define hierarquia visual, componentes e padrões para criar uma navegação clara.',
+  },
+  {
+    key: 'responsive',
+    label: 'Responsivo',
+    description: 'Garante uma experiência consistente em desktop, tablet e dispositivos móveis.',
+  },
+];
+
+const figmaResultItems = [
+  'Wireframes',
+  'UI Design',
+  'Componentes',
+  'Protótipos',
+  'Desktop',
+  'Mobile',
 ];
 
 const movingStackChips = [
@@ -641,6 +668,158 @@ function AppliedTechnologyStory({ className, setSectionRef }) {
   );
 }
 
+function getFigmaPhase(progress) {
+  if (progress >= 0.98) {
+    return 'complete';
+  }
+
+  if (progress >= 0.75) {
+    return 'responsive';
+  }
+
+  if (progress >= 0.7) {
+    return 'interfaceToResponsive';
+  }
+
+  if (progress >= 0.4) {
+    return 'interface';
+  }
+
+  if (progress >= 0.34) {
+    return 'flowToInterface';
+  }
+
+  if (progress >= 0.15) {
+    return 'flow';
+  }
+
+  return 'intro';
+}
+
+function FigmaRoleVisual({ role, visualClassName, progress, phase, shouldReduceMotion }) {
+  const cardOpacity = useTransform(progress, [0, 0.15], [0.72, 1]);
+  const cardY = useTransform(progress, [0, 0.15], [18, 0]);
+  const cardGlow = useTransform(progress, [0, 0.4, 1], [0.16, 0.32, 0.42]);
+  const visualPhase = shouldReduceMotion ? 'complete' : phase;
+  const activeItem = {
+    flow: 'flow',
+    interface: 'interface',
+    responsive: 'responsive',
+  }[visualPhase];
+  const isComplete = visualPhase === 'complete';
+  const shouldHideResultGrid = !isComplete && visualPhase !== 'intro';
+  const figmaClassName = [
+    visualClassName,
+    styles.techFigmaVisual,
+    activeItem || isComplete ? styles.techRoleVisualActive : '',
+    styles[`techFigmaPhase-${visualPhase}`],
+  ].filter(Boolean).join(' ');
+
+  return (
+    <motion.div
+      className={figmaClassName}
+      style={shouldReduceMotion ? undefined : {
+        opacity: cardOpacity,
+        y: cardY,
+        '--figma-card-glow': cardGlow,
+      }}
+      aria-hidden="true"
+    >
+      <span>{role.label}</span>
+      <strong>{role.visualTitle}</strong>
+
+      <ol className={styles.techFigmaStoryboard}>
+        {figmaStoryboardItems.map((item) => {
+          const itemIsActive = activeItem === item.key;
+          const itemIsComplete = isComplete;
+          const itemClassName = [
+            styles.techFigmaItem,
+            itemIsActive ? styles.techFigmaItemActive : '',
+            itemIsComplete ? styles.techFigmaItemComplete : '',
+          ].filter(Boolean).join(' ');
+
+          return (
+            <li className={itemClassName} key={item.key}>
+              <div className={styles.techFigmaItemHeader}>
+                <i aria-hidden="true" />
+                <span>{item.label}</span>
+                {itemIsComplete && <em aria-hidden="true">✓</em>}
+              </div>
+              <p>{item.description}</p>
+            </li>
+          );
+        })}
+      </ol>
+
+      <div
+        className={[
+          styles.techFigmaResultGrid,
+          shouldHideResultGrid ? styles.techFigmaResultGridHidden : '',
+          isComplete ? styles.techFigmaResultGridComplete : '',
+        ].filter(Boolean).join(' ')}
+      >
+        {figmaResultItems.map((item) => (
+          <span key={item}>{isComplete ? `✓ ${item}` : item}</span>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+function FigmaRoleStory({ role, index }) {
+  const shouldReduceMotion = useReducedMotion();
+  const storyRef = useRef(null);
+  const [phase, setPhase] = useState('intro');
+  const { scrollYProgress } = useScroll({
+    target: storyRef,
+    offset: ['start start', 'end end'],
+  });
+  const visualClassName = [
+    styles.techRoleVisual,
+    styles[`techRoleVisual-${role.kind}`],
+    styles.techRoleVisualFramed,
+  ].filter(Boolean).join(' ');
+
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    const nextPhase = getFigmaPhase(latest);
+    setPhase((currentPhase) => (currentPhase === nextPhase ? currentPhase : nextPhase));
+  });
+
+  return (
+    <section className={styles.techRoleStory} ref={storyRef}>
+      <motion.article
+        className={`${styles.techRoleBlock} ${styles.techRoleSticky}`}
+        custom={index}
+        initial="hidden"
+        key={role.title}
+        variants={cardReveal}
+        viewport={revealViewport}
+        whileInView="visible"
+      >
+        <div className={styles.techRoleCopy}>
+          <span>{role.label}</span>
+          <h3>{role.title}</h3>
+          <p>{role.description}</p>
+          <ul>
+            {role.items.map((item, itemIndex) => (
+              <motion.li custom={itemIndex} key={item} variants={tagReveal}>
+                {item}
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+        <FigmaRoleVisual
+          phase={phase}
+          progress={scrollYProgress}
+          role={role}
+          shouldReduceMotion={shouldReduceMotion}
+          visualClassName={visualClassName}
+        />
+      </motion.article>
+    </section>
+  );
+}
+
 function RoleVisual({ role, index }) {
   const shouldFrame = index % 2 === 0;
   const visualClassName = [
@@ -945,31 +1124,37 @@ export default function TechnologiesPage() {
             />
 
             <div className={styles.techRolesFlow}>
-              {technologyRoles.map((role, index) => (
-                <motion.article
-                  className={`${styles.techRoleBlock} ${index % 2 === 1 ? styles.techRoleBlockReverse : ''}`}
-                  custom={index}
-                  initial="hidden"
-                  key={role.title}
-                  variants={cardReveal}
-                  viewport={revealViewport}
-                  whileInView="visible"
-                >
-                  <div className={styles.techRoleCopy}>
-                    <span>{role.label}</span>
-                    <h3>{role.title}</h3>
-                    <p>{role.description}</p>
-                    <ul>
-                      {role.items.map((item, itemIndex) => (
-                        <motion.li custom={itemIndex} key={item} variants={tagReveal}>
-                          {item}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-                  <RoleVisual role={role} index={index} />
-                </motion.article>
-              ))}
+              {technologyRoles.map((role, index) => {
+                if (role.kind === 'figma') {
+                  return <FigmaRoleStory index={index} key={role.title} role={role} />;
+                }
+
+                return (
+                  <motion.article
+                    className={`${styles.techRoleBlock} ${index % 2 === 1 ? styles.techRoleBlockReverse : ''}`}
+                    custom={index}
+                    initial="hidden"
+                    key={role.title}
+                    variants={cardReveal}
+                    viewport={revealViewport}
+                    whileInView="visible"
+                  >
+                    <div className={styles.techRoleCopy}>
+                      <span>{role.label}</span>
+                      <h3>{role.title}</h3>
+                      <p>{role.description}</p>
+                      <ul>
+                        {role.items.map((item, itemIndex) => (
+                          <motion.li custom={itemIndex} key={item} variants={tagReveal}>
+                            {item}
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+                    <RoleVisual role={role} index={index} />
+                  </motion.article>
+                );
+              })}
             </div>
           </Container>
         </section>

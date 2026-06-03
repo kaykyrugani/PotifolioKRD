@@ -5330,6 +5330,11 @@
   gap: var(--space-10);
 }
 
+.techRoleStory {
+  position: relative;
+  min-width: 0;
+}
+
 .techRoleBlock {
   position: relative;
   display: grid;
@@ -5481,6 +5486,185 @@
   background:
     linear-gradient(135deg, rgba(0, 194, 255, 0.09), transparent),
     rgba(255, 255, 255, 0.035);
+}
+
+.techFigmaVisual {
+  --figma-card-glow: 0.16;
+
+  overflow: hidden;
+  border-color: rgba(0, 194, 255, calc(0.12 + var(--figma-card-glow) * 0.24));
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(10, 16, 30, 0.72);
+  box-shadow:
+    0 18px 58px rgba(0, 0, 0, 0.22),
+    0 0 calc(var(--figma-card-glow) * 28px) rgba(0, 194, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.065);
+}
+
+.techRoleVisualActive {
+  border-color: rgba(0, 194, 255, 0.22);
+}
+
+.techFigmaStoryboard {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.techFigmaItem {
+  position: relative;
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  min-height: 38px;
+  align-content: center;
+  padding: 0 0.84rem;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+  opacity: 0.72;
+  transform: translateY(0) scale(1);
+  transition:
+    min-height 420ms ease,
+    padding 420ms ease,
+    border-color 460ms ease,
+    background 460ms ease,
+    box-shadow 460ms ease,
+    opacity 420ms ease,
+    transform 460ms ease;
+}
+
+.techFigmaItemActive {
+  min-height: 96px;
+  align-content: start;
+  padding: 0.68rem 0.9rem 0.78rem;
+  border-color: rgba(0, 194, 255, 0.36);
+  background:
+    rgba(0, 194, 255, 0.055);
+  box-shadow:
+    0 0 18px rgba(0, 194, 255, 0.085),
+    inset 0 1px 0 rgba(255, 255, 255, 0.065);
+  opacity: 1;
+  transform: translateY(-1px) scale(1.012);
+}
+
+.techFigmaItemComplete {
+  min-height: 38px;
+  padding: 0 0.84rem;
+  border-color: rgba(0, 194, 255, 0.22);
+  background: rgba(0, 194, 255, 0.045);
+  opacity: 1;
+}
+
+.techFigmaItemHeader {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  align-items: center;
+  min-height: 20px;
+}
+
+.techFigmaItemHeader i {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 194, 255, 0.52);
+  box-shadow: 0 0 0 rgba(0, 194, 255, 0);
+  transition: background 420ms ease, box-shadow 420ms ease, scale 420ms ease;
+}
+
+.techFigmaItemActive .techFigmaItemHeader i,
+.techFigmaItemComplete .techFigmaItemHeader i {
+  background: var(--color-blue-cyan);
+  box-shadow: 0 0 14px rgba(0, 194, 255, 0.38);
+  scale: 1.12;
+}
+
+.techFigmaItemHeader span,
+.techFigmaItemHeader em {
+  color: rgba(255, 255, 255, 0.82);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-style: normal;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+.techFigmaItemActive .techFigmaItemHeader span,
+.techFigmaItemComplete .techFigmaItemHeader span,
+.techFigmaItemHeader em {
+  color: var(--color-text);
+}
+
+.techFigmaItem p {
+  max-height: 0;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  line-height: 1.48;
+  opacity: 0;
+  transform: translate3d(0, -4px, 0);
+  transition:
+    max-height 420ms ease,
+    opacity 420ms ease,
+    transform 420ms ease;
+}
+
+.techFigmaItemActive p {
+  max-height: 58px;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.techFigmaResultGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: auto;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 480ms ease, transform 480ms ease;
+}
+
+.techFigmaResultGridHidden {
+  opacity: 0;
+  transform: translateY(8px) scale(0.95);
+}
+
+.techFigmaResultGrid span {
+  display: grid;
+  min-height: 34px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  color: transparent;
+  background:
+    linear-gradient(135deg, rgba(0, 194, 255, 0.09), transparent),
+    rgba(255, 255, 255, 0.035);
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 850;
+  line-height: 1.15;
+  text-align: center;
+  transition:
+    border-color 460ms ease,
+    background 460ms ease,
+    color 460ms ease,
+    box-shadow 460ms ease;
+}
+
+.techFigmaResultGridComplete span {
+  border-color: rgba(0, 194, 255, 0.18);
+  color: rgba(255, 255, 255, 0.84);
+  background:
+    radial-gradient(circle at 12% 10%, rgba(0, 194, 255, 0.12), transparent 7rem),
+    rgba(0, 194, 255, 0.045);
+  box-shadow:
+    0 0 22px rgba(0, 194, 255, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
 }
 
 .techActionGrid {
@@ -6042,6 +6226,17 @@
     padding: var(--space-12) 0;
   }
 
+  .techRoleStory {
+    min-height: 280vh;
+  }
+
+  .techRoleSticky {
+    position: sticky;
+    top: 84px;
+    min-height: calc(100vh - 84px);
+    align-content: center;
+  }
+
   .techRoleBlockReverse {
     grid-template-columns: minmax(360px, 0.68fr) minmax(0, 1fr);
   }
@@ -6057,6 +6252,11 @@
   .techRoleVisual {
     min-height: 340px;
     padding: var(--space-8);
+  }
+
+  .techFigmaVisual {
+    min-height: 300px;
+    padding: var(--space-6);
   }
 
   .techActionGrid {
@@ -6953,6 +7153,16 @@
     grid-template-columns: minmax(270px, 0.9fr) minmax(0, 1.1fr);
     min-height: auto;
   }
+
+  .techRoleStory {
+    min-height: auto;
+  }
+
+  .techRoleSticky {
+    position: relative;
+    top: auto;
+    min-height: auto;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -7015,6 +7225,15 @@
 
   .techMovingChip {
     display: none;
+  }
+
+  .techFigmaVisual,
+  .techFigmaItem,
+  .techFigmaItemHeader i,
+  .techFigmaItem p,
+  .techFigmaResultGrid,
+  .techFigmaResultGrid span {
+    transition: none;
   }
 
   .techAppliedScrollTrack {
