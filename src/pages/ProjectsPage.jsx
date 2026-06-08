@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { projectPreviews } from '../data/siteContent';
 import PageLayout from '../components/layout/PageLayout';
+import FeaturedCases from '../components/sections/FeaturedCases';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
 import celularHeroImage from '../assets/images/celularIMG.png';
@@ -239,6 +240,8 @@ export default function ProjectsPage() {
             </div>
           </Container>
         </section>
+
+        <FeaturedCases />
 
         <section
           className={getRevealSectionClassName(styles.projectsProcessSection, revealSectionKeys.process)}

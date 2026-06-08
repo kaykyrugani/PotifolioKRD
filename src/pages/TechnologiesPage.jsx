@@ -187,21 +187,70 @@ const figmaResultItems = [
   'Mobile',
 ];
 
-const reactArchitectureModules = [
-  { key: 'interface', title: 'Interface', className: 'Interface', level: 1 },
-  { key: 'components', title: 'Componentes', className: 'Components', level: 2 },
-  { key: 'states', title: 'Estados', className: 'States', level: 3 },
-  { key: 'reuse', title: 'Reutilização', className: 'Reuse', level: 4 },
-  { key: 'scale', title: 'Escalabilidade', className: 'Scale', level: 5 },
+const reactCompositionComponents = [
+  { key: 'button', label: 'Button', className: 'Button' },
+  { key: 'input', label: 'Input', className: 'Input' },
+  { key: 'card', label: 'Card', className: 'Card' },
+  { key: 'modal', label: 'Modal', className: 'Modal' },
+  { key: 'dropdown', label: 'Dropdown', className: 'Dropdown' },
 ];
 
-const reactArchitectureModuleRanges = [
-  [0, 0.12],
-  [0.12, 0.26],
-  [0.26, 0.4],
-  [0.4, 0.54],
-  [0.54, 0.68],
-];
+const reactCompositionPanelReveal = {
+  hidden: { opacity: 0, y: 26, scale: 0.985 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.62,
+      ease: [0.22, 1, 0.36, 1],
+      when: 'beforeChildren',
+    },
+  },
+};
+
+const reactCompositionBaseReveal = {
+  hidden: { opacity: 0, x: -20, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: { delay: 0.22, duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const reactCompositionNodeReveal = {
+  hidden: { opacity: 0, y: 18, scale: 0.94 },
+  visible: (index = 0) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      delay: 0.9 + index * 0.11,
+      duration: 0.46,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
+
+const reactCompositionAppReveal = {
+  hidden: { opacity: 0, x: 24, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: { delay: 1.76, duration: 0.56, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const reactCompositionConnectionReveal = {
+  hidden: { opacity: 0, pathLength: 0 },
+  visible: (delay = 0.62) => ({
+    opacity: 1,
+    pathLength: 1,
+    transition: { delay, duration: 0.72, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
 
 function useDesktopTimeline() {
   const [matches, setMatches] = useState(false);
@@ -873,33 +922,7 @@ function FigmaRoleStory({ role, index }) {
   );
 }
 
-function ReactArchitectureNode({ isComplete, module, moduleIndex, progress, shouldReduceMotion }) {
-  const [start, end] = reactArchitectureModuleRanges[moduleIndex];
-  const opacity = useTransform(progress, [start, end], [0, 1], { clamp: true });
-  const y = useTransform(progress, [start, end], [24, 0], { clamp: true });
-  const scale = useTransform(progress, [start, end], [0.96, 1], { clamp: true });
-  const blur = useTransform(progress, [start, end], [5, 0], { clamp: true });
-  const filter = useTransform(blur, (value) => `blur(${value}px)`);
-  const style = shouldReduceMotion || isComplete
-    ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
-    : { opacity, y, scale, filter };
-
-  return (
-    <motion.span
-      className={`${styles.techReactArchitectureNode} ${styles[`techReactArchitectureNode${module.className}`]}`}
-      key={module.key}
-      style={style}
-    >
-      <i
-        className={`${styles.techReactArchitectureIcon} ${styles[`techReactArchitectureIcon${module.className}`]}`}
-        aria-hidden="true"
-      />
-      <strong>{module.title}</strong>
-    </motion.span>
-  );
-}
-
-function ReactRoleVisual({ isComplete, role, index, progress, shouldReduceMotion }) {
+function ReactRoleVisual({ role, index }) {
   const shouldFrame = index % 2 === 0;
   const visualClassName = [
     styles.techRoleVisual,
@@ -928,19 +951,77 @@ function ReactRoleVisual({ isComplete, role, index, progress, shouldReduceMotion
       </motion.div>
 
       <motion.div
-        className={styles.techReactArchitecturePanel}
+        className={styles.reactCompositionPanel}
         aria-hidden="true"
+        initial="hidden"
+        variants={reactCompositionPanelReveal}
+        viewport={{ once: true, amount: 0.34 }}
+        whileInView="visible"
       >
-        {reactArchitectureModules.map((module, moduleIndex) => (
-          <ReactArchitectureNode
-            isComplete={isComplete}
-            key={module.key}
-            module={module}
-            moduleIndex={moduleIndex}
-            progress={progress}
-            shouldReduceMotion={shouldReduceMotion}
+        <svg className={styles.reactConnectionLayer} viewBox="0 0 1000 360" preserveAspectRatio="none">
+          <motion.path
+            className={styles.reactConnectionPath}
+            custom={0.62}
+            d="M230 164 C292 150 326 148 372 154"
+            variants={reactCompositionConnectionReveal}
           />
-        ))}
+          <motion.path
+            className={styles.reactConnectionPath}
+            custom={0.72}
+            d="M230 198 C292 216 326 218 372 206"
+            variants={reactCompositionConnectionReveal}
+          />
+          <motion.path
+            className={styles.reactConnectionPath}
+            custom={1.46}
+            d="M636 154 C696 146 734 150 770 166"
+            variants={reactCompositionConnectionReveal}
+          />
+          <motion.path
+            className={styles.reactConnectionPath}
+            custom={1.56}
+            d="M636 210 C696 224 734 216 770 194"
+            variants={reactCompositionConnectionReveal}
+          />
+        </svg>
+
+        <motion.div className={styles.reactBaseNode} variants={reactCompositionBaseReveal}>
+          <span className={styles.reactNodeLabel}>Componente Base</span>
+          <span className={styles.reactBaseButton}>Button</span>
+        </motion.div>
+
+        <div className={styles.reactComponentCluster}>
+          <span className={styles.reactNodeLabel}>Sistema de Componentes</span>
+          <div className={styles.reactComponentOrbit}>
+            {reactCompositionComponents.map((component, componentIndex) => (
+              <motion.span
+                className={`${styles.reactComponentNode} ${styles[`reactComponentNode${component.className}`]}`}
+                custom={componentIndex}
+                key={component.key}
+                variants={reactCompositionNodeReveal}
+              >
+                {component.label}
+              </motion.span>
+            ))}
+          </div>
+        </div>
+
+        <motion.div className={styles.reactAppNode} variants={reactCompositionAppReveal}>
+          <span className={styles.reactNodeLabel}>Aplicação</span>
+          <div className={styles.reactMiniInterface}>
+            <span />
+            <div>
+              <i />
+              <i />
+              <i />
+            </div>
+            <section>
+              <em />
+              <em />
+              <em />
+            </section>
+          </div>
+        </motion.div>
       </motion.div>
     </>
   );
@@ -950,33 +1031,17 @@ function ReactSeoTransitionStory({ reactRole, reactIndex, seoRole, seoIndex }) {
   const shouldReduceMotion = useReducedMotion();
   const isDesktopTimeline = useDesktopTimeline();
   const storyRef = useRef(null);
-  const [isComplete, setIsComplete] = useState(false);
   const { scrollYProgress } = useScroll({
     target: storyRef,
     offset: ['start start', 'end end'],
   });
   const shouldAnimateTransition = isDesktopTimeline && !shouldReduceMotion;
-  const reactProgress = useTransform(scrollYProgress, [0, 0.5], [0, 1], { clamp: true });
   const reactX = useTransform(scrollYProgress, [0, 0.62, 0.72, 1], ['0%', '0%', '-110%', '-110%'], { clamp: true });
   const reactOpacity = useTransform(scrollYProgress, [0, 0.62, 0.72, 1], [1, 1, 0, 0], { clamp: true });
   const seoX = useTransform(scrollYProgress, [0, 0.74, 0.84, 1], ['110%', '110%', '0%', '0%'], { clamp: true });
   const seoOpacity = useTransform(scrollYProgress, [0, 0.74, 0.84, 1], [0, 0, 1, 1], { clamp: true });
   const reactPanelStyle = shouldAnimateTransition ? { x: reactX, opacity: reactOpacity } : undefined;
   const seoPanelStyle = shouldAnimateTransition ? { x: seoX, opacity: seoOpacity } : undefined;
-
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    setIsComplete((currentValue) => {
-      if (latest >= 0.5) {
-        return true;
-      }
-
-      if (latest <= 0.04) {
-        return false;
-      }
-
-      return currentValue;
-    });
-  });
 
   return (
     <section
@@ -1010,13 +1075,7 @@ function ReactSeoTransitionStory({ reactRole, reactIndex, seoRole, seoIndex }) {
             ))}
           </ul>
         </div>
-        <ReactRoleVisual
-          isComplete={isComplete}
-          index={reactIndex}
-          progress={reactProgress}
-          role={reactRole}
-          shouldReduceMotion={shouldReduceMotion}
-        />
+        <ReactRoleVisual index={reactIndex} role={reactRole} />
       </motion.article>
 
       <motion.article
