@@ -21,3 +21,12 @@ O fundo passa a depender de cor escura, profundidade por gradientes radiais suav
 
 - src/components/sections/Hero.module.css
 - docs/home-hero-redesign.md
+
+## Adaptacao mobile
+
+Data da alteracao: 2026-06-15
+
+- A coluna principal do Hero passou a usar `minmax(0, 1fr)` para impedir que o titulo force largura maior que o viewport.
+- Os blocos de titulo, descricao e acoes agora respeitam a largura util da secao.
+- Abaixo de `600px`, os CTAs ficam em uma coluna e ocupam toda a largura disponivel.
+- Os textos dos botoes podem quebrar linha sem gerar overflow horizontal.

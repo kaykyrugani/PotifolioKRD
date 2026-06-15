@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion';
 import { services } from '../../data/siteContent';
 import Button from '../ui/Button';
@@ -10,6 +10,8 @@ const processFlow = [
   'Desenvolvimento',
   'Resultado',
 ];
+
+const mobileCarouselMediaQuery = '(max-width: 900px)';
 
 const serviceNarratives = {
   'Sites Institucionais': {
@@ -182,7 +184,15 @@ function ServicesOrbitBackground({ progress, activeIndex, total }) {
   );
 }
 
-function AnimatedServiceCard({ activeIndex, children, index, total, scrollYProgress }) {
+function AnimatedServiceCard({
+  activeIndex,
+  children,
+  index,
+  isCarousel,
+  serviceTitle,
+  total,
+  scrollYProgress,
+}) {
   const segment = 1 / total;
   const start = index * segment;
   const end = start + segment;
@@ -259,6 +269,10 @@ function AnimatedServiceCard({ activeIndex, children, index, total, scrollYProgr
   return (
     <motion.div
       className={`${styles.animatedCard} ${isActive ? styles.animatedCardActive : ''}`}
+      role={isCarousel ? 'group' : undefined}
+      aria-hidden={!isCarousel && !isActive}
+      aria-label={isCarousel ? `${serviceTitle}, item ${index + 1} de ${total}` : undefined}
+      aria-roledescription={isCarousel ? 'slide' : undefined}
       style={{
         opacity: visibleOpacity,
         y,
@@ -276,7 +290,11 @@ function AnimatedServiceCard({ activeIndex, children, index, total, scrollYProgr
 
 export default function Services({ reveal }) {
   const sectionRef = useRef(null);
+  const carouselRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobileCarousel, setIsMobileCarousel] = useState(() => (
+    typeof window !== 'undefined' && window.matchMedia(mobileCarouselMediaQuery).matches
+  ));
   const sectionKey = 'services';
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -287,9 +305,98 @@ export default function Services({ reveal }) {
   const serviceProgress = services.length > 0 ? ((activeIndex + 1) / services.length) * 100 : 0;
 
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    if (isMobileCarousel) {
+      return;
+    }
+
     const nextIndex = getActiveServiceIndex(latest, services.length);
     setActiveIndex((currentIndex) => (currentIndex === nextIndex ? currentIndex : nextIndex));
   });
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(mobileCarouselMediaQuery);
+    const updateCarouselMode = () => {
+      setIsMobileCarousel(mediaQuery.matches);
+      setActiveIndex(0);
+    };
+
+    updateCarouselMode();
+    mediaQuery.addEventListener('change', updateCarouselMode);
+
+    return () => mediaQuery.removeEventListener('change', updateCarouselMode);
+  }, []);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+
+    if (!isMobileCarousel || !carousel) {
+      return undefined;
+    }
+
+    let frameId = 0;
+
+    const updateActiveCard = () => {
+      cancelAnimationFrame(frameId);
+      frameId = requestAnimationFrame(() => {
+        const carouselCenter = carousel.getBoundingClientRect().left + carousel.clientWidth / 2;
+        const cards = Array.from(carousel.children);
+        let closestIndex = 0;
+        let closestDistance = Number.POSITIVE_INFINITY;
+
+        cards.forEach((card, index) => {
+          const cardRect = card.getBoundingClientRect();
+          const cardCenter = cardRect.left + cardRect.width / 2;
+          const distance = Math.abs(carouselCenter - cardCenter);
+
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = index;
+          }
+        });
+
+        setActiveIndex((currentIndex) => (
+          currentIndex === closestIndex ? currentIndex : closestIndex
+        ));
+      });
+    };
+
+    updateActiveCard();
+    carousel.addEventListener('scroll', updateActiveCard, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      carousel.removeEventListener('scroll', updateActiveCard);
+    };
+  }, [isMobileCarousel]);
+
+  const scrollToService = useCallback((index) => {
+    const carousel = carouselRef.current;
+    const targetCard = carousel?.children[index];
+
+    if (!carousel || !targetCard) {
+      return;
+    }
+
+    const targetLeft = targetCard.offsetLeft - ((carousel.clientWidth - targetCard.clientWidth) / 2);
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    carousel.scrollTo({
+      left: Math.max(0, targetLeft),
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    });
+    setActiveIndex(index);
+  }, []);
+
+  const handleCarouselKeyDown = (event) => {
+    if (!isMobileCarousel || !['ArrowLeft', 'ArrowRight'].includes(event.key)) {
+      return;
+    }
+
+    event.preventDefault();
+    const direction = event.key === 'ArrowRight' ? 1 : -1;
+    const nextIndex = Math.min(services.length - 1, Math.max(0, activeIndex + direction));
+    scrollToService(nextIndex);
+  };
 
   const setSectionRefs = useCallback((node) => {
     sectionRef.current = node;
@@ -335,7 +442,16 @@ export default function Services({ reveal }) {
             </div>
 
             <div className={styles.servicesSystem}>
-              <div className={styles.servicesCardsStage}>
+              <div
+                className={styles.servicesCardsStage}
+                id="services-carousel"
+                ref={carouselRef}
+                role={isMobileCarousel ? 'region' : undefined}
+                aria-label={isMobileCarousel ? 'Serviços disponíveis' : undefined}
+                aria-roledescription={isMobileCarousel ? 'carrossel' : undefined}
+                tabIndex={isMobileCarousel ? 0 : undefined}
+                onKeyDown={handleCarouselKeyDown}
+              >
                 {services.map((service, index) => {
                   const narrative = getServiceNarrative(service);
 
@@ -343,7 +459,9 @@ export default function Services({ reveal }) {
                     <AnimatedServiceCard
                       activeIndex={activeIndex}
                       index={index}
+                      isCarousel={isMobileCarousel}
                       key={service.title}
+                      serviceTitle={narrative.title}
                       scrollYProgress={scrollYProgress}
                       total={services.length}
                     >
@@ -371,6 +489,55 @@ export default function Services({ reveal }) {
                     </AnimatedServiceCard>
                   );
                 })}
+              </div>
+
+              <div className={styles.mobileCarouselNavigation} aria-label="Navegação do carrossel">
+                <button
+                  type="button"
+                  className={styles.carouselArrow}
+                  onClick={() => scrollToService(activeIndex - 1)}
+                  disabled={activeIndex === 0}
+                  aria-controls="services-carousel"
+                  aria-label="Ver serviço anterior"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
+                </button>
+
+                <div className={styles.carouselStatus} aria-live="polite">
+                  <span>
+                    <strong>{String(activeIndex + 1).padStart(2, '0')}</strong>
+                    {' / '}
+                    {String(services.length).padStart(2, '0')}
+                  </span>
+                  <div className={styles.carouselDots}>
+                    {services.map((service, index) => (
+                      <button
+                        type="button"
+                        className={index === activeIndex ? styles.carouselDotActive : ''}
+                        key={service.title}
+                        onClick={() => scrollToService(index)}
+                        aria-controls="services-carousel"
+                        aria-current={index === activeIndex ? 'true' : undefined}
+                        aria-label={`Ir para o serviço ${index + 1}: ${service.title}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  className={styles.carouselArrow}
+                  onClick={() => scrollToService(activeIndex + 1)}
+                  disabled={activeIndex === services.length - 1}
+                  aria-controls="services-carousel"
+                  aria-label="Ver próximo serviço"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </button>
               </div>
 
               <div className={styles.serviceProgressPanel} aria-live="polite">

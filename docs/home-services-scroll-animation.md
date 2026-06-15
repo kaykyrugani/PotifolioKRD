@@ -14,7 +14,7 @@ Durante o scroll, apenas um card fica ativo por vez. Os proximos cards entram de
 
 No desktop, a animacao sticky fica ativa.
 No tablet, permanece ativa se houver espaco suficiente.
-No mobile, a animacao e desativada e todos os cards aparecem empilhados normalmente.
+Em telas de ate 900px, a animacao por scroll vertical e desativada e os cards passam para um carrossel horizontal.
 
 ## Tecnologia
 
@@ -24,17 +24,30 @@ Foi utilizado Framer Motion com useScroll e useTransform para controlar opacity,
 
 Os cards agora ficam sobrepostos em um stage absoluto no desktop. A classe de stage mantem position relative e cada card animado usa position absolute com inset 0, impedindo que os cards entrem no fluxo normal do documento.
 
-Apenas o mobile usa empilhamento com flex-direction column. Esse fallback fica restrito a telas menores que 900px para evitar que a coluna direita cresca com todos os cards no desktop.
+Apenas o mobile usa o trilho horizontal com scroll nativo. Esse fallback fica restrito a telas de ate 900px para preservar a composicao sticky no desktop.
 
-A ref do useScroll fica na area alta da secao, em servicesScrollArea, que possui min-height de 420vh. O sticky segura o layout visivel enquanto o scroll da pagina troca o card ativo dentro do mesmo espaco visual.
+A ref do useScroll fica na area alta da secao, em servicesScrollArea, que possui min-height de 320vh no desktop. O sticky segura o layout visivel enquanto o scroll da pagina troca o card ativo dentro do mesmo espaco visual.
 
 ## Reativacao da animacao
 
 Apos validar o sticky, todos os cards foram reativados no mesmo stage absoluto. Cada card voltou a ser renderizado pelo map de services dentro de AnimatedServiceCard.
 
-O componente AnimatedServiceCard usa useScroll e useTransform para controlar opacity, translateY e scale de cada card conforme o progresso da secao. No desktop, os cards permanecem sobrepostos no mesmo espaco visual; no mobile, o fallback continua exibindo todos empilhados.
+O componente AnimatedServiceCard usa useScroll e useTransform para controlar opacity, translateY e scale de cada card conforme o progresso da secao. No desktop, os cards permanecem sobrepostos no mesmo espaco visual; no mobile, todos ficam visiveis lado a lado no carrossel.
 
-O log temporario de scrollYProgress e os outlines de debug foram mantidos para validacao visual antes da limpeza final.
+No mobile, os estilos de transformacao, opacidade e visibilidade dos cards sao neutralizados para que todos participem do trilho horizontal.
+
+## Carrossel mobile
+
+Data da alteracao: 2026-06-15
+
+- O breakpoint entre os modos permanece em `900px` / `901px`.
+- Ate `900px`, os cards usam overflow horizontal nativo e `scroll-snap`.
+- A navegacao funciona por swipe, trackpad, botoes anterior/proximo, indicadores e setas do teclado.
+- O card central atualiza o contador e os indicadores durante o movimento manual.
+- Os controles possuem rotulos acessiveis e alvos de toque de `48px`.
+- O painel de progresso do sticky fica oculto no mobile para evitar controles duplicados.
+- A pagina limita o overflow horizontal decorativo sem bloquear o movimento interno do carrossel.
+- Com `prefers-reduced-motion`, a rolagem programatica deixa de usar movimento suave.
 
 ## Arquivos editados
 

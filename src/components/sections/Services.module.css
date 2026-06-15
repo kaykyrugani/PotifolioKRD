@@ -609,6 +609,10 @@
   text-shadow: 0 0 16px rgba(0, 194, 255, 0.42);
 }
 
+.mobileCarouselNavigation {
+  display: none;
+}
+
 .servicesScrollArea:global(.revealSectionVisible) .orbitBackground {
   animation: servicesLayerIn 760ms 80ms ease-out both;
 }
@@ -777,6 +781,10 @@
 }
 
 @media (max-width: 900px) {
+  .servicesScrollArea {
+    overflow-x: clip;
+  }
+
   .orbitBackground {
     opacity: 0.72;
   }
@@ -831,25 +839,160 @@
   }
 
   .servicesSystem {
+    --services-carousel-gutter: var(--space-4);
+    gap: var(--space-4);
     transform: none;
   }
 
   .servicesCardsStage {
+    display: flex;
+    width: calc(100% + var(--services-carousel-gutter) + var(--services-carousel-gutter));
     min-height: auto;
+    gap: var(--space-4);
+    margin-inline: calc(0px - var(--services-carousel-gutter));
+    padding: var(--space-1) var(--services-carousel-gutter) var(--space-5);
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-behavior: smooth;
+    scroll-padding-inline: var(--services-carousel-gutter);
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .servicesCardsStage::-webkit-scrollbar {
+    display: none;
   }
 
   .animatedCard {
-    display: none;
+    display: flex;
     position: relative;
     inset: auto;
+    flex: 0 0 min(86vw, 520px);
+    min-width: 0;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    will-change: auto;
   }
 
   .animatedCardActive {
-    display: block;
+    display: flex;
   }
 
   .card {
+    width: 100%;
+    height: 100%;
     min-height: auto;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  .mobileCarouselNavigation {
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .carouselArrow {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    place-items: center;
+    border: 1px solid rgba(0, 194, 255, 0.2);
+    border-radius: 50%;
+    color: var(--color-text);
+    background: rgba(255, 255, 255, 0.045);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+    transition:
+      color var(--transition-fast),
+      border-color var(--transition-fast),
+      background var(--transition-fast),
+      opacity var(--transition-fast);
+  }
+
+  .carouselArrow svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .carouselArrow path {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+
+  .carouselArrow:hover:not(:disabled) {
+    border-color: rgba(0, 194, 255, 0.46);
+    color: var(--color-blue-cyan);
+    background: rgba(0, 194, 255, 0.08);
+  }
+
+  .carouselArrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .carouselStatus {
+    display: grid;
+    min-width: 0;
+    gap: var(--space-3);
+    justify-items: center;
+  }
+
+  .carouselStatus > span {
+    color: var(--color-text-muted);
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .carouselStatus strong {
+    color: var(--color-blue-cyan);
+    font-size: 0.95rem;
+  }
+
+  .carouselDots {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carouselDots button {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.24);
+    cursor: pointer;
+    transition:
+      width var(--transition-fast),
+      background var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  .carouselDots .carouselDotActive {
+    width: 24px;
+    background: var(--color-blue-cyan);
+    box-shadow: 0 0 14px rgba(0, 194, 255, 0.42);
+  }
+
+  .serviceProgressPanel {
+    display: none;
   }
 }
 
@@ -875,9 +1018,14 @@
     padding: 22px;
   }
 
-  .serviceProgressMeta {
-    display: grid;
-    gap: var(--space-2);
+  .mobileCarouselNavigation {
+    gap: var(--space-3);
+  }
+}
+
+@media (min-width: 820px) and (max-width: 900px) {
+  .servicesSystem {
+    --services-carousel-gutter: var(--space-6);
   }
 }
 
@@ -904,6 +1052,10 @@
 
   .processFlow::before {
     transform: scaleY(1);
+  }
+
+  .servicesCardsStage {
+    scroll-behavior: auto;
   }
 }
 

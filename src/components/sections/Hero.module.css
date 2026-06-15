@@ -42,7 +42,9 @@
   position: relative;
   z-index: 1;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   width: min(100%, 1240px);
+  min-width: 0;
   min-height: calc(100svh - 9.5rem);
   margin: 0 auto;
   align-content: center;
@@ -51,7 +53,9 @@
 .heroContent {
   position: relative;
   z-index: 4;
+  width: 100%;
   max-width: 980px;
+  min-width: 0;
   padding: var(--space-4) 0 0;
 }
 
@@ -124,7 +128,9 @@
 .heroTextBlock {
   position: relative;
   z-index: 4;
+  width: 100%;
   max-width: 620px;
+  min-width: 0;
 }
 
 .subtitle {
@@ -142,11 +148,17 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
+  width: 100%;
+  max-width: 100%;
   margin-top: var(--space-6);
   opacity: 0;
   filter: blur(10px);
   transform: translate3d(0, 28px, 0);
   animation: heroTextFadeUp 800ms 1020ms ease-out both;
+}
+
+.actions a {
+  max-width: 100%;
 }
 
 .quickBenefits {
@@ -614,14 +626,6 @@
     font-size: 1rem;
   }
 
-  .actions {
-    display: grid;
-  }
-
-  .actions a {
-    width: 100%;
-  }
-
   .quickBenefits {
     grid-template-columns: 1fr;
   }
@@ -632,6 +636,21 @@
 
   .heroImageArea img {
     width: min(130vw, 620px);
+  }
+}
+
+@media (max-width: 600px) {
+  .actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .actions a {
+    width: 100%;
+    min-width: 0;
+    padding-inline: var(--space-4);
+    text-align: center;
+    white-space: normal;
   }
 }
 
