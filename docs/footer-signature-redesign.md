@@ -12,7 +12,7 @@ A estrutura principal foi dividida em duas areas laterais e um vazio central:
 
 - Lado esquerdo: navegacao principal e contexto curto do projeto.
 - Centro: logo `logoKRD1semFundo.png` como nucleo divisor entre os dois blocos.
-- Lado direito: servicos, stack e contato via WhatsApp usando apenas dados existentes no projeto.
+- Lado direito: servicos, stack e canais reais de WhatsApp, telefone, email e Instagram.
 
 Os paineis laterais usam cortes angulares discretos para apontar para o centro sem competir com a logo.
 

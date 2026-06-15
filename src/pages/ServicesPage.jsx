@@ -4,7 +4,7 @@ import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
 import servicosHeroImage from '../assets/images/servicosIMG.png';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
-import { whatsappPath } from '../utils/contact';
+import { whatsappUrl } from '../utils/contact';
 import styles from './Page.module.css';
 
 const mainSolutions = [
@@ -235,7 +235,7 @@ export default function ServicesPage() {
                     </p>
                     <div className={`${styles.servicesHeroActions} ${styles.heroActions}`}>
                       <Button className={styles.servicesHeroPrimaryCta} href="#solucoes">Ver soluções</Button>
-                      <Button className={styles.servicesHeroSecondaryCta} to={whatsappPath} variant="secondary">Iniciar projeto</Button>
+                      <Button className={styles.servicesHeroSecondaryCta} href={whatsappUrl} target="_blank" rel="noreferrer" variant="secondary">Iniciar projeto</Button>
                     </div>
                   </div>
 
@@ -452,7 +452,7 @@ export default function ServicesPage() {
                       <li key={item}>{item}</li>
                     ))}
                   </ul>
-                  <Button to={whatsappPath} variant={plan.featured ? 'primary' : 'secondary'}>
+                  <Button href={whatsappUrl} target="_blank" rel="noreferrer" variant={plan.featured ? 'primary' : 'secondary'}>
                     {plan.cta}
                   </Button>
                 </article>
@@ -534,7 +534,7 @@ export default function ServicesPage() {
                 <h2 className={styles.revealTitle} id="services-final-title">Vamos transformar sua ideia em presença digital</h2>
                 <p className={styles.revealDescription}>Me conte seu projeto e vamos encontrar a melhor solução.</p>
                 <div className={styles.servicesFinalActions}>
-                  <Button to={whatsappPath}>Chamar no WhatsApp</Button>
+                  <Button href={whatsappUrl} target="_blank" rel="noreferrer">Chamar no WhatsApp</Button>
                   <Button to="/projetos" variant="secondary">Ver portfólio</Button>
                 </div>
               </div>

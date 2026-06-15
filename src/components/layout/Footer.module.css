@@ -367,10 +367,18 @@
   font-size: 0.78rem;
 }
 
+.contactLinks {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+
 .contactLink {
   display: inline-flex;
-  margin-top: var(--space-8);
+  max-width: 100%;
   color: rgba(204, 251, 241, 0.86);
+  overflow-wrap: anywhere;
 }
 
 .bottom {

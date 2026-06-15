@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion';
 import { services } from '../../data/siteContent';
+import { whatsappUrl } from '../../utils/contact';
 import Button from '../ui/Button';
 import styles from './Services.module.css';
 
@@ -484,7 +485,7 @@ export default function Services({ reveal }) {
                           <strong>{narrative.result}</strong>
                         </div>
 
-                        <Button to="/contato" variant="secondary">{getServiceCtaLabel(service)}</Button>
+                        <Button href={whatsappUrl} target="_blank" rel="noreferrer" variant="secondary">{getServiceCtaLabel(service)}</Button>
                       </article>
                     </AnimatedServiceCard>
                   );

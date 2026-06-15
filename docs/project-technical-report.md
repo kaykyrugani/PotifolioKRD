@@ -78,10 +78,12 @@ O conteúdo editável está centralizado em `src/data/siteContent.js`:
 
 Os dados de contato ficam em `src/utils/contact.js`:
 
-- `whatsappLabel = 'Número em breve'`
-- `whatsappPath = '/contato'`
+- email: `kaykyruganidev@gmail.com`
+- telefone e WhatsApp: `(16) 98827-8840`
+- Instagram: `@kaykyrugani.dev`
+- links técnicos centralizados para `mailto:`, `tel:`, WhatsApp e Instagram
 
-O projeto ainda não contém telefone real, links comerciais reais ou cases reais.
+Os CTAs comerciais abrem o WhatsApp real em nova aba. A rota `/contato` permanece como página informativa e apresenta todos os canais fornecidos. O projeto ainda não contém cases comerciais reais.
 
 ## Tecnologias e Padrões Implementados
 
@@ -289,7 +291,7 @@ A navbar é fixa no topo e usa:
 - `useState` para menu e scroll.
 - `useEffect` com listener passivo para detectar `window.scrollY > 24`.
 - `NavLink` para active state.
-- CTA para `whatsappPath`, atualmente `/contato`.
+- CTA externo para o WhatsApp centralizado em `src/utils/contact.js`.
 
 Visual:
 
@@ -430,6 +432,13 @@ Padrões:
 - Cards empilham em uma coluna.
 - Offsets decorativos são reduzidos para evitar overflow horizontal.
 
+#### Timeline de infraestrutura da página Tecnologias
+
+- Abaixo de `900px`, cada etapa usa uma grade vertical com marcador numérico à esquerda e um bloco único de título e descrição à direita.
+- Em telas de até `640px`, marcadores, espaçamentos e tipografia são reduzidos para preservar a área útil de leitura.
+- Em telas de até `380px`, a coluna dos marcadores é reduzida novamente para impedir quebra excessiva de texto.
+- A partir de `900px`, a timeline mantém a composição horizontal em seis colunas.
+
 ## Decisões Arquiteturais Atuais
 
 - Conteúdo do site fica em `siteContent.js`, reduzindo duplicação entre Home, páginas internas e footer.
@@ -447,7 +456,6 @@ Padrões:
 - Validar visualmente a seção Services em desktop real depois dos ajustes de `overflow: visible` e `min-height`.
 - Decidir se `Header.jsx` e `Header.module.css` continuam necessários, pois o layout atual usa `Navbar` diretamente.
 - Adicionar fonte local ou import explícito se Space Grotesk e Inter forem requisitos visuais obrigatórios.
-- Substituir textos temporários de contato quando houver número/link real.
 - Substituir `projectPreviews` por cases reais apenas quando houver dados e imagens fornecidos.
 - Se o `ServicesWaveBackground` não for reutilizado, considerar documentar claramente que ele é um efeito disponível, mas inativo.
 

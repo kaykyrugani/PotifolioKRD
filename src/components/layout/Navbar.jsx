@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { navItems } from '../../data/siteContent';
-import { whatsappLabel, whatsappPath } from '../../utils/contact';
+import { whatsappLabel, whatsappUrl } from '../../utils/contact';
 import Button from '../ui/Button';
 import styles from './Navbar.module.css';
 
@@ -49,7 +49,7 @@ export default function Navbar() {
           ))}
         </div>
 
-        <Button to={whatsappPath} variant="primary" className={styles.cta}>
+        <Button href={whatsappUrl} target="_blank" rel="noreferrer" variant="primary" className={styles.cta}>
           Chamar no WhatsApp
           <span>{whatsappLabel}</span>
         </Button>

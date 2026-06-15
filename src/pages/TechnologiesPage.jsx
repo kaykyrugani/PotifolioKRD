@@ -5,7 +5,7 @@ import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
 import tecnologiaHeroImage from '../assets/images/tecnologiaIMG.png';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
-import { whatsappPath } from '../utils/contact';
+import { whatsappUrl } from '../utils/contact';
 import styles from './Page.module.css';
 
 const revealViewport = { once: true, amount: 0.28 };
@@ -1322,7 +1322,7 @@ export default function TechnologiesPage() {
                     <Button href="#tecnologias-ecossistema">Explorar tecnologias</Button>
                   </span>
                   <span className={styles.techHeroSecondaryActionReveal}>
-                    <Button to={whatsappPath} variant="secondary">Iniciar projeto</Button>
+                    <Button href={whatsappUrl} target="_blank" rel="noreferrer" variant="secondary">Iniciar projeto</Button>
                   </span>
                 </div>
               </div>
@@ -1509,8 +1509,10 @@ export default function TechnologiesPage() {
                   whileInView="visible"
                 >
                   <span>{String(index + 1).padStart(2, '0')}</span>
-                  <strong>{item.title}</strong>
-                  <p>{item.description}</p>
+                  <div className={styles.techInfrastructureStepContent}>
+                    <strong>{item.title}</strong>
+                    <p>{item.description}</p>
+                  </div>
                 </motion.li>
               ))}
             </ol>
@@ -1560,7 +1562,7 @@ export default function TechnologiesPage() {
                 Cada ferramenta deve servir a um objetivo: criar uma experiência mais clara, rápida e confiável para o seu público.
               </p>
               <div className={styles.techFinalActions}>
-                <Button to={whatsappPath}>Chamar no WhatsApp</Button>
+                <Button href={whatsappUrl} target="_blank" rel="noreferrer">Chamar no WhatsApp</Button>
                 <Button to="/servicos" variant="secondary">Ver serviços</Button>
               </div>
             </motion.div>

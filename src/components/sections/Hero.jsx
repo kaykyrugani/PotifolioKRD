@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { whatsappPath } from '../../utils/contact';
+import { whatsappUrl } from '../../utils/contact';
 import heroImage from '../../assets/images/ImgHero.png';
 import Button from '../ui/Button';
 import styles from './Hero.module.css';
@@ -84,7 +84,7 @@ export default function Hero() {
             Desenvolvimento de sites institucionais e landing pages rápidas, modernas e otimizadas para SEO, performance e conversão.
           </p>
           <div className={styles.actions}>
-            <Button to={whatsappPath}>Chamar no WhatsApp</Button>
+            <Button href={whatsappUrl} target="_blank" rel="noreferrer">Chamar no WhatsApp</Button>
             <Button to="/projetos" variant="secondary">Ver projetos</Button>
           </div>
         </div>

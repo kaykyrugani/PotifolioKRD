@@ -1,6 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
-import { whatsappLabel, whatsappPath } from '../utils/contact';
+import {
+  emailLabel,
+  emailUrl,
+  instagramLabel,
+  instagramUrl,
+  phoneLabel,
+  phoneUrl,
+  whatsappLabel,
+  whatsappUrl,
+} from '../utils/contact';
 import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
@@ -13,6 +22,13 @@ const heroSignals = [
   { label: 'Planejamento', className: 'contactHeroSignalPlan' },
   { label: 'Desenvolvimento', className: 'contactHeroSignalDev' },
   { label: 'Publicação', className: 'contactHeroSignalLaunch' },
+];
+
+const contactChannels = [
+  { label: 'WhatsApp', value: whatsappLabel, href: whatsappUrl, external: true },
+  { label: 'Telefone', value: phoneLabel, href: phoneUrl },
+  { label: 'Email', value: emailLabel, href: emailUrl },
+  { label: 'Instagram', value: instagramLabel, href: instagramUrl, external: true },
 ];
 
 const processSteps = [
@@ -197,9 +213,23 @@ export default function Contact() {
                 <p>Projetos desenvolvidos com foco em estratégia, experiência do usuário, performance e resultados reais para empresas e profissionais.</p>
               </div>
               <div className={`${styles.contactHeroActions} ${styles.revealItem} ${styles.revealItemVisible}`}>
-                <Button to={whatsappPath}>Iniciar conversa</Button>
+                <Button href={whatsappUrl} target="_blank" rel="noreferrer">Iniciar conversa</Button>
                 <Button to="/projetos" variant="secondary">Ver projetos</Button>
               </div>
+              <address className={styles.contactChannelList} aria-label="Canais de contato">
+                {contactChannels.map((channel) => (
+                  <a
+                    className={styles.contactChannelLink}
+                    href={channel.href}
+                    key={channel.label}
+                    rel={channel.external ? 'noreferrer' : undefined}
+                    target={channel.external ? '_blank' : undefined}
+                  >
+                    <strong>{channel.label}</strong>
+                    <span>{channel.value}</span>
+                  </a>
+                ))}
+              </address>
             </div>
 
             <div className={`${styles.heroImageVisual} ${styles.contactHeroVisual}`} aria-hidden="true">
@@ -365,7 +395,7 @@ export default function Contact() {
               className={getRevealItemClassName(styles.contactFinalActions, revealItemKeys.finalActions)}
               ref={(node) => setRevealItemRef(revealItemKeys.finalActions, node)}
             >
-              <Button to={whatsappPath}>Chamar no WhatsApp</Button>
+              <Button href={whatsappUrl} target="_blank" rel="noreferrer">Chamar no WhatsApp</Button>
               <Button to="/projetos" variant="secondary">Ver projetos</Button>
             </div>
           </section>

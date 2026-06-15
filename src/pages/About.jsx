@@ -3,7 +3,7 @@ import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
 import aboutPhoto from '../assets/images/KaykyRuagani.png';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
-import { whatsappPath } from '../utils/contact';
+import { whatsappUrl } from '../utils/contact';
 import styles from './Page.module.css';
 
 const positioningCards = [
@@ -171,7 +171,7 @@ export default function About() {
               </p>
               <div className={`${styles.aboutHeroActions} ${styles.aboutHeroActionsReveal}`}>
                 <Button to="/servicos">Ver serviços</Button>
-                <Button to={whatsappPath} variant="secondary">Iniciar conversa</Button>
+                <Button href={whatsappUrl} target="_blank" rel="noreferrer" variant="secondary">Iniciar conversa</Button>
               </div>
             </div>
 
@@ -313,7 +313,7 @@ export default function About() {
                   ref={(node) => setRevealItemRef('build-cta', node)}
                 >
                   <p>Quer construir um projeto seguindo esse processo?</p>
-                  <Button to={whatsappPath}>Iniciar conversa</Button>
+                  <Button href={whatsappUrl} target="_blank" rel="noreferrer">Iniciar conversa</Button>
                 </div>
               </div>
             </section>
@@ -390,7 +390,7 @@ export default function About() {
                 Me conte sobre seu projeto e eu te ajudo a entender o melhor caminho para tirar sua ideia do papel com estratégia, design e desenvolvimento.
               </p>
               <div className={styles.aboutFinalActions}>
-                <Button to={whatsappPath}>Chamar no WhatsApp</Button>
+                <Button href={whatsappUrl} target="_blank" rel="noreferrer">Chamar no WhatsApp</Button>
                 <Button to="/servicos" variant="secondary">Ver serviços</Button>
               </div>
             </div>

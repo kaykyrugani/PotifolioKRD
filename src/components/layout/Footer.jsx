@@ -1,8 +1,24 @@
 import { Link } from 'react-router-dom';
 import { navItems, services, technologies } from '../../data/siteContent';
 import logoKrd from '../../assets/logos/logoKRD1semFundo.png';
-import { whatsappLabel, whatsappPath } from '../../utils/contact';
+import {
+  emailLabel,
+  emailUrl,
+  instagramLabel,
+  instagramUrl,
+  phoneLabel,
+  phoneUrl,
+  whatsappLabel,
+  whatsappUrl,
+} from '../../utils/contact';
 import styles from './Footer.module.css';
+
+const contactLinks = [
+  { label: 'WhatsApp', value: whatsappLabel, href: whatsappUrl, external: true },
+  { label: 'Telefone', value: phoneLabel, href: phoneUrl },
+  { label: 'Email', value: emailLabel, href: emailUrl },
+  { label: 'Instagram', value: instagramLabel, href: instagramUrl, external: true },
+];
 
 export default function Footer() {
   return (
@@ -78,9 +94,19 @@ export default function Footer() {
                 </div>
               </div>
             </div>
-            <Link className={styles.contactLink} to={whatsappPath}>
-              WhatsApp: {whatsappLabel}
-            </Link>
+            <div className={styles.contactLinks} aria-label="Canais de contato">
+              {contactLinks.map((contact) => (
+                <a
+                  className={styles.contactLink}
+                  href={contact.href}
+                  key={contact.label}
+                  rel={contact.external ? 'noreferrer' : undefined}
+                  target={contact.external ? '_blank' : undefined}
+                >
+                  {contact.label}: {contact.value}
+                </a>
+              ))}
+            </div>
           </section>
         </div>
 

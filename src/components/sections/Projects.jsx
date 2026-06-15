@@ -4,6 +4,7 @@ import institutionalPreview from '../../assets/images/institucional.png';
 import servicesPagePreview from '../../assets/images/PageServicos.jpeg';
 import customProjectPreview from '../../assets/images/projPersonalisado.jpeg';
 import krdLogoDecoration from '../../assets/logos/logoKRD2semFndo.png';
+import { whatsappUrl } from '../../utils/contact';
 import Button from '../ui/Button';
 import SectionHeader from './SectionHeader';
 import styles from './Projects.module.css';
@@ -44,7 +45,7 @@ export default function Projects({ reveal }) {
             </div>
             <h3>{project.title}</h3>
             <p>{project.description}</p>
-            <Button to="/contato" variant="ghost">Discutir projeto</Button>
+            <Button href={whatsappUrl} target="_blank" rel="noreferrer" variant="ghost">Discutir projeto</Button>
           </article>
         ))}
         <div className={styles.logoDecoration} aria-hidden="true">

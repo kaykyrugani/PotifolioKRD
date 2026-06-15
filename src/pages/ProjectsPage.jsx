@@ -10,7 +10,7 @@ import monitorHeroImage from '../assets/images/monitorIMG.png';
 import projetosHeroImage from '../assets/images/projetosIMG.png';
 import tabletHeroImage from '../assets/images/tabletIMG.png';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
-import { whatsappPath } from '../utils/contact';
+import { whatsappUrl } from '../utils/contact';
 import styles from './Page.module.css';
 
 const filters = [
@@ -131,7 +131,7 @@ export default function ProjectsPage() {
                 </p>
                 <div className={styles.projectsHeroActions}>
                   <Button className={styles.projectsHeroPrimaryAction} href="#projetos-lista">Ver projetos</Button>
-                  <Button className={styles.projectsHeroSecondaryAction} to={whatsappPath} variant="secondary">Iniciar projeto</Button>
+                  <Button className={styles.projectsHeroSecondaryAction} href={whatsappUrl} target="_blank" rel="noreferrer" variant="secondary">Iniciar projeto</Button>
                 </div>
               </div>
 
@@ -319,7 +319,7 @@ export default function ProjectsPage() {
                 <h2 className={styles.revealTitle} id="projects-final-title">Seu projeto pode ser o próximo.</h2>
                 <p className={styles.revealDescription}>Me conte sua ideia e vamos transformar ela em uma experiência digital estratégica.</p>
                 <div className={styles.projectsFinalActions}>
-                  <Button to={whatsappPath}>Chamar no WhatsApp</Button>
+                  <Button href={whatsappUrl} target="_blank" rel="noreferrer">Chamar no WhatsApp</Button>
                   <Button to="/servicos" variant="secondary">Ver serviços</Button>
                 </div>
               </div>
