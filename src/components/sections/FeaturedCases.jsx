@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
+import SectionFold from '../SectionFold/SectionFold';
 import aicCaseImage from '../../assets/imagesCases/aicIMG.png';
 import pomboCaseImage from '../../assets/imagesCases/pomboIMG.png';
 import topCaseImage from '../../assets/imagesCases/topIMG.png';
@@ -153,12 +154,17 @@ function CaseDetail({ activeCase }) {
   );
 }
 
-export default function FeaturedCases() {
+export default function FeaturedCases({ className = '', foldVariant }) {
   const [activeCaseId, setActiveCaseId] = useState(cases[0].id);
   const activeCase = cases.find((item) => item.id === activeCaseId) || cases[0];
+  const SectionComponent = foldVariant ? SectionFold : 'section';
 
   return (
-    <section className={styles.featuredCases} aria-labelledby="featured-cases-title">
+    <SectionComponent
+      className={`${styles.featuredCases} ${className}`}
+      variant={foldVariant}
+      aria-labelledby="featured-cases-title"
+    >
       <div className={styles.inner}>
         <div className={styles.sectionIntro}>
           <p className={styles.eyebrow}>CASES EM DESTAQUE</p>
@@ -191,6 +197,6 @@ export default function FeaturedCases() {
           ))}
         </div>
       </div>
-    </section>
+    </SectionComponent>
   );
 }

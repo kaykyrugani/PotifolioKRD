@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { projectPreviews } from '../data/siteContent';
 import PageLayout from '../components/layout/PageLayout';
+import SectionFold from '../components/SectionFold/SectionFold';
 import FeaturedCases from '../components/sections/FeaturedCases';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
@@ -111,7 +112,11 @@ export default function ProjectsPage() {
       <section className={styles.projectsPage}>
         <div className={styles.projectsBackground} aria-hidden="true" />
 
-        <section className={styles.projectsHero} aria-labelledby="projects-page-title">
+        <SectionFold
+          className={`${styles.projectsHero} ${styles.projectsFoldHero}`}
+          variant="bottom"
+          aria-labelledby="projects-page-title"
+        >
           <Container size="wide">
             <div className={styles.projectsHeroGrid}>
               <div className={styles.projectsHeroCopy}>
@@ -160,10 +165,11 @@ export default function ProjectsPage() {
               </div>
             </div>
           </Container>
-        </section>
+        </SectionFold>
 
-        <section
-          className={getRevealSectionClassName(styles.projectsShowcase, revealSectionKeys.showcase)}
+        <SectionFold
+          className={getRevealSectionClassName(`${styles.projectsShowcase} ${styles.projectsFoldShowcase}`, revealSectionKeys.showcase)}
+          variant="top"
           id="projetos-lista"
           ref={(node) => setRevealSectionRef(revealSectionKeys.showcase, node)}
           aria-labelledby="projects-showcase-title"
@@ -239,84 +245,87 @@ export default function ProjectsPage() {
               ))}
             </div>
           </Container>
-        </section>
+        </SectionFold>
 
-        <FeaturedCases />
+        <FeaturedCases className={styles.projectsFoldCases} foldVariant="bottom" />
 
-        <section
-          className={getRevealSectionClassName(styles.projectsProcessSection, revealSectionKeys.process)}
-          id="processo-aplicado"
-          ref={(node) => setRevealSectionRef(revealSectionKeys.process, node)}
-          aria-labelledby="projects-process-title"
-        >
-          <Container size="wide">
-            <div className={styles.projectsSectionIntro}>
-              <p className={`${styles.projectsEyebrow} ${styles.revealEyebrow}`}>PROCESSO APLICADO</p>
-              <h2 className={styles.revealTitle} id="projects-process-title">O que foi aplicado nesses projetos</h2>
-            </div>
-
-            <ol className={styles.projectsProcessFlow}>
-              {processSteps.map((step, index) => (
-                <li
-                  className={getRevealItemClassName(styles.projectsProcessStep, createRevealItemKey('process', step))}
-                  key={step}
-                  ref={(node) => setRevealItemRef(createRevealItemKey('process', step), node)}
-                >
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <strong>{step}</strong>
-                </li>
-              ))}
-            </ol>
-          </Container>
-        </section>
-
-        <section
-          className={getRevealSectionClassName(styles.projectsResultsSection, revealSectionKeys.results)}
-          ref={(node) => setRevealSectionRef(revealSectionKeys.results, node)}
-          aria-labelledby="projects-results-title"
-        >
-          <Container size="wide">
-            <div className={styles.projectsResultsComposition}>
-              <div className={styles.projectsResultsCopy}>
-                <p className={`${styles.projectsEyebrow} ${styles.revealEyebrow}`}>RESULTADOS</p>
-                <h2 className={styles.revealTitle} id="projects-results-title">Indicadores reais de uma entrega bem construída.</h2>
+        <div className={styles.projectsProcessChapter}>
+          <SectionFold
+            className={getRevealSectionClassName(`${styles.projectsProcessSection} ${styles.projectsFoldProcess}`, revealSectionKeys.process)}
+            variant="top"
+            id="processo-aplicado"
+            ref={(node) => setRevealSectionRef(revealSectionKeys.process, node)}
+            aria-labelledby="projects-process-title"
+          >
+            <Container size="wide">
+              <div className={styles.projectsSectionIntro}>
+                <p className={`${styles.projectsEyebrow} ${styles.revealEyebrow}`}>PROCESSO APLICADO</p>
+                <h2 className={styles.revealTitle} id="projects-process-title">O que foi aplicado nesses projetos</h2>
               </div>
 
-              <div className={styles.projectsResultsTrack}>
-                {resultSignals.map((signal) => (
-                  <span
-                    className={getRevealItemClassName('', createRevealItemKey('result', signal))}
-                    key={signal}
-                    ref={(node) => setRevealItemRef(createRevealItemKey('result', signal), node)}
+              <ol className={styles.projectsProcessFlow}>
+                {processSteps.map((step, index) => (
+                  <li
+                    className={getRevealItemClassName(styles.projectsProcessStep, createRevealItemKey('process', step))}
+                    key={step}
+                    ref={(node) => setRevealItemRef(createRevealItemKey('process', step), node)}
                   >
-                    {signal}
-                  </span>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <strong>{step}</strong>
+                  </li>
                 ))}
-              </div>
-            </div>
-          </Container>
-        </section>
+              </ol>
+            </Container>
+          </SectionFold>
 
-        <section
-          className={getRevealSectionClassName(styles.projectsFinalCta, revealSectionKeys.finalCta)}
-          ref={(node) => setRevealSectionRef(revealSectionKeys.finalCta, node)}
-          aria-labelledby="projects-final-title"
-        >
-          <Container>
-            <div
-              className={getRevealItemClassName(styles.projectsFinalBox, 'final-box')}
-              ref={(node) => setRevealItemRef('final-box', node)}
-            >
-              <p className={`${styles.projectsEyebrow} ${styles.revealEyebrow}`}>PRÓXIMO PROJETO</p>
-              <h2 className={styles.revealTitle} id="projects-final-title">Seu projeto pode ser o próximo.</h2>
-              <p className={styles.revealDescription}>Me conte sua ideia e vamos transformar ela em uma experiência digital estratégica.</p>
-              <div className={styles.projectsFinalActions}>
-                <Button to={whatsappPath}>Chamar no WhatsApp</Button>
-                <Button to="/servicos" variant="secondary">Ver serviços</Button>
+          <section
+            className={getRevealSectionClassName(styles.projectsResultsSection, revealSectionKeys.results)}
+            ref={(node) => setRevealSectionRef(revealSectionKeys.results, node)}
+            aria-labelledby="projects-results-title"
+          >
+            <Container size="wide">
+              <div className={styles.projectsResultsComposition}>
+                <div className={styles.projectsResultsCopy}>
+                  <p className={`${styles.projectsEyebrow} ${styles.revealEyebrow}`}>RESULTADOS</p>
+                  <h2 className={styles.revealTitle} id="projects-results-title">Indicadores reais de uma entrega bem construída.</h2>
+                </div>
+
+                <div className={styles.projectsResultsTrack}>
+                  {resultSignals.map((signal) => (
+                    <span
+                      className={getRevealItemClassName('', createRevealItemKey('result', signal))}
+                      key={signal}
+                      ref={(node) => setRevealItemRef(createRevealItemKey('result', signal), node)}
+                    >
+                      {signal}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-          </Container>
-        </section>
+            </Container>
+          </section>
+
+          <section
+            className={getRevealSectionClassName(styles.projectsFinalCta, revealSectionKeys.finalCta)}
+            ref={(node) => setRevealSectionRef(revealSectionKeys.finalCta, node)}
+            aria-labelledby="projects-final-title"
+          >
+            <Container>
+              <div
+                className={getRevealItemClassName(styles.projectsFinalBox, 'final-box')}
+                ref={(node) => setRevealItemRef('final-box', node)}
+              >
+                <p className={`${styles.projectsEyebrow} ${styles.revealEyebrow}`}>PRÓXIMO PROJETO</p>
+                <h2 className={styles.revealTitle} id="projects-final-title">Seu projeto pode ser o próximo.</h2>
+                <p className={styles.revealDescription}>Me conte sua ideia e vamos transformar ela em uma experiência digital estratégica.</p>
+                <div className={styles.projectsFinalActions}>
+                  <Button to={whatsappPath}>Chamar no WhatsApp</Button>
+                  <Button to="/servicos" variant="secondary">Ver serviços</Button>
+                </div>
+              </div>
+            </Container>
+          </section>
+        </div>
       </section>
     </PageLayout>
   );

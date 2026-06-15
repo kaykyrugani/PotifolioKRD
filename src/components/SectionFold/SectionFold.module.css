@@ -1,0 +1,43 @@
+.fold {
+  --section-fold-depth: 48px;
+
+  position: relative;
+  background: var(--section-fold-bg, #020617);
+}
+
+.bottom {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--section-fold-depth)),
+    59% calc(100% - var(--section-fold-depth)),
+    50% 100%,
+    41% calc(100% - var(--section-fold-depth)),
+    0 calc(100% - var(--section-fold-depth))
+  );
+}
+
+.top {
+  margin-top: calc(var(--section-fold-depth) * -1);
+  clip-path: polygon(
+    0 var(--section-fold-depth),
+    41% var(--section-fold-depth),
+    50% 0,
+    59% var(--section-fold-depth),
+    100% var(--section-fold-depth),
+    100% 100%,
+    0 100%
+  );
+}
+
+@media (max-width: 1024px) {
+  .fold {
+    --section-fold-depth: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .fold {
+    --section-fold-depth: 20px;
+  }
+}
