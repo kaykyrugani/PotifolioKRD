@@ -1,10 +1,10 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import SectionFold from '../SectionFold/SectionFold';
-import aicCaseImage from '../../assets/imagesCases/aicIMG.png';
-import pomboCaseImage from '../../assets/imagesCases/pomboIMG.png';
-import topCaseImage from '../../assets/imagesCases/topIMG.png';
-import ucanCaseImage from '../../assets/imagesCases/ucanIMG.png';
+import aicCaseImage from '../../assets/imagesCases/aicIMG.webp';
+import pomboCaseImage from '../../assets/imagesCases/pomboIMG.webp';
+import topCaseImage from '../../assets/imagesCases/topIMG.webp';
+import ucanCaseImage from '../../assets/imagesCases/ucanIMG.webp';
 import styles from './FeaturedCases.module.css';
 
 const cases = [

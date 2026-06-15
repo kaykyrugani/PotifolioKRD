@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
-import servicosHeroImage from '../assets/images/servicosIMG.png';
+import servicosHeroImage from '../assets/images/servicosIMG.webp';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 import { whatsappUrl } from '../utils/contact';
 import styles from './Page.module.css';

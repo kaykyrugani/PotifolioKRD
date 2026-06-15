@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { whatsappUrl } from '../../utils/contact';
-import heroImage from '../../assets/images/ImgHero.png';
+import heroImage from '../../assets/images/ImgHero.webp';
 import Button from '../ui/Button';
 import styles from './Hero.module.css';
 

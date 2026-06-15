@@ -13,7 +13,7 @@ import {
 import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
-import contatoHeroImage from '../assets/images/contatoIMG.png';
+import contatoHeroImage from '../assets/images/contatoIMG.webp';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 import styles from './Page.module.css';
 

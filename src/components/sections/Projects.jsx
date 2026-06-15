@@ -1,9 +1,9 @@
 import { projectPreviews } from '../../data/siteContent';
-import landingPagePreview from '../../assets/images/landingPage.jpeg';
-import institutionalPreview from '../../assets/images/institucional.png';
-import servicesPagePreview from '../../assets/images/PageServicos.jpeg';
-import customProjectPreview from '../../assets/images/projPersonalisado.jpeg';
-import krdLogoDecoration from '../../assets/logos/logoKRD2semFndo.png';
+import landingPagePreview from '../../assets/images/landingPage.webp';
+import institutionalPreview from '../../assets/images/institucional.webp';
+import servicesPagePreview from '../../assets/images/PageServicos.webp';
+import customProjectPreview from '../../assets/images/projPersonalisado.webp';
+import krdLogoDecoration from '../../assets/logos/logoKRD2semFndo.webp';
 import { whatsappUrl } from '../../utils/contact';
 import Button from '../ui/Button';
 import SectionHeader from './SectionHeader';

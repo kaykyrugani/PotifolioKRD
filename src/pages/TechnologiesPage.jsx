@@ -3,7 +3,7 @@ import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform 
 import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
-import tecnologiaHeroImage from '../assets/images/tecnologiaIMG.png';
+import tecnologiaHeroImage from '../assets/images/tecnologiaIMG.webp';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 import { whatsappUrl } from '../utils/contact';
 import styles from './Page.module.css';

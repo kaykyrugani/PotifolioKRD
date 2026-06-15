@@ -83,7 +83,7 @@ Objetivo visual:
 
 - primeira dobra forte, premium e limpa;
 - titulo menor que a versao inicial para equilibrar copy, CTAs e imagem;
-- imagem `ImgHero.png` como ativo principal;
+- imagem `ImgHero.webp` como ativo principal;
 - CTAs para WhatsApp e projetos;
 - badges e beneficios rapidos como sinais de proposta tecnica.
 

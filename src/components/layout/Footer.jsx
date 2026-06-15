@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { navItems, services, technologies } from '../../data/siteContent';
-import logoKrd from '../../assets/logos/logoKRD1semFundo.png';
+import logoKrd from '../../assets/logos/logoKRD1semFundo.webp';
 import {
   emailLabel,
   emailUrl,

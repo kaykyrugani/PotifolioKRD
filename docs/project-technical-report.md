@@ -17,6 +17,8 @@ Este documento registra o estado atual do projeto Kayky Rugani Dev com base no c
 
 O projeto não usa TypeScript, bibliotecas de UI externas, Tailwind, Sass, shadcn ou dependências visuais adicionais. A UI atual é construída com React, CSS Modules e CSS puro.
 
+Os ativos raster usados pela interface são importados em formato WebP. Os arquivos SVG permanecem em uso para favicon, ícones e elementos vetoriais.
+
 ## Estrutura do Projeto
 
 ### Entrada e roteamento
@@ -313,7 +315,7 @@ O Hero é uma composição editorial dark tech:
 - headline grande com gradiente no termo `clientes`
 - eyebrow técnico
 - subtítulo e CTAs
-- imagem `ImgHero.png`
+- imagem `ImgHero.webp`
 - badges flutuantes no desktop
 - cards de benefícios rápidos
 - glow radial atrás da imagem
