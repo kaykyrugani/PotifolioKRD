@@ -19,6 +19,8 @@ const cases = [
     result: 'Experiência otimizada para dispositivos móveis e preparada para campanhas.',
     image: aicCaseImage,
     imageAlt: 'Landing page desenvolvida para AIC',
+    imageWidth: 1920,
+    imageHeight: 5959,
   },
   {
     id: '02',
@@ -31,6 +33,8 @@ const cases = [
     result: 'Site rápido, responsivo e preparado para gerar confiança no primeiro contato.',
     image: pomboCaseImage,
     imageAlt: 'Site institucional desenvolvido para Pombo Chester',
+    imageWidth: 1906,
+    imageHeight: 7336,
   },
   {
     id: '03',
@@ -43,6 +47,8 @@ const cases = [
     result: 'Experiência digital consistente, responsiva e orientada à autoridade profissional.',
     image: topCaseImage,
     imageAlt: 'Site desenvolvido para Top Locações',
+    imageWidth: 1920,
+    imageHeight: 8860,
   },
   {
     id: '04',
@@ -55,6 +61,8 @@ const cases = [
     result: 'Fluxo mais claro para apresentação do serviço e geração de oportunidades.',
     image: ucanCaseImage,
     imageAlt: 'Landing page desenvolvida para U Can',
+    imageWidth: 1920,
+    imageHeight: 14013,
   },
 ];
 
@@ -111,6 +119,8 @@ function CasePreview({ activeCase }) {
             className={styles.previewImage}
             src={activeCase.image}
             alt={activeCase.imageAlt}
+            width={activeCase.imageWidth}
+            height={activeCase.imageHeight}
             loading="lazy"
           />
         </motion.div>

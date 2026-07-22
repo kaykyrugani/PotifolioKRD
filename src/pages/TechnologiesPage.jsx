@@ -1362,6 +1362,8 @@ export default function TechnologiesPage() {
                   className={styles.techHeroPerson}
                   src={tecnologiaHeroImage}
                   alt=""
+                  width="1024"
+                  height="1536"
                   loading="eager"
                 />
               </div>

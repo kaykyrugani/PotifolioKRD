@@ -167,7 +167,7 @@ export default function About() {
                 <span className={styles.aboutHeroTitleLine}>por trás dos projetos.</span>
               </h1>
               <p className={styles.aboutHeroDescription}>
-                Sou Kayky Rugani, desenvolvedor focado em criar sites, landing pages e experiências digitais que unem design, performance, SEO técnico e clareza comercial. Meu trabalho combina prototipação, desenvolvimento front-end, otimização e suporte para transformar ideias em presença digital profissional.
+                Sou Kayky Rugani, desenvolvedor web em Franca focado em criar sites, landing pages e experiências digitais que unem design, performance, SEO técnico e clareza comercial. Meu trabalho combina prototipação, desenvolvimento front-end, otimização e suporte para transformar ideias em presença digital profissional.
               </p>
               <div className={`${styles.aboutHeroActions} ${styles.aboutHeroActionsReveal}`}>
                 <Button to="/servicos">Ver serviços</Button>
@@ -181,7 +181,10 @@ export default function About() {
                 <img
                   src={aboutPhoto}
                   alt="Retrato de Kayky Rugani, desenvolvedor front-end."
+                  width="1122"
+                  height="1402"
                   loading="eager"
+                  fetchPriority="high"
                 />
               </div>
             </div>

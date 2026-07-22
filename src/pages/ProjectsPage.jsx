@@ -148,19 +148,19 @@ export default function ProjectsPage() {
                 <span className={`${styles.projectsHeroDot} ${styles.projectsHeroDotThree}`} />
 
                 <div className={`${styles.projectsHeroDevice} ${styles.projectsHeroMonitor}`}>
-                  <img src={monitorHeroImage} alt="" loading="eager" />
+                  <img src={monitorHeroImage} alt="" width="1536" height="1024" loading="eager" />
                 </div>
 
                 <div className={`${styles.projectsHeroDevice} ${styles.projectsHeroTablet}`}>
-                  <img src={tabletHeroImage} alt="" loading="eager" />
+                  <img src={tabletHeroImage} alt="" width="1536" height="1024" loading="eager" />
                 </div>
 
                 <div className={`${styles.projectsHeroDevice} ${styles.projectsHeroPhone}`}>
-                  <img src={celularHeroImage} alt="" loading="eager" />
+                  <img src={celularHeroImage} alt="" width="1024" height="1536" loading="eager" />
                 </div>
 
                 <div className={styles.projectsHeroPerson}>
-                  <img src={projetosHeroImage} alt="" loading="eager" />
+                  <img src={projetosHeroImage} alt="" width="1023" height="1537" loading="eager" />
                 </div>
               </div>
             </div>

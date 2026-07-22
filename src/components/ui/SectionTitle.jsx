@@ -5,6 +5,7 @@ export default function SectionTitle({
   eyebrow,
   title,
   description,
+  as: Heading = 'h1',
   align = 'center',
   className = '',
   eyebrowClassName = '',
@@ -16,7 +17,7 @@ export default function SectionTitle({
   return (
     <div className={classNames}>
       {eyebrow && <Badge className={eyebrowClassName}>{eyebrow}</Badge>}
-      <h1 className={titleClassName}>{title}</h1>
+      <Heading className={titleClassName}>{title}</Heading>
       {description && <p className={descriptionClassName}>{description}</p>}
     </div>
   );

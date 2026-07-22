@@ -6,6 +6,7 @@ import Contact from './pages/Contact';
 import ProjectsPage from './pages/ProjectsPage';
 import ServicesPage from './pages/ServicesPage';
 import TechnologiesPage from './pages/TechnologiesPage';
+import Seo from './components/seo/Seo';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -28,6 +29,7 @@ function ScrollToTop() {
 function App() {
   return (
     <>
+      <Seo />
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />

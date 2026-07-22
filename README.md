@@ -21,6 +21,18 @@ npm run lint
 npm run preview
 ```
 
+## SEO e URL de produção
+
+A URL canônica atual é `https://potifolio-krd.vercel.app` e fica centralizada para o React em `src/config/seo.js`. O mesmo arquivo concentra titles e descriptions das rotas públicas.
+
+Quando houver domínio próprio, atualizar também as referências absolutas necessárias aos arquivos estáticos:
+
+- `index.html`
+- `public/robots.txt`
+- `public/sitemap.xml`
+
+O campo `SOCIAL_IMAGE_URL` deve permanecer vazio enquanto não existir uma imagem pública adequada para Open Graph e Twitter Cards.
+
 ## Estrutura principal
 
 - `src/main.jsx`: inicialização React, `StrictMode` e `BrowserRouter`.

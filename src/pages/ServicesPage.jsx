@@ -231,7 +231,7 @@ export default function ServicesPage() {
                       <span className={styles.heroTitleLine}>evolução</span>
                     </h1>
                     <p className={styles.heroDescription}>
-                      Desenvolvimento de sites, landing pages, hospedagem e suporte técnico com foco em experiência, performance e crescimento.
+                      Desenvolvimento de sites, landing pages, hospedagem e suporte técnico para empresas em Franca e região, com foco em experiência, performance e crescimento.
                     </p>
                     <div className={`${styles.servicesHeroActions} ${styles.heroActions}`}>
                       <Button className={styles.servicesHeroPrimaryCta} href="#solucoes">Ver soluções</Button>
@@ -244,7 +244,14 @@ export default function ServicesPage() {
                       <span className={styles.servicesHeroSceneGlow} />
                       <span className={styles.servicesHeroSceneGrid} />
 
-                      <img className={styles.servicesHeroPerson} src={servicosHeroImage} alt="" loading="eager" />
+                      <img
+                        className={styles.servicesHeroPerson}
+                        src={servicosHeroImage}
+                        alt=""
+                        width="1024"
+                        height="1536"
+                        loading="eager"
+                      />
 
                       <div className={`${styles.servicesInterfaceFragment} ${styles.servicesHeroFragment} ${styles.servicesFragmentLanding}`}>
                         <span className={styles.servicesFragmentLabel}>Landing Page estratégica</span>

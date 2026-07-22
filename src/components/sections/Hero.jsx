@@ -65,9 +65,9 @@ export default function Hero() {
     <section id="home" className={styles.hero}>
       <div className={styles.inner}>
         <div className={styles.heroContent}>
-          <p className={styles.eyebrow}>DARK TECH PREMIUM PARA PRESENÇA DIGITAL</p>
+          <p className={styles.eyebrow}>DESENVOLVIMENTO WEB EM FRANCA</p>
           <h1 className={styles.heroTitle}>
-            Crio sites que transformam visitantes em{' '}
+            Criação de sites e landing pages em Franca para transformar visitantes em{' '}
             <span
               className={styles.heroTitleHighlight}
               data-text={highlightWord}
@@ -81,7 +81,7 @@ export default function Hero() {
 
         <div className={styles.heroTextBlock}>
           <p className={styles.subtitle}>
-            Desenvolvimento de sites institucionais e landing pages rápidas, modernas e otimizadas para SEO, performance e conversão.
+            Sites profissionais para empresas em Franca e região, com interfaces rápidas, modernas e otimizadas para SEO, performance e conversão.
           </p>
           <div className={styles.actions}>
             <Button href={whatsappUrl} target="_blank" rel="noreferrer">Chamar no WhatsApp</Button>
@@ -119,7 +119,14 @@ export default function Hero() {
               <span />
             </div>
           </div>
-          <img src={heroImage} alt="" loading="eager" />
+          <img
+            src={heroImage}
+            alt=""
+            width="1672"
+            height="941"
+            loading="eager"
+            fetchPriority="high"
+          />
         </div>
 
         <ul className={styles.quickBenefits} aria-label="Benefícios rápidos">

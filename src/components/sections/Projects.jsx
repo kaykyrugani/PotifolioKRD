@@ -12,10 +12,10 @@ import styles from './Projects.module.css';
 const createRevealItemKey = (groupKey, index) => `${groupKey}-${index}`;
 
 const projectPreviewImages = [
-  landingPagePreview,
-  institutionalPreview,
-  servicesPagePreview,
-  customProjectPreview,
+  { src: landingPagePreview, width: 1600, height: 906 },
+  { src: institutionalPreview, width: 1899, height: 1080 },
+  { src: servicesPagePreview, width: 1600, height: 896 },
+  { src: customProjectPreview, width: 1600, height: 900 },
 ];
 
 export default function Projects({ reveal }) {
@@ -41,7 +41,13 @@ export default function Projects({ reveal }) {
             ref={(node) => reveal?.setRevealItemRef(createRevealItemKey('projects', index), node)}
           >
             <div className={styles.preview}>
-              <img src={projectPreviewImages[index]} alt={`Preview visual - ${project.title}`} />
+              <img
+                src={projectPreviewImages[index].src}
+                alt={`Prévia do projeto conceitual: ${project.title}`}
+                width={projectPreviewImages[index].width}
+                height={projectPreviewImages[index].height}
+                loading="lazy"
+              />
             </div>
             <h3>{project.title}</h3>
             <p>{project.description}</p>
@@ -49,7 +55,7 @@ export default function Projects({ reveal }) {
           </article>
         ))}
         <div className={styles.logoDecoration} aria-hidden="true">
-          <img src={krdLogoDecoration} alt="" />
+          <img src={krdLogoDecoration} alt="" width="776" height="394" loading="lazy" />
         </div>
       </div>
     </section>

@@ -68,7 +68,14 @@ export default function Footer() {
               <circle cx="122" cy="38" r="4" />
             </svg>
             <div className={styles.logoPortal}>
-              <img className={styles.footerLogo} src={logoKrd} alt="Kayky Rugani Dev" />
+              <img
+                className={styles.footerLogo}
+                src={logoKrd}
+                alt="Kayky Rugani Dev"
+                width="1536"
+                height="1024"
+                loading="lazy"
+              />
             </div>
           </div>
 

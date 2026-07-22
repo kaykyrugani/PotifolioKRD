@@ -153,26 +153,6 @@ export default function Contact() {
   }, [setRevealSectionRef]);
 
   useEffect(() => {
-    const previousTitle = document.title;
-    const descriptionTag = document.querySelector('meta[name="description"]');
-    const previousDescription = descriptionTag?.getAttribute('content') || '';
-
-    document.title = 'Contato | Kayky Rugani - Desenvolvedor Front-End';
-
-    if (descriptionTag) {
-      descriptionTag.setAttribute('content', 'Entre em contato para desenvolver sites profissionais, landing pages e experiências digitais com foco em performance, SEO e conversão.');
-    }
-
-    return () => {
-      document.title = previousTitle;
-
-      if (descriptionTag) {
-        descriptionTag.setAttribute('content', previousDescription);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
     const media = window.matchMedia('(min-width: 900px)');
     const syncMedia = () => {
       setIsProjectScrollEnabled(media.matches);
@@ -210,7 +190,7 @@ export default function Contact() {
               <h1 className={styles.revealTitle} id="contact-page-title">Vamos conversar sobre seu projeto.</h1>
               <div className={styles.revealDescription}>
                 <p className={styles.contactVisualTitle}>Vamos transformar sua ideia em uma experiência digital de alta performance.</p>
-                <p>Projetos desenvolvidos com foco em estratégia, experiência do usuário, performance e resultados reais para empresas e profissionais.</p>
+                <p>Atendimento a empresas, pequenos negócios e profissionais em Franca e região, com foco em estratégia, experiência do usuário, performance e resultados.</p>
               </div>
               <div className={`${styles.contactHeroActions} ${styles.revealItem} ${styles.revealItemVisible}`}>
                 <Button href={whatsappUrl} target="_blank" rel="noreferrer">Iniciar conversa</Button>
@@ -240,7 +220,13 @@ export default function Contact() {
                   <path d="M244 254C176 264 118 312 94 380" />
                   <path d="M224 174C156 134 108 152 78 212" />
                 </svg>
-                <img src={contatoHeroImage} alt="" loading="eager" />
+                <img
+                  src={contatoHeroImage}
+                  alt=""
+                  width="1024"
+                  height="1536"
+                  loading="eager"
+                />
                 {heroSignals.map((signal, index) => (
                   <motion.span
                     className={`${styles.contactHeroSignal} ${styles[signal.className]}`}
