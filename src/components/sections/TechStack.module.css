@@ -149,6 +149,15 @@
   grid-template-rows: repeat(4, minmax(112px, 1fr));
 }
 
+.techGroup,
+.techGroupGrid {
+  display: contents;
+}
+
+.groupTitle {
+  display: none;
+}
+
 .techCard {
   position: relative;
   display: grid;
@@ -232,35 +241,35 @@
   opacity: 0.92;
 }
 
-.techCard:nth-child(1) {
+.reactCard {
   grid-area: react;
 }
 
-.techCard:nth-child(2) {
+.performanceCard {
   grid-area: performance;
 }
 
-.techCard:nth-child(3) {
+.seoCard {
   grid-area: seo;
 }
 
-.techCard:nth-child(4) {
+.nodeCard {
   grid-area: node;
 }
 
-.techCard:nth-child(5) {
+.javascriptCard {
   grid-area: javascript;
 }
 
-.techCard:nth-child(6) {
+.viteCard {
   grid-area: vite;
 }
 
-.techCard:nth-child(7) {
+.cssCard {
   grid-area: css;
 }
 
-.techCard:nth-child(8) {
+.apisCard {
   grid-area: apis;
 }
 
@@ -382,23 +391,96 @@
   .corePanel {
     min-height: auto;
     padding: var(--space-4);
+    overflow: visible;
   }
 
   .coreCenter {
-    display: none;
+    position: relative;
+    top: auto;
+    left: auto;
+    display: flex;
+    width: 100%;
+    min-height: 104px;
+    aspect-ratio: auto;
+    gap: var(--space-3);
+    align-items: baseline;
+    justify-content: flex-start;
+    padding: var(--space-5);
+    border-radius: 20px;
+    translate: none;
+  }
+
+  .coreCenter strong {
+    font-size: clamp(1.65rem, 5vw, 2.15rem);
   }
 
   .coreGrid {
     min-height: auto;
-    padding: 0;
+    gap: var(--space-4);
+    padding: var(--space-4) 0 0;
     grid-template-areas: none;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     grid-template-rows: none;
+  }
+
+  .techGroup {
+    display: grid;
+    min-width: 0;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid rgba(255, 255, 255, 0.075);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.022);
+  }
+
+  .groupTitle {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .groupTitle span {
+    color: var(--color-blue-cyan);
+    font-family: var(--font-heading);
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+  }
+
+  .groupTitle strong {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .techGroupGrid {
+    display: grid;
+    min-width: 0;
+    gap: var(--space-3);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .optimizationGroup .techGroupGrid {
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
   }
 
   .techCard {
     grid-area: auto;
     min-height: 124px;
+  }
+
+  .frontendGroup .reactCard {
+    grid-column: 1 / -1;
+    min-height: 146px;
+  }
+
+  .frontendGroup .cssCard {
+    grid-column: 1 / -1;
+    min-height: 104px;
   }
 
   .primary,
@@ -408,10 +490,7 @@
   }
 
   .groupLegend {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    margin-top: var(--space-4);
+    display: none;
   }
 }
 
@@ -433,13 +512,30 @@
     border-radius: 22px;
   }
 
-  .coreGrid {
-    grid-template-columns: 1fr;
+  .coreCenter {
+    min-height: 92px;
+    padding: var(--space-4);
+  }
+
+  .techGroup {
+    padding: var(--space-3);
+  }
+
+  .techGroupGrid,
+  .optimizationGroup .techGroupGrid {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .techCard {
+    grid-column: auto;
     min-height: auto;
     padding: var(--space-5);
+  }
+
+  .frontendGroup .reactCard,
+  .frontendGroup .cssCard {
+    grid-column: auto;
+    min-height: auto;
   }
 }
 

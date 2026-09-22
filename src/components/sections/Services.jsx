@@ -1,18 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion';
+import { useCallback } from 'react';
 import { services } from '../../data/siteContent';
 import { whatsappUrl } from '../../utils/contact';
 import Button from '../ui/Button';
 import styles from './Services.module.css';
 
-const processFlow = [
-  'Estratégia',
-  'Design',
-  'Desenvolvimento',
-  'Resultado',
-];
-
-const mobileCarouselMediaQuery = '(max-width: 900px)';
+const processFlow = ['Estratégia', 'Design', 'Desenvolvimento', 'Resultado'];
 
 const serviceNarratives = {
   'Sites Institucionais': {
@@ -75,25 +67,8 @@ function getServiceNarrative(service) {
   };
 }
 
-function getActiveServiceIndex(progress, total) {
-  if (total <= 1) {
-    return 0;
-  }
-
-  if (total === 4) {
-    if (progress < 0.34) return 0;
-    if (progress < 0.64) return 1;
-    if (progress < 0.94) return 2;
-    return 3;
-  }
-
-  return Math.min(total - 1, Math.max(0, Math.floor(progress * total)));
-}
-
 function getServiceCtaLabel(service) {
-  if (service.ctaLabel) {
-    return service.ctaLabel;
-  }
+  if (service.ctaLabel) return service.ctaLabel;
 
   const normalizedTitle = service.title.toLowerCase();
 
@@ -105,463 +80,116 @@ function getServiceCtaLabel(service) {
   return 'Conversar sobre este serviço';
 }
 
-function ServicesOrbitBackground({ progress, activeIndex, total }) {
-  const orbitRotate = useTransform(progress, [0, 1], [-8, 24]);
-  const orbitScale = useTransform(progress, [0, 0.5, 1], [0.985, 1.02, 1]);
-  const progressPath = useTransform(progress, [0, 1], [0.12, 0.92]);
-  const connectorPath = useTransform(progress, [0, 1], [0.18, 1]);
-  const ambientOpacity = useTransform(progress, [0, 0.45, 1], [0.58, 0.72, 0.62]);
-  const currentStep = total > 0 ? activeIndex + 1 : 1;
-
+function ServicesDecoration() {
   return (
-    <div
-      className={`${styles.orbitBackground} ${styles[`orbitBackgroundStep${currentStep}`] ?? ''}`}
-      aria-hidden="true"
-    >
-      <motion.span className={`${styles.ambientGlow} ${styles.ambientGlowLeft}`} style={{ opacity: ambientOpacity }} />
-      <span className={`${styles.ambientGlow} ${styles.ambientGlowRight}`} />
-      <span className={`${styles.ambientGlow} ${styles.ambientAurora}`} />
-
-      <motion.div
-        className={styles.orbitSystem}
-        style={{
-          rotate: orbitRotate,
-          scale: orbitScale,
-        }}
-      >
-        <svg className={styles.orbitSvg} viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="servicesOrbitGradient" x1="28" y1="38" x2="224" y2="222" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#00C2FF" />
-              <stop offset="0.54" stopColor="#3B82F6" />
-              <stop offset="1" stopColor="#8B5CF6" />
-            </linearGradient>
-            <radialGradient id="servicesOrbitCore" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(130 130) rotate(90) scale(60)">
-              <stop stopColor="#00C2FF" stopOpacity="0.28" />
-              <stop offset="1" stopColor="#00C2FF" stopOpacity="0" />
-            </radialGradient>
-          </defs>
-
-          <circle className={styles.orbitCore} cx="130" cy="130" r="60" fill="url(#servicesOrbitCore)" />
-          <circle className={styles.orbitRingMuted} cx="130" cy="130" r="102" />
-          <circle className={styles.orbitRingMuted} cx="130" cy="130" r="66" />
-          <circle className={styles.orbitRingSoft} cx="130" cy="130" r="34" />
-
-          <path className={styles.orbitArc} d="M32 136c18-58 55-94 110-108 33-8 62-3 88 15" />
-          <path className={styles.orbitArcMuted} d="M226 124c-22 62-62 98-119 108-32 6-60-2-82-22" />
-          <motion.path
-            className={styles.orbitProgressArc}
-            d="M47 96a92 92 0 0 1 166 18"
-            style={{ pathLength: progressPath }}
-          />
-
-          <line className={styles.orbitTechLine} x1="70" y1="74" x2="190" y2="190" />
-          <line className={styles.orbitTechLine} x1="202" y1="88" x2="68" y2="178" />
-          <circle className={styles.orbitNode} cx="70" cy="74" r="4" />
-          <circle className={styles.orbitNode} cx="202" cy="88" r="4" />
-          <circle className={styles.orbitNodeDim} cx="190" cy="190" r="3.5" />
-          <circle className={styles.orbitNodeDim} cx="68" cy="178" r="3.5" />
-          <circle className={styles.orbitDot} cx="213" cy="118" r="5" />
-        </svg>
-      </motion.div>
-
-      <svg className={styles.energyLine} viewBox="0 0 900 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div className={styles.decoration} aria-hidden="true">
+      <span className={styles.glowLeft} />
+      <span className={styles.glowRight} />
+      <svg className={styles.orbit} viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient id="servicesEnergyGradient" x1="90" y1="102" x2="812" y2="160" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#00C2FF" stopOpacity="0" />
-            <stop offset="0.18" stopColor="#00C2FF" stopOpacity="0.34" />
-            <stop offset="0.64" stopColor="#3B82F6" stopOpacity="0.2" />
-            <stop offset="1" stopColor="#8B5CF6" stopOpacity="0" />
+          <linearGradient id="servicesOrbitGradient" x1="28" y1="38" x2="224" y2="222" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#00C2FF" />
+            <stop offset="0.54" stopColor="#3B82F6" />
+            <stop offset="1" stopColor="#8B5CF6" />
           </linearGradient>
         </defs>
-        <motion.path
-          className={styles.energyLinePath}
-          d="M92 126C244 76 330 88 456 132C586 178 666 172 812 112"
-          style={{ pathLength: connectorPath }}
-        />
-        <circle className={styles.energyPulse} cx="456" cy="132" r="4" />
+        <circle cx="130" cy="130" r="102" />
+        <circle cx="130" cy="130" r="66" />
+        <path d="M32 136c18-58 55-94 110-108 33-8 62-3 88 15" />
+        <path d="M226 124c-22 62-62 98-119 108-32 6-60-2-82-22" />
+        <circle className={styles.orbitDot} cx="213" cy="118" r="5" />
       </svg>
     </div>
   );
 }
 
-function AnimatedServiceCard({
-  activeIndex,
-  children,
-  index,
-  isCarousel,
-  serviceTitle,
-  total,
-  scrollYProgress,
-}) {
-  const segment = 1 / total;
-  const start = index * segment;
-  const end = start + segment;
-  const fixedRanges = [
-    {
-      inputRange: [0, 0.2, 0.26],
-      opacityRange: [1, 1, 0],
-      yRange: [0, 0, -48],
-      scaleRange: [0.985, 1, 0.985],
-    },
-    {
-      inputRange: [0.27, 0.34, 0.49, 0.56],
-      opacityRange: [0, 1, 1, 0],
-      yRange: [56, 0, 0, -48],
-      scaleRange: [0.985, 1, 1, 0.985],
-    },
-    {
-      inputRange: [0.57, 0.64, 0.79, 0.86],
-      opacityRange: [0, 1, 1, 0],
-      yRange: [56, 0, 0, -48],
-      scaleRange: [0.985, 1, 1, 0.985],
-    },
-    {
-      inputRange: [0.87, 0.94, 1],
-      opacityRange: [0, 1, 1],
-      yRange: [56, 0, 0],
-      scaleRange: [0.985, 1, 1],
-    },
-  ];
-  let inputRange;
-  let opacityRange;
-  let yRange;
-  let scaleRange;
-  const isActive = activeIndex === index;
-  const zIndexValue = isActive ? 10 : index + 1;
-
-  if (total === fixedRanges.length) {
-    ({ inputRange, opacityRange, yRange, scaleRange } = fixedRanges[index]);
-  } else if (index === 0) {
-    inputRange = [0, end * 0.82, end, Math.min(1, end + segment * 0.2)];
-    opacityRange = [1, 1, 0.15, 0];
-    yRange = [0, 0, -32, -56];
-    scaleRange = [1, 1, 0.99, 0.985];
-  } else if (index === total - 1) {
-    inputRange = [
-      start + segment * 0.02,
-      start + segment * 0.24,
-      1,
-    ];
-    opacityRange = [0, 1, 1];
-    yRange = [64, 0, 0];
-    scaleRange = [0.985, 1, 1];
-  } else {
-    inputRange = [
-      start + segment * 0.02,
-      start + segment * 0.24,
-      end - segment * 0.22,
-      end + segment * 0.06,
-    ];
-    opacityRange = [0, 1, 1, 0];
-    yRange = [64, 0, 0, -56];
-    scaleRange = [0.985, 1, 1, 0.985];
-  }
-
-  const opacity = useTransform(scrollYProgress, inputRange, opacityRange);
-  const visibleOpacity = useTransform(opacity, (value) => (isActive ? Math.max(value, 0.98) : value));
-  const yRaw = useTransform(scrollYProgress, inputRange, yRange);
-  const scaleRaw = useTransform(scrollYProgress, inputRange, scaleRange);
-  const y = useSpring(yRaw, { stiffness: 96, damping: 30, mass: 0.72 });
-  const scale = useSpring(scaleRaw, { stiffness: 120, damping: 32, mass: 0.72 });
-  const blur = useTransform(opacity, (value) => (isActive ? 'blur(0px)' : `blur(${Math.max(0, (1 - value) * 10)}px)`));
-  const visibility = useTransform(opacity, (value) => value > 0.01 ? 'visible' : 'hidden');
-
-  return (
-    <motion.div
-      className={`${styles.animatedCard} ${isActive ? styles.animatedCardActive : ''}`}
-      role={isCarousel ? 'group' : undefined}
-      aria-hidden={!isCarousel && !isActive}
-      aria-label={isCarousel ? `${serviceTitle}, item ${index + 1} de ${total}` : undefined}
-      aria-roledescription={isCarousel ? 'slide' : undefined}
-      style={{
-        opacity: visibleOpacity,
-        y,
-        scale,
-        filter: blur,
-        visibility: isActive ? 'visible' : visibility,
-        zIndex: zIndexValue,
-        pointerEvents: isActive ? 'auto' : 'none',
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
 export default function Services({ reveal }) {
-  const sectionRef = useRef(null);
-  const carouselRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isMobileCarousel, setIsMobileCarousel] = useState(() => (
-    typeof window !== 'undefined' && window.matchMedia(mobileCarouselMediaQuery).matches
-  ));
-  const sectionKey = 'services';
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end end'],
-  });
-  const activeService = services[activeIndex] ?? services[0];
-  const activeNarrative = getServiceNarrative(activeService);
-  const serviceProgress = services.length > 0 ? ((activeIndex + 1) / services.length) * 100 : 0;
-
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    if (isMobileCarousel) {
-      return;
-    }
-
-    const nextIndex = getActiveServiceIndex(latest, services.length);
-    setActiveIndex((currentIndex) => (currentIndex === nextIndex ? currentIndex : nextIndex));
-  });
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia(mobileCarouselMediaQuery);
-    const updateCarouselMode = () => {
-      setIsMobileCarousel(mediaQuery.matches);
-      setActiveIndex(0);
-    };
-
-    updateCarouselMode();
-    mediaQuery.addEventListener('change', updateCarouselMode);
-
-    return () => mediaQuery.removeEventListener('change', updateCarouselMode);
-  }, []);
-
-  useEffect(() => {
-    const carousel = carouselRef.current;
-
-    if (!isMobileCarousel || !carousel) {
-      return undefined;
-    }
-
-    let frameId = 0;
-
-    const updateActiveCard = () => {
-      cancelAnimationFrame(frameId);
-      frameId = requestAnimationFrame(() => {
-        const carouselCenter = carousel.getBoundingClientRect().left + carousel.clientWidth / 2;
-        const cards = Array.from(carousel.children);
-        let closestIndex = 0;
-        let closestDistance = Number.POSITIVE_INFINITY;
-
-        cards.forEach((card, index) => {
-          const cardRect = card.getBoundingClientRect();
-          const cardCenter = cardRect.left + cardRect.width / 2;
-          const distance = Math.abs(carouselCenter - cardCenter);
-
-          if (distance < closestDistance) {
-            closestDistance = distance;
-            closestIndex = index;
-          }
-        });
-
-        setActiveIndex((currentIndex) => (
-          currentIndex === closestIndex ? currentIndex : closestIndex
-        ));
-      });
-    };
-
-    updateActiveCard();
-    carousel.addEventListener('scroll', updateActiveCard, { passive: true });
-
-    return () => {
-      cancelAnimationFrame(frameId);
-      carousel.removeEventListener('scroll', updateActiveCard);
-    };
-  }, [isMobileCarousel]);
-
-  const scrollToService = useCallback((index) => {
-    const carousel = carouselRef.current;
-    const targetCard = carousel?.children[index];
-
-    if (!carousel || !targetCard) {
-      return;
-    }
-
-    const targetLeft = targetCard.offsetLeft - ((carousel.clientWidth - targetCard.clientWidth) / 2);
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    carousel.scrollTo({
-      left: Math.max(0, targetLeft),
-      behavior: prefersReducedMotion ? 'auto' : 'smooth',
-    });
-    setActiveIndex(index);
-  }, []);
-
-  const handleCarouselKeyDown = (event) => {
-    if (!isMobileCarousel || !['ArrowLeft', 'ArrowRight'].includes(event.key)) {
-      return;
-    }
-
-    event.preventDefault();
-    const direction = event.key === 'ArrowRight' ? 1 : -1;
-    const nextIndex = Math.min(services.length - 1, Math.max(0, activeIndex + direction));
-    scrollToService(nextIndex);
-  };
-
-  const setSectionRefs = useCallback((node) => {
-    sectionRef.current = node;
-    reveal?.setRevealSectionRef(sectionKey, node);
-  }, [reveal, sectionKey]);
+  const setSectionRef = useCallback((node) => {
+    reveal?.setRevealSectionRef('services', node);
+  }, [reveal]);
 
   return (
     <section
       id="servicos"
-      className={reveal?.getRevealSectionClassName(styles.servicesScrollArea, sectionKey) ?? styles.servicesScrollArea}
-      ref={setSectionRefs}
+      className={reveal?.getRevealSectionClassName(styles.servicesSection, 'services') ?? styles.servicesSection}
+      ref={setSectionRef}
+      aria-labelledby="services-title"
     >
-      <div className={styles.servicesSticky}>
-        <ServicesOrbitBackground
-          activeIndex={activeIndex}
-          progress={scrollYProgress}
-          total={services.length}
-        />
-        <div className={styles.servicesContainer}>
-          <div className={styles.servicesContent}>
-            <div className={styles.servicesIntro}>
-              <div className={styles.servicesHeader}>
-                <span className={`${styles.eyebrow} ${reveal?.styles.revealEyebrow ?? ''}`}>Serviços</span>
-                <h2 className={reveal?.styles.revealTitle}>Soluções digitais para presença, performance e conversão.</h2>
-              </div>
+      <ServicesDecoration />
 
-              <div className={styles.servicesCopy}>
-                <p className={reveal?.styles.revealDescription}>
-                  Desenvolvimento de sites, landing pages, hospedagem e manutenção com foco em clareza,
-                  velocidade e resultado comercial. Cada solução é pensada para fortalecer sua presença digital
-                  e transformar visitantes em oportunidades reais.
-                </p>
-              </div>
+      <div className={styles.servicesContainer}>
+        <header className={styles.sectionIntro}>
+          <div className={styles.sectionHeading}>
+            <span className={`${styles.eyebrow} ${reveal?.styles.revealEyebrow ?? ''}`}>Serviços</span>
+            <h2 id="services-title" className={reveal?.styles.revealTitle}>
+              Soluções digitais para presença, performance e conversão.
+            </h2>
+          </div>
 
-              <ol className={styles.processFlow} aria-label="Fluxo de construção da solução digital">
-                {processFlow.map((step, index) => (
-                  <li key={step} style={{ '--flow-delay': `${520 + index * 90}ms` }}>
-                    <span aria-hidden="true" />
-                    <strong>{step}</strong>
-                  </li>
-                ))}
-              </ol>
-            </div>
+          <div className={styles.sectionContext}>
+            <p className={reveal?.styles.revealDescription}>
+              Desenvolvimento de sites, landing pages, hospedagem e manutenção com foco em clareza,
+              velocidade e resultado comercial. Cada solução é pensada para fortalecer sua presença digital
+              e transformar visitantes em oportunidades reais.
+            </p>
 
-            <div className={styles.servicesSystem}>
-              <div
-                className={styles.servicesCardsStage}
-                id="services-carousel"
-                ref={carouselRef}
-                role={isMobileCarousel ? 'region' : undefined}
-                aria-label={isMobileCarousel ? 'Serviços disponíveis' : undefined}
-                aria-roledescription={isMobileCarousel ? 'carrossel' : undefined}
-                tabIndex={isMobileCarousel ? 0 : undefined}
-                onKeyDown={handleCarouselKeyDown}
-              >
-                {services.map((service, index) => {
-                  const narrative = getServiceNarrative(service);
+            <ol className={styles.processFlow} aria-label="Fluxo de construção da solução digital">
+              {processFlow.map((step, index) => (
+                <li key={step}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <strong>{step}</strong>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </header>
 
-                  return (
-                    <AnimatedServiceCard
-                      activeIndex={activeIndex}
-                      index={index}
-                      isCarousel={isMobileCarousel}
-                      key={service.title}
-                      serviceTitle={narrative.title}
-                      scrollYProgress={scrollYProgress}
-                      total={services.length}
-                    >
-                      <article className={styles.card}>
-                        <span className={styles.cardCategory}>{narrative.category}</span>
-                        <h3>{narrative.title}</h3>
-                        <p>{narrative.description}</p>
+        <div className={styles.servicesGrid}>
+          {services.map((service, index) => {
+            const narrative = getServiceNarrative(service);
 
-                        <div className={styles.cardBenefits}>
-                          <span>Benefícios da solução</span>
-                          <ul>
-                            {narrative.benefits.map((item) => (
-                              <li key={item}>{item}</li>
-                            ))}
-                          </ul>
-                        </div>
+            return (
+              <article className={`${styles.card} ${index === 0 ? styles.cardFeatured : ''}`} key={service.title}>
+                <div className={styles.cardHeader}>
+                  <span className={styles.cardNumber}>{String(index + 1).padStart(2, '0')}</span>
+                  <span className={styles.cardCategory}>{narrative.category}</span>
+                </div>
 
-                        <div className={styles.serviceResult}>
-                          <span>Resultado esperado</span>
-                          <strong>{narrative.result}</strong>
-                        </div>
+                <div className={styles.cardBody}>
+                  <div className={styles.cardCopy}>
+                    <h3>{narrative.title}</h3>
+                    <p>{narrative.description}</p>
+                  </div>
 
-                        <Button href={whatsappUrl} target="_blank" rel="noreferrer" variant="secondary">{getServiceCtaLabel(service)}</Button>
-                      </article>
-                    </AnimatedServiceCard>
-                  );
-                })}
-              </div>
-
-              <div className={styles.mobileCarouselNavigation} aria-label="Navegação do carrossel">
-                <button
-                  type="button"
-                  className={styles.carouselArrow}
-                  onClick={() => scrollToService(activeIndex - 1)}
-                  disabled={activeIndex === 0}
-                  aria-controls="services-carousel"
-                  aria-label="Ver serviço anterior"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="m15 18-6-6 6-6" />
-                  </svg>
-                </button>
-
-                <div className={styles.carouselStatus} aria-live="polite">
-                  <span>
-                    <strong>{String(activeIndex + 1).padStart(2, '0')}</strong>
-                    {' / '}
-                    {String(services.length).padStart(2, '0')}
-                  </span>
-                  <div className={styles.carouselDots}>
-                    {services.map((service, index) => (
-                      <button
-                        type="button"
-                        className={index === activeIndex ? styles.carouselDotActive : ''}
-                        key={service.title}
-                        onClick={() => scrollToService(index)}
-                        aria-controls="services-carousel"
-                        aria-current={index === activeIndex ? 'true' : undefined}
-                        aria-label={`Ir para o serviço ${index + 1}: ${service.title}`}
-                      />
-                    ))}
+                  <div className={styles.cardBenefits}>
+                    <span>Benefícios da solução</span>
+                    <ul>
+                      {narrative.benefits.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  className={styles.carouselArrow}
-                  onClick={() => scrollToService(activeIndex + 1)}
-                  disabled={activeIndex === services.length - 1}
-                  aria-controls="services-carousel"
-                  aria-label="Ver próximo serviço"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="m9 18 6-6-6-6" />
-                  </svg>
-                </button>
-              </div>
+                <div className={styles.cardFooter}>
+                  <div className={styles.serviceResult}>
+                    <span>Resultado esperado</span>
+                    <strong>{narrative.result}</strong>
+                  </div>
 
-              <div className={styles.serviceProgressPanel} aria-live="polite">
-                <div className={styles.serviceProgressMeta}>
-                  <span>Sistema em execução</span>
-                  <strong>{activeNarrative.category}</strong>
+                  <Button
+                    className={styles.cardCta}
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    variant={index === 0 ? 'primary' : 'secondary'}
+                  >
+                    {getServiceCtaLabel(service)}
+                  </Button>
                 </div>
-                <div className={styles.serviceProgressTrack} aria-hidden="true">
-                  <span style={{ width: `${serviceProgress}%` }} />
-                </div>
-                <ol className={styles.serviceProgressSteps} aria-label="Serviço ativo">
-                  {services.map((service, index) => (
-                    <li
-                      className={`${index === activeIndex ? styles.serviceProgressStepActive : ''} ${index < activeIndex ? styles.serviceProgressStepDone : ''}`}
-                      key={service.title}
-                    >
-                      {index + 1}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </div>
-          </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

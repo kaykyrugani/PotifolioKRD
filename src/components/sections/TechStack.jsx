@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import Button from '../ui/Button';
 import styles from './TechStack.module.css';
 
@@ -9,6 +9,7 @@ const techCore = [
     role: 'Interfaces componentizadas',
     level: 'primary',
     group: 'frontend',
+    area: 'reactCard',
   },
   {
     name: 'Performance',
@@ -16,6 +17,7 @@ const techCore = [
     role: 'Carregamento rápido',
     level: 'primary',
     group: 'optimization',
+    area: 'performanceCard',
   },
   {
     name: 'SEO',
@@ -23,6 +25,7 @@ const techCore = [
     role: 'Base técnica para busca',
     level: 'primary',
     group: 'optimization',
+    area: 'seoCard',
   },
   {
     name: 'Node.js',
@@ -30,6 +33,7 @@ const techCore = [
     role: 'Evolução e integrações',
     level: 'secondary',
     group: 'backend',
+    area: 'nodeCard',
   },
   {
     name: 'JavaScript',
@@ -37,6 +41,7 @@ const techCore = [
     role: 'Interação e lógica',
     level: 'secondary',
     group: 'frontend',
+    area: 'javascriptCard',
   },
   {
     name: 'Vite',
@@ -44,6 +49,7 @@ const techCore = [
     role: 'Build moderno',
     level: 'secondary',
     group: 'frontend',
+    area: 'viteCard',
   },
   {
     name: 'CSS',
@@ -51,6 +57,7 @@ const techCore = [
     role: 'Layout responsivo',
     level: 'tertiary',
     group: 'frontend',
+    area: 'cssCard',
   },
   {
     name: 'APIs',
@@ -58,6 +65,7 @@ const techCore = [
     role: 'Conexões sob demanda',
     level: 'tertiary',
     group: 'backend',
+    area: 'apisCard',
   },
 ];
 
@@ -65,6 +73,12 @@ const stackSignals = [
   '8+ tecnologias',
   'Performance First',
   'SEO Ready',
+];
+
+const techGroups = [
+  { key: 'frontend', label: 'Frontend', index: '01' },
+  { key: 'backend', label: 'Backend', index: '02' },
+  { key: 'optimization', label: 'Otimização', index: '03' },
 ];
 
 const levelDelay = {
@@ -75,6 +89,7 @@ const levelDelay = {
 
 export default function TechStack({ reveal }) {
   const sectionKey = 'techStack';
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <section
@@ -103,30 +118,45 @@ export default function TechStack({ reveal }) {
         <div className={styles.corePanel} aria-label="Core tecnológico dos projetos">
           <motion.div
             className={styles.coreCenter}
-            initial={{ opacity: 0, scale: 0.9, filter: 'blur(12px)' }}
+            initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.9, filter: 'blur(12px)' }}
             whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.58, delay: 0.28, ease: 'easeOut' }}
-            aria-hidden="true"
           >
             <span>Core</span>
             <strong>Tech</strong>
           </motion.div>
 
           <div className={styles.coreGrid}>
-            {techCore.map((tech) => (
-              <motion.article
-                className={`${styles.techCard} ${styles[tech.level]} ${styles[tech.group]}`}
-                key={tech.name}
-                initial={{ opacity: 0, y: 22, scale: 0.96, filter: 'blur(10px)' }}
-                whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.48, delay: levelDelay[tech.level], ease: 'easeOut' }}
+            {techGroups.map((group) => (
+              <div
+                className={`${styles.techGroup} ${styles[`${group.key}Group`]}`}
+                key={group.key}
+                role="group"
+                aria-label={group.label}
               >
-                <span>{tech.category}</span>
-                <h3>{tech.name}</h3>
-                <p>{tech.role}</p>
-              </motion.article>
+                <header className={styles.groupTitle}>
+                  <span>{group.index}</span>
+                  <strong>{group.label}</strong>
+                </header>
+
+                <div className={styles.techGroupGrid}>
+                  {techCore.filter((tech) => tech.group === group.key).map((tech) => (
+                    <motion.article
+                      className={`${styles.techCard} ${styles[tech.level]} ${styles[tech.group]} ${styles[tech.area]}`}
+                      key={tech.name}
+                      initial={prefersReducedMotion ? false : { opacity: 0, y: 22, scale: 0.96, filter: 'blur(10px)' }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+                      viewport={{ once: true, amount: 0.25 }}
+                      transition={{ duration: 0.48, delay: levelDelay[tech.level], ease: 'easeOut' }}
+                    >
+                      <span>{tech.category}</span>
+                      <h3>{tech.name}</h3>
+                      <p>{tech.role}</p>
+                    </motion.article>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
 

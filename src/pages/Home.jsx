@@ -1,14 +1,13 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import PageLayout from '../components/layout/PageLayout';
-import Benefits from '../components/sections/Benefits';
 import CTA from '../components/sections/CTA';
 import Differentials from '../components/sections/Differentials';
 import Hero from '../components/sections/Hero';
 import Projects from '../components/sections/Projects';
 import Services from '../components/sections/Services';
 import TechStack from '../components/sections/TechStack';
-import { benefits, differentials, projectPreviews } from '../data/siteContent';
+import { differentials, projectPreviews } from '../data/siteContent';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 import '../styles/tech-atmosphere.css';
 import styles from './Home.module.css';
@@ -16,7 +15,6 @@ import revealStyles from './Page.module.css';
 
 const revealSectionKeys = {
   services: 'services',
-  benefits: 'benefits',
   transitionIntro: 'transitionIntro',
   techStack: 'techStack',
   differentials: 'differentials',
@@ -29,7 +27,6 @@ const revealSectionKeyList = Object.values(revealSectionKeys);
 const createRevealItemKey = (groupKey, index) => `${groupKey}-${index}`;
 
 const revealItemKeyList = [
-  ...benefits.map((_, index) => createRevealItemKey('benefits', index)),
   ...differentials.map((_, index) => createRevealItemKey('differentials', index)),
   ...projectPreviews.map((_, index) => createRevealItemKey('projects', index)),
   'cta-box',
@@ -68,7 +65,6 @@ export default function Home() {
     <PageLayout>
       <Hero />
       <Services reveal={reveal} />
-      <Benefits reveal={reveal} />
       <section className={styles.horizontalTransition} ref={horizontalRef}>
         <motion.div
           className="techAtmosphereBridge"

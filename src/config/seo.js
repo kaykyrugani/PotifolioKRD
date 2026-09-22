@@ -4,8 +4,8 @@ export const SOCIAL_IMAGE_URL = '';
 
 export const ROUTE_SEO = Object.freeze({
   '/': {
-    title: 'Kayky Rugani | Criação de Sites e Landing Pages em Franca',
-    description: 'Desenvolvedor web especializado na criação de sites profissionais e landing pages para empresas em Franca e região. Projetos modernos, responsivos e personalizados.',
+    title: 'Kayky Rugani | Criação de Sites e Landing Pages',
+    description: 'Desenvolvimento de sites profissionais e landing pages com design responsivo, SEO técnico, alta performance e foco em conversão.',
   },
   '/sobre': {
     title: 'Sobre Kayky Rugani | Desenvolvedor Web em Franca',

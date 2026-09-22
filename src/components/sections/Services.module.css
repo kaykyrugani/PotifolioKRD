@@ -1,229 +1,97 @@
-.servicesScrollArea {
+.servicesSection {
   position: relative;
   isolation: isolate;
-  overflow: visible;
+  overflow: clip;
   background:
-    radial-gradient(circle at 12% 22%, rgba(0, 194, 255, 0.07), transparent 24rem),
-    radial-gradient(circle at 86% 38%, rgba(124, 58, 237, 0.08), transparent 28rem);
+    radial-gradient(circle at 10% 16%, rgba(0, 194, 255, 0.08), transparent 25rem),
+    radial-gradient(circle at 92% 46%, rgba(124, 58, 237, 0.09), transparent 30rem);
 }
 
-.servicesSticky {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  overflow: visible;
-}
-
-.orbitBackground {
-  --orbit-accent-opacity: 0.52;
+.decoration {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   overflow: hidden;
   pointer-events: none;
   opacity: 0;
 }
 
-.orbitBackgroundStep2 {
-  --orbit-accent-opacity: 0.58;
-}
-
-.orbitBackgroundStep3 {
-  --orbit-accent-opacity: 0.64;
-}
-
-.orbitBackgroundStep4 {
-  --orbit-accent-opacity: 0.7;
-}
-
-.ambientGlow {
+.glowLeft,
+.glowRight {
   position: absolute;
   border-radius: 50%;
-  pointer-events: none;
-  filter: blur(30px);
-  transform: translateZ(0);
+  filter: blur(34px);
 }
 
-.ambientGlowLeft {
-  top: clamp(42px, 12vh, 110px);
-  left: max(-90px, calc(50% - 720px));
-  width: clamp(180px, 24vw, 350px);
-  height: clamp(180px, 24vw, 350px);
-  background: radial-gradient(circle, rgba(0, 194, 255, 0.16), rgba(45, 127, 249, 0.07) 44%, transparent 72%);
+.glowLeft {
+  top: 8%;
+  left: -8rem;
+  width: 20rem;
+  height: 20rem;
+  background: radial-gradient(circle, rgba(0, 194, 255, 0.15), transparent 70%);
 }
 
-.ambientGlowRight {
-  top: clamp(92px, 18vh, 180px);
-  right: max(-110px, calc(50% - 730px));
-  width: clamp(260px, 34vw, 500px);
-  height: clamp(220px, 30vw, 430px);
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.15), rgba(0, 194, 255, 0.06) 48%, transparent 74%);
-  opacity: 0.7;
+.glowRight {
+  right: -11rem;
+  bottom: 12%;
+  width: 26rem;
+  height: 26rem;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15), transparent 70%);
 }
 
-.ambientAurora {
-  top: 12%;
-  right: -14%;
-  width: min(540px, 48vw);
-  height: 72%;
-  border-radius: 42%;
-  background:
-    radial-gradient(ellipse at 34% 28%, rgba(0, 194, 255, 0.09), transparent 48%),
-    radial-gradient(ellipse at 70% 62%, rgba(139, 92, 246, 0.11), transparent 54%);
-  filter: blur(36px);
-  opacity: 0.48;
-}
-
-.orbitSystem {
+.orbit {
   position: absolute;
-  top: clamp(32px, 8vh, 74px);
-  left: max(10px, calc(50% - 668px));
-  width: clamp(140px, 16vw, 220px);
-  opacity: var(--orbit-accent-opacity);
+  top: 3rem;
+  right: max(-3rem, calc(50% - 700px));
+  width: clamp(9rem, 18vw, 14rem);
+  opacity: 0.32;
   filter: drop-shadow(0 0 24px rgba(0, 194, 255, 0.12));
-  transform-origin: center;
-  will-change: transform;
 }
 
-.orbitSvg {
-  width: 100%;
-  height: auto;
-  animation: servicesOrbitBreathe 12s ease-in-out infinite;
-}
-
-.orbitRingMuted,
-.orbitRingSoft,
-.orbitArc,
-.orbitArcMuted,
-.orbitProgressArc,
-.orbitTechLine {
+.orbit circle,
+.orbit path {
   fill: none;
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
 
-.orbitRingMuted {
-  stroke: rgba(255, 255, 255, 0.12);
-  stroke-width: 1;
-}
-
-.orbitRingSoft {
-  stroke: rgba(0, 194, 255, 0.16);
-  stroke-width: 1;
-}
-
-.orbitArc {
+.orbit path {
   stroke: url(#servicesOrbitGradient);
   stroke-linecap: round;
-  stroke-width: 1.8;
-  opacity: 0.62;
+  stroke-width: 1.5;
+  opacity: 0.65;
 }
 
-.orbitArcMuted {
-  stroke: url(#servicesOrbitGradient);
-  stroke-linecap: round;
-  stroke-width: 1.2;
-  opacity: 0.3;
-}
-
-.orbitProgressArc {
-  stroke: url(#servicesOrbitGradient);
-  stroke-linecap: round;
-  stroke-width: 3;
-  opacity: 0.78;
-  filter: drop-shadow(0 0 8px rgba(0, 194, 255, 0.28));
-}
-
-.orbitTechLine {
-  stroke: rgba(255, 255, 255, 0.1);
-  stroke-width: 1;
-}
-
-.orbitNode,
-.orbitNodeDim,
-.orbitDot {
+.orbit .orbitDot {
   fill: var(--color-blue-cyan);
-}
-
-.orbitNode {
-  opacity: 0.68;
-  filter: drop-shadow(0 0 7px rgba(0, 194, 255, 0.55));
-}
-
-.orbitNodeDim {
-  opacity: 0.34;
-}
-
-.orbitDot {
-  opacity: 0.86;
-  filter: drop-shadow(0 0 10px rgba(0, 194, 255, 0.62));
-}
-
-.energyLine {
-  position: absolute;
-  top: clamp(126px, 25vh, 220px);
-  left: 50%;
-  width: min(900px, 72vw);
-  height: min(260px, 32vh);
-  opacity: 0.42;
-  transform: translateX(-50%);
-}
-
-.energyLinePath {
-  fill: none;
-  stroke: url(#servicesEnergyGradient);
-  stroke-linecap: round;
-  stroke-width: 1.2;
-}
-
-.energyPulse {
-  fill: rgba(255, 255, 255, 0.75);
-  filter: drop-shadow(0 0 10px rgba(0, 194, 255, 0.5));
-  opacity: 0.52;
-  animation: servicesEnergyPulse 4.8s ease-in-out infinite;
+  stroke: none;
+  filter: drop-shadow(0 0 9px rgba(0, 194, 255, 0.6));
 }
 
 .servicesContainer {
-  position: relative;
-  z-index: 2;
   width: 100%;
   max-width: var(--container);
   margin: 0 auto;
   padding: var(--space-16) var(--space-4);
 }
 
-.servicesContent {
-  position: relative;
-  z-index: 2;
+.sectionIntro {
   display: grid;
-  gap: var(--space-10);
-  width: 100%;
-  overflow: visible;
+  gap: var(--space-8);
+  margin-bottom: var(--space-10);
 }
 
-.servicesIntro {
-  display: grid;
-  max-width: 640px;
-  gap: clamp(18px, 2.4vh, 26px);
-  align-content: center;
-}
-
-.servicesHeader {
-  position: relative;
-  max-width: 820px;
-  margin-bottom: 0;
-}
-
-.eyebrow,
-.servicesHeader h2 {
+.sectionHeading,
+.sectionContext {
   position: relative;
   z-index: 1;
 }
 
 .eyebrow {
   display: inline-flex;
-  align-items: center;
   gap: var(--space-3);
+  align-items: center;
   margin-bottom: var(--space-3);
   color: var(--color-blue-cyan);
   font-family: var(--font-heading);
@@ -242,145 +110,85 @@
   box-shadow: 0 0 20px rgba(0, 194, 255, 0.42);
 }
 
-.servicesHeader h2 {
+.sectionHeading h2 {
   max-width: 760px;
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 5vw, 3.35rem);
+  font-size: clamp(2rem, 7vw, 3.35rem);
   line-height: 1.05;
 }
 
-.servicesCopy {
-  max-width: 590px;
+.sectionContext {
+  display: grid;
+  gap: var(--space-6);
 }
 
-.servicesCopy p {
+.sectionContext > p {
+  max-width: 680px;
   color: var(--color-text-muted);
   font-size: clamp(0.98rem, 1.5vw, 1.06rem);
   line-height: 1.72;
 }
 
 .processFlow {
-  position: relative;
   display: grid;
-  max-width: 430px;
-  gap: 0;
-  padding: var(--space-3) 0;
-  opacity: 0;
-  filter: blur(10px);
-  transform: translate3d(0, 24px, 0);
-}
-
-.processFlow::before {
-  position: absolute;
-  top: 28px;
-  bottom: 28px;
-  left: 13px;
-  width: 1px;
-  content: "";
-  background: linear-gradient(180deg, rgba(0, 194, 255, 0.5), rgba(139, 92, 246, 0.26), transparent);
-  transform: scaleY(0);
-  transform-origin: top;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-border);
 }
 
 .processFlow li {
-  position: relative;
   display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  gap: var(--space-3);
-  align-items: center;
-  min-height: 48px;
-  color: rgba(255, 255, 255, 0.78);
-  opacity: 0;
-  filter: blur(8px);
-  transform: translate3d(-10px, 12px, 0);
+  min-height: 74px;
+  gap: var(--space-2);
+  align-content: center;
+  padding: var(--space-3) var(--space-4);
+  background: rgba(8, 13, 24, 0.92);
 }
 
-.processFlow li span {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  width: 28px;
-  height: 28px;
-  place-items: center;
-  border: 1px solid rgba(0, 194, 255, 0.28);
-  border-radius: 10px;
-  background: rgba(7, 11, 20, 0.82);
-  box-shadow:
-    0 0 24px rgba(0, 194, 255, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-.processFlow li span::before {
-  width: 7px;
-  height: 7px;
-  border-radius: var(--radius-full);
-  content: "";
-  background: var(--color-blue-cyan);
-  box-shadow: 0 0 16px rgba(0, 194, 255, 0.5);
+.processFlow span {
+  color: var(--color-blue-cyan);
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
 }
 
 .processFlow strong {
+  color: rgba(255, 255, 255, 0.82);
   font-family: var(--font-heading);
-  font-size: 0.95rem;
+  font-size: 0.86rem;
   font-weight: 800;
 }
 
-.servicesSystem {
-  position: relative;
+.servicesGrid {
   display: grid;
-  gap: var(--space-5);
-  opacity: 1;
-  filter: none;
-  transform: none;
-}
-
-.servicesSystem::before {
-  position: absolute;
-  inset: -10% -8% -12%;
-  z-index: -1;
-  content: "";
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 48% 18%, rgba(0, 194, 255, 0.12), transparent 18rem),
-    radial-gradient(circle at 84% 66%, rgba(139, 92, 246, 0.13), transparent 22rem);
-  filter: blur(16px);
-  opacity: 0.78;
-}
-
-.servicesCardsStage {
-  position: relative;
-  width: 100%;
-}
-
-.animatedCard {
-  width: 100%;
-}
-
-.animatedCardActive {
-  filter: none;
-  visibility: visible;
+  gap: var(--space-4);
 }
 
 .card {
   position: relative;
   display: flex;
-  min-height: 100%;
+  min-width: 0;
   flex-direction: column;
   overflow: hidden;
-  padding: clamp(24px, 3vw, 34px);
+  padding: clamp(22px, 4vw, 30px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 26px;
+  border-radius: var(--radius-xl);
   background:
-    radial-gradient(circle at 16% 0%, rgba(0, 194, 255, 0.15), transparent 34%),
-    radial-gradient(circle at 92% 82%, rgba(139, 92, 246, 0.13), transparent 36%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.068), rgba(255, 255, 255, 0.024)),
-    rgba(8, 13, 24, 0.78);
+    radial-gradient(circle at 100% 0%, rgba(139, 92, 246, 0.11), transparent 36%),
+    linear-gradient(155deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
+    rgba(8, 13, 24, 0.84);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.07),
-    0 28px 86px rgba(0, 0, 0, 0.34),
-    0 0 42px rgba(0, 194, 255, 0.045);
-  backdrop-filter: blur(16px);
-  transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+    0 24px 70px rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(14px);
+  transition:
+    transform var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 .card::before {
@@ -389,77 +197,93 @@
   content: "";
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(135deg, transparent 0 58%, rgba(0, 194, 255, 0.048) 59%, transparent 60% 100%);
-  background-size: 44px 44px, 44px 44px, 100% 100%;
-  opacity: 0.32;
-  mask-image: radial-gradient(circle at 62% 46%, black, transparent 76%);
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: 0.5;
+  mask-image: linear-gradient(140deg, black, transparent 64%);
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(0, 194, 255, 0.28);
+.cardFeatured {
+  border-color: rgba(0, 194, 255, 0.2);
+  background:
+    radial-gradient(circle at 8% 0%, rgba(0, 194, 255, 0.16), transparent 38%),
+    radial-gradient(circle at 100% 100%, rgba(124, 58, 237, 0.14), transparent 42%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.022)),
+    rgba(8, 13, 24, 0.88);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 32px 94px rgba(0, 0, 0, 0.36),
-    0 0 54px rgba(0, 194, 255, 0.08);
+    0 30px 86px rgba(0, 0, 0, 0.32),
+    0 0 44px rgba(0, 194, 255, 0.05);
 }
 
-.cardCategory,
-.card h3,
-.card p,
-.cardBenefits,
-.serviceResult,
-.card a {
+.cardHeader,
+.cardBody,
+.cardFooter {
   position: relative;
   z-index: 1;
+}
+
+.cardHeader {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+}
+
+.cardNumber {
+  color: rgba(255, 255, 255, 0.38);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
 }
 
 .cardCategory {
   display: inline-flex;
   width: fit-content;
-  margin-bottom: var(--space-5);
   padding: 0.44rem 0.66rem;
   border: 1px solid rgba(0, 194, 255, 0.18);
   border-radius: var(--radius-full);
   color: var(--color-blue-cyan);
   background: rgba(0, 194, 255, 0.06);
   font-family: var(--font-heading);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 900;
   letter-spacing: 0.08em;
   line-height: 1;
   text-transform: uppercase;
 }
 
-.card h3 {
-  max-width: 620px;
-  margin-bottom: var(--space-3);
-  font-family: var(--font-heading);
-  font-size: clamp(1.48rem, 2.6vw, 2rem);
-  line-height: 1.1;
+.cardBody {
+  display: grid;
+  gap: var(--space-6);
 }
 
-.card p {
-  max-width: 620px;
-  margin-bottom: var(--space-6);
+.cardCopy h3 {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-heading);
+  font-size: clamp(1.38rem, 4.8vw, 1.8rem);
+  line-height: 1.12;
+}
+
+.cardCopy p {
   color: var(--color-text-muted);
-  font-size: 1rem;
-  line-height: 1.7;
+  font-size: 0.96rem;
+  line-height: 1.68;
 }
 
 .cardBenefits {
   display: grid;
   gap: var(--space-3);
-  margin-bottom: var(--space-6);
 }
 
 .cardBenefits > span,
 .serviceResult span {
-  color: rgba(255, 255, 255, 0.56);
+  color: rgba(255, 255, 255, 0.54);
   font-family: var(--font-heading);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -474,592 +298,169 @@
   position: relative;
   padding-left: var(--space-5);
   color: var(--color-text-soft);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   line-height: 1.45;
 }
 
 .cardBenefits li::before {
   position: absolute;
-  top: 0.62em;
+  top: 0.6em;
   left: 0;
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   content: "";
   background: var(--color-blue-cyan);
-  box-shadow: 0 0 18px rgba(0, 194, 255, 0.55);
+  box-shadow: 0 0 14px rgba(0, 194, 255, 0.5);
+}
+
+.cardFooter {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: auto;
+  padding-top: var(--space-6);
 }
 
 .serviceResult {
   display: grid;
   gap: var(--space-2);
-  margin-bottom: var(--space-6);
-  padding: var(--space-4);
-  border: 1px solid rgba(255, 255, 255, 0.085);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.038);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .serviceResult strong {
   color: var(--color-text);
   font-family: var(--font-heading);
-  font-size: 0.98rem;
+  font-size: 0.92rem;
   font-weight: 800;
-  line-height: 1.42;
+  line-height: 1.45;
 }
 
-.card a {
+.cardCta {
   width: 100%;
-  margin-top: auto;
   padding-inline: 1rem;
   line-height: 1.2;
   text-align: center;
 }
 
-.serviceProgressPanel {
-  position: relative;
-  display: grid;
-  gap: var(--space-4);
-  padding: 16px 18px;
-  border: 1px solid rgba(0, 194, 255, 0.13);
-  border-radius: 20px;
-  background:
-    linear-gradient(135deg, rgba(0, 194, 255, 0.06), rgba(124, 58, 237, 0.04)),
-    rgba(7, 11, 20, 0.5);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 18px 48px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(12px);
+.servicesSection:global(.revealSectionVisible) .decoration {
+  animation: servicesDecorationIn 700ms 80ms ease-out both;
 }
 
-.serviceProgressMeta {
-  display: flex;
-  gap: var(--space-3);
-  align-items: baseline;
-  justify-content: space-between;
+.servicesSection:global(.revealSectionVisible) .servicesGrid {
+  animation: servicesGridIn 720ms 520ms ease-out both;
 }
 
-.serviceProgressMeta span {
-  color: rgba(255, 255, 255, 0.56);
-  font-family: var(--font-heading);
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 194, 255, 0.28);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 32px 90px rgba(0, 0, 0, 0.34),
+      0 0 48px rgba(0, 194, 255, 0.07);
+  }
 }
 
-.serviceProgressMeta strong {
-  color: var(--color-blue-cyan);
-  font-family: var(--font-heading);
-  font-size: 0.92rem;
-  font-weight: 900;
-}
+@media (min-width: 640px) {
+  .servicesContainer {
+    padding-inline: var(--space-6);
+  }
 
-.serviceProgressTrack {
-  position: relative;
-  height: 3px;
-  overflow: hidden;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.1);
-}
+  .processFlow {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 
-.serviceProgressTrack::after {
-  position: absolute;
-  inset: -7px 0;
-  content: "";
-  background: radial-gradient(circle at left, rgba(0, 194, 255, 0.22), transparent 36%);
-  animation: servicesProgressPulse 2.4s ease-in-out infinite;
-}
+  .servicesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
-.serviceProgressTrack span {
-  position: relative;
-  z-index: 1;
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--color-blue-cyan), var(--color-purple-soft));
-  box-shadow: 0 0 18px rgba(0, 194, 255, 0.38);
-  transition: width 260ms ease;
-}
-
-.serviceProgressSteps {
-  display: flex;
-  gap: clamp(1.25rem, 7vw, 5.75rem);
-  align-items: center;
-  justify-content: center;
-}
-
-.serviceProgressSteps li {
-  position: relative;
-  color: rgba(255, 255, 255, 0.52);
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 900;
-  line-height: 1;
-  transition: color 240ms ease, text-shadow 240ms ease;
-}
-
-.serviceProgressStepDone,
-.serviceProgressStepActive {
-  color: var(--color-text);
-}
-
-.serviceProgressStepActive {
-  color: var(--color-blue-cyan);
-  text-shadow: 0 0 16px rgba(0, 194, 255, 0.42);
-}
-
-.mobileCarouselNavigation {
-  display: none;
-}
-
-.servicesScrollArea:global(.revealSectionVisible) .orbitBackground {
-  animation: servicesLayerIn 760ms 80ms ease-out both;
-}
-
-.servicesScrollArea:global(.revealSectionVisible) .processFlow {
-  animation: servicesElementIn 680ms 520ms ease-out both;
-}
-
-.servicesScrollArea:global(.revealSectionVisible) .processFlow::before {
-  animation: servicesFlowLineIn 620ms 620ms ease-out both;
-}
-
-.servicesScrollArea:global(.revealSectionVisible) .processFlow li {
-  animation: servicesFlowItemIn 540ms var(--flow-delay, 640ms) ease-out both;
-}
-
-.servicesScrollArea:global(.revealSectionVisible) .servicesSystem {
-  animation: servicesSystemIn 760ms 780ms ease-out both;
+  .cardFeatured {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (min-width: 820px) {
   .servicesContainer {
-    padding: var(--space-20) var(--space-6);
+    padding-block: var(--space-20);
+  }
+
+  .sectionIntro {
+    grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+    gap: clamp(40px, 6vw, 80px);
+    align-items: end;
+    margin-bottom: var(--space-12);
+  }
+
+  .sectionContext {
+    gap: var(--space-5);
+  }
+
+  .processFlow li {
+    min-height: 68px;
+    padding-inline: var(--space-3);
+  }
+
+  .servicesGrid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-5);
+  }
+
+  .card {
+    grid-column: span 6;
+  }
+
+  .cardFeatured {
+    grid-column: span 7;
+  }
+
+  .card:nth-child(2) {
+    grid-column: span 5;
+  }
+
+  .card:nth-child(3),
+  .card:nth-child(4) {
+    grid-column: span 6;
+  }
+
+  .cardFeatured .cardBody {
+    grid-template-columns: minmax(0, 1fr) minmax(230px, 0.78fr);
+    gap: clamp(28px, 4vw, 52px);
+    align-items: start;
+  }
+
+  .cardFeatured .cardCopy h3 {
+    font-size: clamp(1.75rem, 3vw, 2.35rem);
   }
 }
 
 @media (min-width: 901px) {
-  .servicesScrollArea {
-    min-height: 320vh;
+  .card:nth-child(2) {
+    padding: 26px;
   }
 
-  .servicesSticky {
-    position: sticky;
-    top: 84px;
-    min-height: calc(100vh - 84px);
-    display: flex;
-    align-items: center;
-    overflow: visible;
-  }
-
-  .servicesContainer {
-    min-height: calc(100vh - 84px);
-    display: flex;
-    align-items: center;
-    padding-block: clamp(28px, 4vh, 48px);
-  }
-
-  .servicesContent {
-    flex: 1;
-    grid-template-columns: minmax(0, 0.82fr) minmax(520px, 1.18fr);
-    gap: clamp(48px, 6vw, 88px);
-    align-items: center;
-    overflow: visible;
-  }
-
-  .servicesCardsStage {
-    min-height: clamp(520px, 68vh, 620px);
-    padding-bottom: var(--space-2);
-    overflow: clip;
-  }
-
-  .animatedCard {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    will-change: transform, opacity, filter;
-  }
-}
-
-@media (min-width: 901px) and (max-height: 820px) {
-  .orbitSystem {
-    top: clamp(18px, 5vh, 42px);
-    width: clamp(120px, 13vw, 165px);
-    opacity: 0.46;
-  }
-
-  .ambientGlow {
-    filter: blur(22px);
-  }
-
-  .energyLine {
-    top: clamp(100px, 22vh, 160px);
-    opacity: 0.32;
-  }
-
-  .servicesContainer {
-    padding-block: clamp(20px, 3vh, 32px);
-  }
-
-  .servicesIntro {
-    gap: 16px;
-  }
-
-  .servicesHeader h2 {
-    font-size: clamp(1.78rem, 4.2vw, 2.78rem);
-    line-height: 1;
-  }
-
-  .servicesCopy p {
-    font-size: 0.96rem;
-    line-height: 1.6;
-  }
-
-  .processFlow li {
-    min-height: 42px;
-  }
-
-  .servicesCardsStage {
-    min-height: 430px;
-  }
-
-  .card {
-    padding: 22px 24px;
-  }
-
-  .cardCategory {
-    margin-bottom: var(--space-4);
-  }
-
-  .card h3 {
-    font-size: 1.48rem;
-  }
-
-  .card p {
-    margin-bottom: var(--space-4);
-    font-size: 0.95rem;
-    line-height: 1.55;
-  }
-
-  .cardBenefits {
-    gap: 10px;
-    margin-bottom: var(--space-4);
-  }
-
-  .cardBenefits ul {
-    gap: 9px;
-  }
-
-  .serviceResult {
-    margin-bottom: var(--space-4);
-    padding: 12px 14px;
-  }
-}
-
-@media (min-width: 901px) and (max-height: 760px) {
-  .servicesContent {
-    grid-template-columns: minmax(0, 0.78fr) minmax(480px, 1.22fr);
-    gap: clamp(34px, 5vw, 60px);
-  }
-
-  .servicesHeader h2 {
-    font-size: clamp(1.68rem, 3.9vw, 2.45rem);
-  }
-
-  .processFlow li {
-    min-height: 38px;
-  }
-
-  .servicesCardsStage {
-    min-height: 390px;
-  }
-
-  .serviceProgressPanel {
-    padding: 12px 14px;
-  }
-}
-
-@media (max-width: 900px) {
-  .servicesScrollArea {
-    overflow-x: clip;
-  }
-
-  .orbitBackground {
-    opacity: 0.72;
-  }
-
-  .orbitSystem {
-    top: 18px;
-    left: auto;
-    right: -34px;
-    width: 150px;
-    opacity: 0.34;
-  }
-
-  .energyLine,
-  .ambientAurora {
-    display: none;
-  }
-
-  .ambientGlowLeft {
-    top: 80px;
-    left: -120px;
-    width: 260px;
-    height: 260px;
-    opacity: 0.42;
-  }
-
-  .ambientGlowRight {
-    top: 34%;
-    right: -150px;
-    width: 300px;
-    height: 300px;
-    opacity: 0.38;
-  }
-
-  .servicesScrollArea {
-    min-height: auto;
-  }
-
-  .servicesSticky {
-    position: relative;
-    top: auto;
-    min-height: auto;
-  }
-
-  .servicesContent {
-    grid-template-columns: 1fr;
-  }
-
-  .servicesIntro,
-  .servicesCopy,
-  .processFlow {
-    max-width: 100%;
-  }
-
-  .servicesSystem {
-    --services-carousel-gutter: var(--space-4);
-    gap: var(--space-4);
-    transform: none;
-  }
-
-  .servicesCardsStage {
-    display: flex;
-    width: calc(100% + var(--services-carousel-gutter) + var(--services-carousel-gutter));
-    min-height: auto;
-    gap: var(--space-4);
-    margin-inline: calc(0px - var(--services-carousel-gutter));
-    padding: var(--space-1) var(--services-carousel-gutter) var(--space-5);
-    overflow-x: auto;
-    overflow-y: visible;
-    scroll-behavior: smooth;
-    scroll-padding-inline: var(--services-carousel-gutter);
-    scroll-snap-type: inline mandatory;
-    scrollbar-width: none;
-    overscroll-behavior-inline: contain;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .servicesCardsStage::-webkit-scrollbar {
-    display: none;
-  }
-
-  .animatedCard {
-    display: flex;
-    position: relative;
-    inset: auto;
-    flex: 0 0 min(86vw, 520px);
-    min-width: 0;
-    opacity: 1 !important;
-    filter: none !important;
-    transform: none !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-    will-change: auto;
-  }
-
-  .animatedCardActive {
-    display: flex;
-  }
-
-  .card {
-    width: 100%;
-    height: 100%;
-    min-height: auto;
-  }
-
-  .card:hover {
-    transform: none;
-  }
-
-  .mobileCarouselNavigation {
-    display: flex;
-    gap: var(--space-4);
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .carouselArrow {
-    display: grid;
-    width: 48px;
-    height: 48px;
-    flex: 0 0 48px;
-    place-items: center;
-    border: 1px solid rgba(0, 194, 255, 0.2);
-    border-radius: 50%;
-    color: var(--color-text);
-    background: rgba(255, 255, 255, 0.045);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-    cursor: pointer;
-    transition:
-      color var(--transition-fast),
-      border-color var(--transition-fast),
-      background var(--transition-fast),
-      opacity var(--transition-fast);
-  }
-
-  .carouselArrow svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .carouselArrow path {
-    fill: none;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 1.8;
-  }
-
-  .carouselArrow:hover:not(:disabled) {
-    border-color: rgba(0, 194, 255, 0.46);
-    color: var(--color-blue-cyan);
-    background: rgba(0, 194, 255, 0.08);
-  }
-
-  .carouselArrow:disabled {
-    opacity: 0.3;
-    cursor: default;
-  }
-
-  .carouselStatus {
-    display: grid;
-    min-width: 0;
-    gap: var(--space-3);
-    justify-items: center;
-  }
-
-  .carouselStatus > span {
-    color: var(--color-text-muted);
-    font-family: var(--font-heading);
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-  }
-
-  .carouselStatus strong {
-    color: var(--color-blue-cyan);
-    font-size: 0.95rem;
-  }
-
-  .carouselDots {
-    display: flex;
-    gap: var(--space-2);
-    align-items: center;
-    justify-content: center;
-  }
-
-  .carouselDots button {
-    width: 8px;
-    height: 8px;
-    padding: 0;
-    border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.24);
-    cursor: pointer;
-    transition:
-      width var(--transition-fast),
-      background var(--transition-fast),
-      box-shadow var(--transition-fast);
-  }
-
-  .carouselDots .carouselDotActive {
-    width: 24px;
-    background: var(--color-blue-cyan);
-    box-shadow: 0 0 14px rgba(0, 194, 255, 0.42);
-  }
-
-  .serviceProgressPanel {
-    display: none;
-  }
-}
-
-@media (max-width: 640px) {
-  .servicesContainer {
-    padding: var(--space-16) var(--space-4);
-  }
-
-  .servicesContent {
-    gap: var(--space-8);
-  }
-
-  .servicesHeader h2 {
-    font-size: clamp(2rem, 10vw, 2.55rem);
-  }
-
-  .processFlow li {
-    min-height: 44px;
-  }
-
-  .card {
-    border-radius: 22px;
-    padding: 22px;
-  }
-
-  .mobileCarouselNavigation {
-    gap: var(--space-3);
-  }
-}
-
-@media (min-width: 820px) and (max-width: 900px) {
-  .servicesSystem {
-    --services-carousel-gutter: var(--space-6);
+  .card:nth-child(2) .cardCopy h3 {
+    font-size: 1.52rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .orbitSvg,
-  .energyPulse,
-  .serviceProgressTrack::after,
-  .servicesScrollArea:global(.revealSectionVisible) .orbitBackground,
-  .servicesScrollArea:global(.revealSectionVisible) .processFlow,
-  .servicesScrollArea:global(.revealSectionVisible) .processFlow::before,
-  .servicesScrollArea:global(.revealSectionVisible) .processFlow li,
-  .servicesScrollArea:global(.revealSectionVisible) .servicesSystem {
+  .card,
+  .cardCta {
+    transition: none;
+  }
+
+  .servicesSection:global(.revealSectionVisible) .decoration,
+  .servicesSection:global(.revealSectionVisible) .servicesGrid {
     animation: none;
   }
 
-  .orbitBackground,
-  .processFlow,
-  .processFlow li,
-  .servicesSystem {
+  .decoration {
     opacity: 1;
-    filter: none;
-    transform: none;
-  }
-
-  .processFlow::before {
-    transform: scaleY(1);
-  }
-
-  .servicesCardsStage {
-    scroll-behavior: auto;
   }
 }
 
-@keyframes servicesLayerIn {
+@keyframes servicesDecorationIn {
   from {
     opacity: 0;
     filter: blur(10px);
@@ -1071,91 +472,16 @@
   }
 }
 
-@keyframes servicesElementIn {
+@keyframes servicesGridIn {
   from {
     opacity: 0;
     filter: blur(10px);
-    transform: translate3d(0, 24px, 0);
+    transform: translate3d(0, 28px, 0);
   }
 
   to {
     opacity: 1;
     filter: blur(0);
     transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes servicesFlowLineIn {
-  from {
-    transform: scaleY(0);
-  }
-
-  to {
-    transform: scaleY(1);
-  }
-}
-
-@keyframes servicesFlowItemIn {
-  from {
-    opacity: 0;
-    filter: blur(8px);
-    transform: translate3d(-10px, 12px, 0);
-  }
-
-  to {
-    opacity: 1;
-    filter: blur(0);
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes servicesSystemIn {
-  from {
-    opacity: 0;
-    filter: blur(12px);
-    transform: translate3d(0, 32px, 0) scale(0.985);
-  }
-
-  to {
-    opacity: 1;
-    filter: blur(0);
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-
-@keyframes servicesOrbitBreathe {
-  0%,
-  100% {
-    opacity: 0.76;
-  }
-
-  50% {
-    opacity: 1;
-  }
-}
-
-@keyframes servicesEnergyPulse {
-  0%,
-  100% {
-    opacity: 0.22;
-    transform: scale(0.86);
-  }
-
-  45% {
-    opacity: 0.62;
-    transform: scale(1.18);
-  }
-}
-
-@keyframes servicesProgressPulse {
-  0%,
-  100% {
-    opacity: 0.36;
-    transform: translateX(-8%);
-  }
-
-  50% {
-    opacity: 0.72;
-    transform: translateX(42%);
   }
 }

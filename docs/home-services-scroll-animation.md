@@ -56,3 +56,13 @@ Data da alteracao: 2026-06-15
 - docs/home-services-scroll-animation.md
 - package.json
 - package-lock.json
+
+## Refatoracao para fluxo natural
+
+Data da alteracao: 2026-09-22
+
+A experiencia sticky controlada pelo progresso do scroll foi removida da Home. A secao nao usa mais `useScroll`, `useMotionValueEvent`, transforms vinculados ao scroll, altura artificial, cards absolutos sobrepostos, estado de servico ativo ou carrossel horizontal no mobile.
+
+Os quatro servicos agora permanecem disponiveis simultaneamente em uma composicao editorial. O primeiro servico recebe destaque e os demais formam uma grade assimetrica no desktop. Em telas menores, todos seguem a ordem do DOM em uma unica coluna e usam apenas o scroll vertical natural da pagina.
+
+O hook compartilhado de reveal da Home e a dependencia Framer Motion foram preservados porque continuam sendo utilizados por outras secoes. A secao manteve somente uma entrada visual discreta, hover em dispositivos compativeis e tratamento para `prefers-reduced-motion`.

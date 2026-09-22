@@ -38,3 +38,15 @@ Foi adicionado um SVG decorativo dentro da secao com circulos orbitais, linhas c
 - src/components/sections/TechStack.jsx
 - src/components/sections/TechStack.module.css
 - docs/home-techstack-redesign.md
+
+## Board responsivo por grupos
+
+Data da alteracao: 2026-09-22
+
+A composicao desktop acima de `900px` foi preservada com a matriz nomeada de quatro colunas, o elemento `CORE / Tech` central e as mesmas areas visuais de cada tecnologia.
+
+Abaixo de `900px`, o painel deixa de depender da matriz espacial desktop. Os mesmos cards, sem duplicacao de conteudo, passam a ser organizados semanticamente em `Frontend`, `Backend` e `Otimizacao`. O elemento `CORE / Tech` deixa a posicao absoluta e funciona como cabecalho conceitual do board.
+
+Entre `561px` e `900px`, cada grupo usa uma grade de duas colunas com proporcoes e destaques diferentes. React e CSS ocupam a largura do grupo Frontend, enquanto Performance e SEO usam colunas proporcionais no grupo de otimizacao. Ate `560px`, os grupos passam para uma coluna e a altura fica inteiramente determinada pelo conteudo.
+
+As animacoes de entrada existentes foram mantidas, mas agora consultam `useReducedMotion` para que o conteudo nao comece oculto quando o usuario prefere movimento reduzido. Os grupos possuem rotulos acessiveis e nenhuma informacao depende de hover.
