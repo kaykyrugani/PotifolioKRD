@@ -485,3 +485,17 @@ O import e o bloco visual de `logoKRD2semFndo.webp` foram removidos apenas de `P
 Os quatro previews WebP existentes continuam sendo utilizados com dimensoes intrinsecas, `loading="lazy"`, `decoding="async"`, `aspect-ratio: 16 / 9` e `object-fit: cover`. Cada card apresenta categoria, nome, descricao e ate tres tecnologias ou caracteristicas vindas de `projectPreviews`.
 
 A Home nao cria destinos individuais ficticios para os projetos, pois esses links nao estao cadastrados. Um CTA unico usa a rota real `/projetos` para encaminhar o visitante a pagina completa. A partir de `680px`, a vitrine usa duas colunas; abaixo desse limite, os projetos seguem em uma coluna e o CTA ocupa toda a largura em smartphones estreitos.
+
+## Reformulação de Cases em Destaque na página Projetos
+
+Data da alteração: 2026-09-22
+
+Os seis cases fornecidos foram centralizados em `src/data/featuredCases.js`, incluindo slugs, textos, tags, imagens e links externos opcionais. A seção `FeaturedCases` renderiza uma grade filtrável a partir desse array, com duas colunas a partir de `1024px` e uma coluna em tablet e mobile. O conteúdo descritivo do case 02 foi preservado da versão anterior.
+
+Cada preview usa `IntersectionObserver` para iniciar um loop vertical somente quando está visível. O deslocamento é calculado pela diferença entre a altura renderizada da imagem e a janela do card, com atualização por `ResizeObserver`. Hover ou foco pausa o movimento, e `prefers-reduced-motion` mantém o print no topo e desativa também as transições do filtro.
+
+Em telas menores que `768px`, Objetivo, Desafio, Solução e Resultado ficam disponíveis em um bloco nativo colapsável abaixo de cada card. Os filtros de tecnologia usam chips com rolagem horizontal nesse breakpoint.
+
+Cada card aponta para `/projetos/:slug`. Quando existe um campo `link`, o rodapé apresenta uma ação separada “Visitar site”, aberta em nova aba com `noopener noreferrer`, sem aninhar links ou conflitar com a navegação interna. A página `ProjectCasePage` reaproveita os mesmos dados, inclui a ação externa opcional e exibe a estrutura básica do case; slugs não cadastrados redirecionam para `/projetos`.
+
+Os assets antigos `aicIMG` e `ucanIMG` foram preservados no repositório, mas não são usados nesta versão da vitrine.

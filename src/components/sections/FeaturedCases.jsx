@@ -1,173 +1,191 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import SectionFold from '../SectionFold/SectionFold';
-import aicCaseImage from '../../assets/imagesCases/aicIMG.webp';
-import pomboCaseImage from '../../assets/imagesCases/pomboIMG.webp';
-import topCaseImage from '../../assets/imagesCases/topIMG.webp';
-import ucanCaseImage from '../../assets/imagesCases/ucanIMG.webp';
+import { featuredCases, featuredCaseTags } from '../../data/featuredCases';
 import styles from './FeaturedCases.module.css';
 
-const cases = [
-  {
-    id: '01',
-    shortName: 'Clínica',
-    name: 'Landing Page para Clínica Estética',
-    objective: 'Gerar novos agendamentos através do tráfego pago.',
-    challenge: 'Transmitir confiança e facilitar o contato.',
-    solution: 'Landing page focada em conversão com estrutura orientada para captação de leads.',
-    stack: ['React', 'SEO', 'Performance', 'UX'],
-    result: 'Experiência otimizada para dispositivos móveis e preparada para campanhas.',
-    image: aicCaseImage,
-    imageAlt: 'Landing page desenvolvida para AIC',
-    imageWidth: 1920,
-    imageHeight: 5959,
-  },
-  {
-    id: '02',
-    shortName: 'Empresa',
-    name: 'Site Institucional para Empresa',
-    objective: 'Apresentar serviços com clareza e fortalecer a presença digital.',
-    challenge: 'Organizar informações comerciais sem deixar a experiência pesada.',
-    solution: 'Estrutura institucional objetiva, com hierarquia visual clara e foco em credibilidade.',
-    stack: ['React', 'Vite', 'CSS Modules', 'SEO'],
-    result: 'Site rápido, responsivo e preparado para gerar confiança no primeiro contato.',
-    image: pomboCaseImage,
-    imageAlt: 'Site institucional desenvolvido para Pombo Chester',
-    imageWidth: 1906,
-    imageHeight: 7336,
-  },
-  {
-    id: '03',
-    shortName: 'Portfólio',
-    name: 'Portfólio Profissional',
-    objective: 'Apresentar trajetória, serviços e projetos com linguagem visual premium.',
-    challenge: 'Criar uma experiência memorável sem comprometer performance e clareza.',
-    solution: 'Interface imersiva com narrativa visual, motion design e arquitetura front-end organizada.',
-    stack: ['React', 'Framer Motion', 'CSS Modules', 'Vite'],
-    result: 'Experiência digital consistente, responsiva e orientada à autoridade profissional.',
-    image: topCaseImage,
-    imageAlt: 'Site desenvolvido para Top Locações',
-    imageWidth: 1920,
-    imageHeight: 8860,
-  },
-  {
-    id: '04',
-    shortName: 'Serviço',
-    name: 'Site para Prestador de Serviço',
-    objective: 'Transformar visitantes em contatos qualificados.',
-    challenge: 'Explicar valor, reduzir objeções e facilitar o início da conversa.',
-    solution: 'Página estruturada com proposta clara, prova visual, CTA estratégico e boa experiência mobile.',
-    stack: ['React', 'UX', 'SEO', 'Conversão'],
-    result: 'Fluxo mais claro para apresentação do serviço e geração de oportunidades.',
-    image: ucanCaseImage,
-    imageAlt: 'Landing page desenvolvida para U Can',
-    imageWidth: 1920,
-    imageHeight: 14013,
-  },
-];
+function CasePreview({ project, index, isPaused }) {
+  const previewRef = useRef(null);
+  const imageRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [scrollDistance, setScrollDistance] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
 
-const caseVariants = {
-  hidden: {
-    opacity: 0,
-    y: 24,
-    scale: 0.98,
-    filter: 'blur(14px)',
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    filter: 'blur(0px)',
-    transition: {
-      duration: 0.56,
-      ease: [0.16, 1, 0.3, 1],
-      when: 'beforeChildren',
-      staggerChildren: 0.07,
-    },
-  },
-  exit: {
-    opacity: 0,
-    y: -18,
-    scale: 0.985,
-    filter: 'blur(12px)',
-    transition: {
-      duration: 0.28,
-      ease: [0.4, 0, 1, 1],
-    },
-  },
-};
+  useEffect(() => {
+    const preview = previewRef.current;
 
-function CasePreview({ activeCase }) {
+    if (!preview || prefersReducedMotion) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.28 },
+    );
+
+    observer.observe(preview);
+
+    return () => observer.disconnect();
+  }, [prefersReducedMotion]);
+
+  useEffect(() => {
+    const preview = previewRef.current;
+    const image = imageRef.current;
+
+    if (!preview || !image) {
+      return undefined;
+    }
+
+    const measure = () => {
+      setScrollDistance(Math.max(0, image.offsetHeight - preview.clientHeight));
+    };
+
+    measure();
+    image.addEventListener('load', measure);
+
+    const resizeObserver = typeof ResizeObserver === 'undefined'
+      ? null
+      : new ResizeObserver(measure);
+
+    resizeObserver?.observe(preview);
+    resizeObserver?.observe(image);
+    window.addEventListener('resize', measure);
+
+    return () => {
+      image.removeEventListener('load', measure);
+      resizeObserver?.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, []);
+
+  const shouldAnimate = isVisible && !prefersReducedMotion && scrollDistance > 0;
+  const shotClassName = [
+    styles.previewShot,
+    shouldAnimate ? styles.previewShotActive : '',
+    isPaused ? styles.previewShotPaused : '',
+  ].filter(Boolean).join(' ');
+
   return (
-    <motion.div className={styles.preview} variants={caseVariants}>
+    <div className={styles.preview}>
       <div className={styles.previewChrome} aria-hidden="true">
         <span />
         <span />
         <span />
       </div>
 
-      <div className={styles.previewImageWindow}>
-        <motion.div
-          className={styles.previewShot}
-          key={activeCase.id}
-          initial={{ opacity: 0, y: 18, filter: 'blur(10px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          exit={{ opacity: 0, y: -12, filter: 'blur(8px)' }}
-          transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+      <div className={styles.previewImageWindow} ref={previewRef}>
+        <div
+          className={shotClassName}
+          style={{
+            '--scroll-distance': `${scrollDistance}px`,
+            '--scroll-delay': `${index * -0.7}s`,
+          }}
         >
           <img
+            ref={imageRef}
             className={styles.previewImage}
-            src={activeCase.image}
-            alt={activeCase.imageAlt}
-            width={activeCase.imageWidth}
-            height={activeCase.imageHeight}
+            src={project.image}
+            alt={project.imageAlt}
+            width={project.imageWidth}
+            height={project.imageHeight}
             loading="lazy"
+            decoding="async"
           />
-        </motion.div>
-        <span className={styles.previewHint} aria-hidden="true">Passe o mouse para explorar</span>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
-function CaseDetail({ activeCase }) {
-  return (
-    <motion.div className={styles.caseInfo} variants={caseVariants}>
-      <span className={styles.caseNumber}>{activeCase.id}</span>
-      <h3>{activeCase.name}</h3>
+function CaseCard({ project, index }) {
+  const [isPaused, setIsPaused] = useState(false);
 
-      <dl className={styles.caseFacts}>
+  const handleBlur = (event) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setIsPaused(false);
+    }
+  };
+
+  return (
+    <div
+      className={styles.caseCard}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocusCapture={() => setIsPaused(true)}
+      onBlurCapture={handleBlur}
+    >
+      <Link
+        className={styles.caseMainLink}
+        to={`/projetos/${project.slug}`}
+        aria-label={`Ver case: ${project.name}`}
+      >
+        <CasePreview project={project} index={index} isPaused={isPaused} />
+
+        <div className={styles.cardContent}>
+          <span className={styles.caseNumber}>{project.id}</span>
+          <h3>{project.name}</h3>
+          <ul className={styles.caseStack} aria-label={`Tecnologias e práticas de ${project.name}`}>
+            {project.stack.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <span className={styles.cardAction} aria-hidden="true">Ver case <b>↗</b></span>
+        </div>
+      </Link>
+
+      {project.link && (
+        <div className={styles.cardFooter}>
+          <a
+            className={styles.externalLink}
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Visitar site de ${project.name} em uma nova aba`}
+          >
+            Visitar site <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MobileCaseFacts({ project }) {
+  return (
+    <details className={styles.mobileFacts}>
+      <summary>Detalhes do case</summary>
+      <dl>
         <div>
           <dt>Objetivo</dt>
-          <dd>{activeCase.objective}</dd>
+          <dd>{project.objective}</dd>
         </div>
         <div>
           <dt>Desafio</dt>
-          <dd>{activeCase.challenge}</dd>
+          <dd>{project.challenge}</dd>
         </div>
         <div>
           <dt>Solução</dt>
-          <dd>{activeCase.solution}</dd>
+          <dd>{project.solution}</dd>
         </div>
         <div>
           <dt>Resultado</dt>
-          <dd>{activeCase.result}</dd>
+          <dd>{project.result}</dd>
         </div>
       </dl>
-
-      <ul className={styles.caseStack} aria-label="Tecnologias e práticas aplicadas">
-        {activeCase.stack.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
-    </motion.div>
+    </details>
   );
 }
 
 export default function FeaturedCases({ className = '', foldVariant }) {
-  const [activeCaseId, setActiveCaseId] = useState(cases[0].id);
-  const activeCase = cases.find((item) => item.id === activeCaseId) || cases[0];
+  const [activeTag, setActiveTag] = useState('Todos');
+  const prefersReducedMotion = useReducedMotion();
   const SectionComponent = foldVariant ? SectionFold : 'section';
+  const filteredCases = useMemo(() => (
+    activeTag === 'Todos'
+      ? featuredCases
+      : featuredCases.filter((project) => project.stack.includes(activeTag))
+  ), [activeTag]);
 
   return (
     <SectionComponent
@@ -180,32 +198,46 @@ export default function FeaturedCases({ className = '', foldVariant }) {
           <p className={styles.eyebrow}>CASES EM DESTAQUE</p>
           <h2 id="featured-cases-title">Projetos construídos para objetivos reais.</h2>
           <p>
-            Cada projeto apresentado abaixo foi planejado para resolver um problema específico através de estratégia,
-            design e desenvolvimento.
+            Explore os projetos em uma vitrine responsiva, filtre pelas tecnologias aplicadas
+            e acesse cada case para conhecer sua estrutura.
           </p>
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div className={styles.caseGrid} key={activeCase.id} variants={caseVariants} initial="hidden" animate="visible" exit="exit">
-            <CasePreview activeCase={activeCase} />
-            <CaseDetail activeCase={activeCase} />
-          </motion.div>
-        </AnimatePresence>
-
-        <div className={styles.caseNav} aria-label="Selecionar case em destaque">
-          {cases.map((item) => (
+        <div className={styles.filters} role="group" aria-label="Filtrar cases por tecnologia">
+          {['Todos', ...featuredCaseTags].map((tag) => (
             <button
-              className={`${styles.caseNavButton} ${item.id === activeCase.id ? styles.caseNavButtonActive : ''}`}
-              key={item.id}
+              className={`${styles.filterButton} ${activeTag === tag ? styles.filterButtonActive : ''}`}
+              key={tag}
               type="button"
-              aria-pressed={item.id === activeCase.id}
-              onClick={() => setActiveCaseId(item.id)}
+              aria-pressed={activeTag === tag}
+              onClick={() => setActiveTag(tag)}
             >
-              <span>{item.id}</span>
-              {item.shortName}
+              {tag}
             </button>
           ))}
         </div>
+
+        <p className={styles.filterStatus} aria-live="polite">
+          {filteredCases.length} {filteredCases.length === 1 ? 'case exibido' : 'cases exibidos'}
+        </p>
+
+        <motion.div className={styles.caseGrid} layout={!prefersReducedMotion}>
+          <AnimatePresence mode="popLayout">
+            {filteredCases.map((project, index) => (
+              <motion.article
+                key={project.slug}
+                layout={!prefersReducedMotion}
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -12 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.28, ease: 'easeOut' }}
+              >
+                <CaseCard project={project} index={index} />
+                <MobileCaseFacts project={project} />
+              </motion.article>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </SectionComponent>
   );

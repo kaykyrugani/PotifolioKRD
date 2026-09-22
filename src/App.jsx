@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import ProjectsPage from './pages/ProjectsPage';
+import ProjectCasePage from './pages/ProjectCasePage';
 import ServicesPage from './pages/ServicesPage';
 import TechnologiesPage from './pages/TechnologiesPage';
 import Seo from './components/seo/Seo';
@@ -36,6 +37,7 @@ function App() {
         <Route path="/sobre" element={<About />} />
         <Route path="/servicos" element={<ServicesPage />} />
         <Route path="/projetos" element={<ProjectsPage />} />
+        <Route path="/projetos/:slug" element={<ProjectCasePage />} />
         <Route path="/tecnologias" element={<TechnologiesPage />} />
         <Route path="/contato" element={<Contact />} />
       </Routes>
