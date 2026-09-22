@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from 'framer-motion';
 import {
   emailLabel,
   emailUrl,
@@ -127,6 +127,7 @@ function getProjectTypeIndex(progress, total) {
 
 export default function Contact() {
   const projectTypesRef = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
   const [activeProjectType, setActiveProjectType] = useState(0);
   const [isProjectScrollEnabled, setIsProjectScrollEnabled] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
@@ -225,15 +226,19 @@ export default function Contact() {
                   alt=""
                   width="1024"
                   height="1536"
+                  decoding="async"
+                  fetchPriority="high"
                   loading="eager"
                 />
                 {heroSignals.map((signal, index) => (
                   <motion.span
                     className={`${styles.contactHeroSignal} ${styles[signal.className]}`}
                     key={signal.label}
-                    initial={{ opacity: 0, y: 10, scale: 0.96 }}
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: 10, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.56, delay: 0.7 + index * 0.18, ease: [0.16, 1, 0.3, 1] }}
+                    transition={shouldReduceMotion
+                      ? { duration: 0 }
+                      : { duration: 0.56, delay: 0.7 + index * 0.18, ease: [0.16, 1, 0.3, 1] }}
                   >
                     {signal.label}
                   </motion.span>
