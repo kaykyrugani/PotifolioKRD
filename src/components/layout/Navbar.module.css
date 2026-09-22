@@ -52,45 +52,26 @@
   align-items: center;
   width: max-content;
   min-width: 0;
-  gap: 0.75rem;
 }
 
-.brandMark {
-  display: grid;
-  width: 42px;
-  height: 42px;
-  flex: 0 0 auto;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  background: var(--gradient-primary);
-  box-shadow:
-    0 0 30px rgba(124, 58, 237, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
-  font-family: var(--font-heading);
-  font-size: 0.92rem;
-  font-weight: 800;
-}
-
-.brand strong,
-.brand small {
+.brandLogo {
+  position: relative;
   display: block;
-}
-
-.brand strong {
+  width: 142px;
+  height: 52px;
+  flex: 0 0 auto;
   overflow: hidden;
-  max-width: 150px;
-  font-family: var(--font-heading);
-  font-size: 0.98rem;
-  line-height: 1.1;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-.brand small {
-  color: var(--color-text-muted);
-  font-size: 0.78rem;
-  line-height: 1.25;
+.brandLogo img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 310px;
+  max-width: none;
+  height: auto;
+  transform: translate(-50%, -50%);
 }
 
 .menu {
@@ -222,7 +203,7 @@
 @media (min-width: 900px) {
   .nav {
     grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: clamp(1.5rem, 3.2vw, 3rem);
+    gap: clamp(1.25rem, 2.6vw, 2.5rem);
     padding: 0 24px;
   }
 
@@ -279,23 +260,13 @@
     padding: 0 12px 0 14px;
   }
 
-  .brand {
-    gap: 0.62rem;
+  .brandLogo {
+    width: 120px;
+    height: 44px;
   }
 
-  .brandMark {
-    width: 40px;
-    height: 40px;
-    border-radius: 15px;
-  }
-
-  .brand strong {
-    max-width: 132px;
-    font-size: 0.9rem;
-  }
-
-  .brand small {
-    font-size: 0.72rem;
+  .brandLogo img {
+    width: 262px;
   }
 
   .menuOpen {
@@ -305,8 +276,13 @@
 }
 
 @media (max-width: 380px) {
-  .brand strong {
-    max-width: 108px;
+  .brandLogo {
+    width: 110px;
+    height: 40px;
+  }
+
+  .brandLogo img {
+    width: 240px;
   }
 }
 

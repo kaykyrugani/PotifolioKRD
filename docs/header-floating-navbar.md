@@ -29,3 +29,15 @@ No mobile, a navbar continua flutuante e arredondada. Os links centrais ficam oc
 - src/components/layout/Navbar.jsx
 - src/components/layout/Navbar.module.css
 - docs/header-floating-navbar.md
+
+## Integracao da nova identidade visual
+
+Data da alteracao: 2026-09-22
+
+O bloco anterior formado pelo monograma `KR`, pelo texto `Kayky Rugani` e pelo complemento `Dev` foi substituido no componente ativo `Navbar` por `src/assets/logos/logoKRD2semFndo.webp`. O link da marca continua apontando para `/` e continua fechando o menu mobile quando acionado.
+
+O WebP possui dimensoes intrinsecas de `776 x 394`, canal alpha e uma area principal de marca com aproximadamente `355 x 129`, centralizada dentro de uma caixa com bastante transparencia. Para preservar o arquivo original sem distorcao, a navbar usa uma janela com `overflow: hidden` que recorta somente a area transparente periferica e centraliza a imagem em seu aspect ratio original.
+
+No desktop, a janela visual da marca mede `142 x 52px`; ate `640px`, mede `120 x 44px`; e ate `380px`, `110 x 40px`. As dimensoes intrinsecas permanecem declaradas no elemento `img` para evitar layout shift. O link possui nome acessivel proprio e a imagem interna usa `alt` vazio para impedir leitura duplicada.
+
+Links, destinos, estado ativo, CTA, listener de scroll, breakpoint de `900px`, botao hamburger e painel mobile foram preservados. Apenas o gap entre os tres grupos do desktop foi moderadamente reduzido para acomodar a marca horizontal na regiao imediatamente anterior ao breakpoint.

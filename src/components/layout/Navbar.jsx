@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import brandLogo from '../../assets/logos/logoKRD2semFndo.webp';
 import { navItems } from '../../data/siteContent';
 import { whatsappLabel, whatsappUrl } from '../../utils/contact';
 import Button from '../ui/Button';
@@ -22,11 +23,14 @@ export default function Navbar() {
   return (
     <header className={styles.header}>
       <nav className={`${styles.nav} ${isScrolled ? styles.navScrolled : ''}`} aria-label="Navegação principal">
-        <NavLink className={styles.brand} to="/" onClick={closeMenu}>
-          <span className={styles.brandMark}>KR</span>
-          <span>
-            <strong>Kayky Rugani</strong>
-            <small>Dev</small>
+        <NavLink
+          className={styles.brand}
+          to="/"
+          onClick={closeMenu}
+          aria-label="Kayky Rugani Dev — ir para a página inicial"
+        >
+          <span className={styles.brandLogo} aria-hidden="true">
+            <img src={brandLogo} alt="" width="776" height="394" />
           </span>
         </NavLink>
 
