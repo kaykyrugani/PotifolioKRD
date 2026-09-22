@@ -473,3 +473,15 @@ Padrões:
 - `docs/header-floating-navbar.md`
 - `docs/footer-signature-redesign.md`
 - `docs/agent-handoff-report.md`
+
+## Atualizacao da vitrine de projetos na Home
+
+Data da alteracao: 2026-09-22
+
+A secao `Projects` da Home passou de uma composicao de tres colunas, com quatro cards e uma celula decorativa de marca, para uma vitrine editorial de quatro projetos em grade `2 x 2` no desktop e tablet com largura suficiente.
+
+O import e o bloco visual de `logoKRD2semFndo.webp` foram removidos apenas de `Projects.jsx`. O arquivo de imagem foi mantido no repositorio e nenhum outro componente ou pagina foi alterado por essa remocao.
+
+Os quatro previews WebP existentes continuam sendo utilizados com dimensoes intrinsecas, `loading="lazy"`, `decoding="async"`, `aspect-ratio: 16 / 9` e `object-fit: cover`. Cada card apresenta categoria, nome, descricao e ate tres tecnologias ou caracteristicas vindas de `projectPreviews`.
+
+A Home nao cria destinos individuais ficticios para os projetos, pois esses links nao estao cadastrados. Um CTA unico usa a rota real `/projetos` para encaminhar o visitante a pagina completa. A partir de `680px`, a vitrine usa duas colunas; abaixo desse limite, os projetos seguem em uma coluna e o CTA ocupa toda a largura em smartphones estreitos.
