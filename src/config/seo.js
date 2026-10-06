@@ -4,8 +4,8 @@ export const SOCIAL_IMAGE_URL = '';
 
 export const ROUTE_SEO = Object.freeze({
   '/': {
-    title: 'Kayky Rugani | Criação de Sites e Landing Pages',
-    description: 'Desenvolvimento de sites profissionais e landing pages com design responsivo, SEO técnico, alta performance e foco em conversão.',
+    title: 'Kayky Rugani | Criação de sites e landing pages',
+    description: 'Desenvolvedor web especializado em criação de sites e landing pages rápidos, responsivos e otimizados para SEO, pensados para gerar contatos e clientes.',
   },
   '/sobre': {
     title: 'Sobre Kayky Rugani | Desenvolvedor Web em Franca',
