@@ -5,7 +5,6 @@ import CTA from '../components/sections/CTA';
 import Differentials from '../components/sections/Differentials';
 import Hero from '../components/sections/Hero';
 import Projects from '../components/sections/Projects';
-import Services from '../components/sections/Services';
 import TechStack from '../components/sections/TechStack';
 import { differentials, projectPreviews } from '../data/siteContent';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
@@ -14,7 +13,6 @@ import styles from './Home.module.css';
 import revealStyles from './Page.module.css';
 
 const revealSectionKeys = {
-  services: 'services',
   transitionIntro: 'transitionIntro',
   techStack: 'techStack',
   differentials: 'differentials',
@@ -64,7 +62,6 @@ export default function Home() {
   return (
     <PageLayout>
       <Hero />
-      <Services reveal={reveal} />
       <section className={styles.horizontalTransition} ref={horizontalRef}>
         <motion.div
           className="techAtmosphereBridge"

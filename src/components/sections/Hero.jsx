@@ -4,6 +4,7 @@ import heroImage from '../../assets/images/ImgHero.webp';
 import heroImage768 from '../../assets/images/ImgHero-768.webp';
 import heroImage1280 from '../../assets/images/ImgHero-1280.webp';
 import Button from '../ui/Button';
+import HeroParticles from './HeroParticles.jsx';
 import styles from './Hero.module.css';
 
 const clientWord = 'clientes';
@@ -19,6 +20,8 @@ function createScrambleWord(resolvedCharacters) {
 
 export default function Hero() {
   const [visualWord, setVisualWord] = useState(clientWord);
+  const heroRef = useRef(null);
+  const figureImageRef = useRef(null);
   const animationRef = useRef(null);
   const runningRef = useRef(false);
   const visualRef = useRef(null);
@@ -88,10 +91,13 @@ export default function Hero() {
   }, [clearAnimation, startScramble]);
 
   return (
-    <section id="home" className={styles.hero} aria-labelledby="home-title">
-      <div className={styles.heroFx} aria-hidden="true" />
+    <section id="home" className={styles.hero} aria-labelledby="home-title" ref={heroRef}>
+      <div className={styles.heroFx} aria-hidden="true">
+        <HeroParticles heroRef={heroRef} imageRef={figureImageRef} />
+      </div>
       <figure className={styles.heroFigure}>
         <img
+          ref={figureImageRef}
           src={heroImage}
           srcSet={`${heroImage768} 768w, ${heroImage1280} 1280w, ${heroImage} 1672w`}
           sizes="(max-width: 767px) 175vw, (max-width: 1023px) 130vw, min(82vw, 150svh)"
