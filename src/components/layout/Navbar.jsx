@@ -10,13 +10,13 @@ const leftItems = visibleNavItems.slice(0, 2);
 const rightItems = visibleNavItems.slice(2);
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(() => window.scrollY > 48);
   const [isOpen, setIsOpen] = useState(false);
   const [hasFocus, setHasFocus] = useState(false);
   const [hasNavLinkFocus, setHasNavLinkFocus] = useState(false);
   const headerRef = useRef(null);
   const menuButtonRef = useRef(null);
-  const scrollStateRef = useRef(false);
+  const scrollStateRef = useRef(window.scrollY > 48);
   const frameRef = useRef(null);
 
   useEffect(() => {
@@ -94,9 +94,11 @@ export default function Navbar() {
       }}
     >
       <nav className={styles.nav} aria-label="Principal" data-open={isOpen} data-link-focus={hasNavLinkFocus}>
-        <NavLink className={styles.brand} to="/" onClick={closeMenu} aria-label="KRD Dev, página inicial">
-          <img className={styles.lockupLogo} src={lockupLogo} alt="" width="950" height="475" />
-          <img className={styles.compactLogo} src={compactLogo} alt="" width="776" height="394" aria-hidden="true" />
+        <NavLink className={styles.brand} to="/" onClick={closeMenu} aria-label="Kayky Rugani, KRD Dev, página inicial">
+          <span className={styles.brandIntro}>
+            <img className={styles.lockupLogo} src={lockupLogo} alt="" width="950" height="475" />
+            <img className={styles.compactLogo} src={compactLogo} alt="" width="776" height="394" aria-hidden="true" />
+          </span>
         </NavLink>
 
         <div className={styles.menuGroups} id="primary-menu">

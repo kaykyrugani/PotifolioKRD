@@ -6,7 +6,8 @@ import Differentials from '../components/sections/Differentials';
 import Hero from '../components/sections/Hero';
 import Projects from '../components/sections/Projects';
 import TechStack from '../components/sections/TechStack';
-import { differentials, projectPreviews } from '../data/siteContent';
+import { differentials } from '../data/siteContent';
+import { homeProjects } from '../data/homeProjects';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 import '../styles/tech-atmosphere.css';
 import styles from './Home.module.css';
@@ -26,7 +27,7 @@ const createRevealItemKey = (groupKey, index) => `${groupKey}-${index}`;
 
 const revealItemKeyList = [
   ...differentials.map((_, index) => createRevealItemKey('differentials', index)),
-  ...projectPreviews.map((_, index) => createRevealItemKey('projects', index)),
+  ...homeProjects.filter((project) => project.visible).map((_, index) => createRevealItemKey('projects', index)),
   'cta-box',
 ];
 

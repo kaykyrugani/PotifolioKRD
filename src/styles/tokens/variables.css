@@ -48,6 +48,27 @@
   --transition-base: 240ms ease;
   --transition-slow: 420ms ease;
 
+  --hero-entry-mask-duration: 600ms;
+  --hero-entry-rise-duration: 500ms;
+  --hero-entry-eyebrow-duration: 400ms;
+  --hero-entry-glow-duration: 1000ms;
+  --hero-entry-photo-duration: 1000ms;
+  --hero-entry-logo-duration: 500ms;
+  --hero-entry-client-duration: 500ms;
+  --hero-entry-glow-delay: 0ms;
+  --hero-entry-photo-delay: 200ms;
+  --hero-entry-logo-delay: 0ms;
+  --hero-entry-eyebrow-delay: 150ms;
+  --hero-entry-title-1-delay: 100ms;
+  --hero-entry-title-2-delay: 190ms;
+  --hero-entry-title-3-delay: 280ms;
+  --hero-entry-subtitle-delay: 500ms;
+  --hero-entry-actions-delay: 650ms;
+  --hero-entry-clients-delay: 900ms;
+  --hero-entry-ease: cubic-bezier(.2, .7, .2, 1);
+  --hero-entry-rise-ease: ease-out;
+  --hero-entry-client-ease: ease-out;
+
   --container: 1180px;
   --z-header: 50;
 }

@@ -1,3 +1,8 @@
+@keyframes heroLogoRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .header {
   position: fixed;
   inset: 0 0 auto;
@@ -66,6 +71,15 @@
   height: auto;
   object-fit: contain;
   transition: opacity 500ms cubic-bezier(.2, .7, .2, 1), transform 500ms cubic-bezier(.2, .7, .2, 1);
+}
+
+.brandIntro {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  animation: heroLogoRise var(--hero-entry-logo-duration) var(--hero-entry-rise-ease) var(--hero-entry-logo-delay) backwards;
 }
 
 .lockupLogo {
@@ -317,10 +331,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .nav::before,
+  .brandIntro,
   .brand img,
   .menuGroup,
   .menuButton,
   .menuButton span {
     transition: none;
+  }
+
+  .brandIntro {
+    animation: none;
   }
 }
