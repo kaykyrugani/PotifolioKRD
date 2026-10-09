@@ -77,7 +77,8 @@
   min-width: 0;
 }
 
-.techRoleCopy > span {
+.techRoleCopy > span,
+.techFigmaHeaderMain > span {
   display: inline-flex;
   margin-bottom: var(--space-3);
   color: var(--color-blue-cyan);
@@ -239,167 +240,6 @@
 
 .techRoleVisualActive {
   border-color: rgba(0, 194, 255, 0.22);
-}
-
-.techFigmaStoryboard {
-  display: grid;
-  gap: 0.5rem;
-  margin: 0.6rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.techFigmaItem {
-  position: relative;
-  display: grid;
-  gap: 0;
-  overflow: hidden;
-  min-height: 38px;
-  align-content: center;
-  padding: 0 0.84rem;
-  border: 1px solid rgba(255, 255, 255, 0.075);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.035);
-  opacity: 0.72;
-  transform: translateY(0) scale(1);
-  transition:
-    min-height 420ms ease,
-    padding 420ms ease,
-    border-color 460ms ease,
-    background 460ms ease,
-    box-shadow 460ms ease,
-    opacity 420ms ease,
-    transform 460ms ease;
-}
-
-.techFigmaItemActive {
-  min-height: 96px;
-  align-content: start;
-  padding: 0.68rem 0.9rem 0.78rem;
-  border-color: rgba(0, 194, 255, 0.36);
-  background:
-    rgba(0, 194, 255, 0.055);
-  box-shadow:
-    0 0 18px rgba(0, 194, 255, 0.085),
-    inset 0 1px 0 rgba(255, 255, 255, 0.065);
-  opacity: 1;
-  transform: translateY(-1px) scale(1.012);
-}
-
-.techFigmaItemComplete {
-  min-height: 38px;
-  padding: 0 0.84rem;
-  border-color: rgba(0, 194, 255, 0.22);
-  background: rgba(0, 194, 255, 0.045);
-  opacity: 1;
-}
-
-.techFigmaItemHeader {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 0.65rem;
-  align-items: center;
-  min-height: 20px;
-}
-
-.techFigmaItemHeader i {
-  width: 7px;
-  height: 7px;
-  border-radius: var(--radius-full);
-  background: rgba(0, 194, 255, 0.52);
-  box-shadow: 0 0 0 rgba(0, 194, 255, 0);
-  transition: background 420ms ease, box-shadow 420ms ease, scale 420ms ease;
-}
-
-.techFigmaItemActive .techFigmaItemHeader i,
-.techFigmaItemComplete .techFigmaItemHeader i {
-  background: var(--color-blue-cyan);
-  box-shadow: 0 0 14px rgba(0, 194, 255, 0.38);
-  scale: 1.12;
-}
-
-.techFigmaItemHeader span,
-.techFigmaItemHeader em {
-  color: rgba(255, 255, 255, 0.82);
-  font-family: var(--font-heading);
-  font-size: 0.8rem;
-  font-style: normal;
-  font-weight: 850;
-  line-height: 1.2;
-}
-
-.techFigmaItemActive .techFigmaItemHeader span,
-.techFigmaItemComplete .techFigmaItemHeader span,
-.techFigmaItemHeader em {
-  color: var(--color-text);
-}
-
-.techFigmaItem p {
-  max-height: 0;
-  margin: 0;
-  color: var(--color-text-muted);
-  font-size: 0.8rem;
-  line-height: 1.48;
-  opacity: 0;
-  transform: translate3d(0, -4px, 0);
-  transition:
-    max-height 420ms ease,
-    opacity 420ms ease,
-    transform 420ms ease;
-}
-
-.techFigmaItemActive p {
-  max-height: 58px;
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
-
-.techFigmaResultGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.55rem;
-  margin-top: auto;
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  transition: opacity 480ms ease, transform 480ms ease;
-}
-
-.techFigmaResultGridHidden {
-  opacity: 0;
-  transform: translateY(8px) scale(0.95);
-}
-
-.techFigmaResultGrid span {
-  display: grid;
-  min-height: 34px;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 12px;
-  color: transparent;
-  background:
-    linear-gradient(135deg, rgba(0, 194, 255, 0.09), transparent),
-    rgba(255, 255, 255, 0.035);
-  font-family: var(--font-heading);
-  font-size: 0.68rem;
-  font-weight: 850;
-  line-height: 1.15;
-  text-align: center;
-  transition:
-    border-color 460ms ease,
-    background 460ms ease,
-    color 460ms ease,
-    box-shadow 460ms ease;
-}
-
-.techFigmaResultGridComplete span {
-  border-color: rgba(0, 194, 255, 0.18);
-  color: rgba(255, 255, 255, 0.84);
-  background:
-    radial-gradient(circle at 12% 10%, rgba(0, 194, 255, 0.12), transparent 7rem),
-    rgba(0, 194, 255, 0.045);
-  box-shadow:
-    0 0 22px rgba(0, 194, 255, 0.055),
-    inset 0 1px 0 rgba(255, 255, 255, 0.055);
 }
 
 @media (min-width: 780px) {
@@ -1274,18 +1114,6 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-
-  .techFigmaVisual,
-.techFigmaItem,
-.techFigmaItemHeader i,
-.techFigmaItem p,
-.techFigmaResultGrid,
-.techFigmaResultGrid span {
-    transition: none;
-  }
-}
-
 @keyframes techFigmaToolFloat {
   0%,
   100% {
@@ -1295,4 +1123,610 @@
   50% {
     transform: translate3d(0, 3px, 0);
   }
+}
+
+/* Figma story: isolated responsive presentation for the three planning stages. */
+.techFigmaStory {
+  position: relative;
+  min-width: 0;
+  margin-top: calc(-1 * var(--space-10));
+  scroll-margin-top: 100px;
+}
+
+.techSectionIntro { margin-bottom: var(--space-8); }
+
+.techFigmaLayout {
+  display: grid;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.techFigmaStory .techFigmaHeaderMain > span {
+  margin-bottom: var(--space-3);
+}
+
+.techFigmaStory .techRoleCopy h3 {
+  max-width: 22ch;
+  font-size: clamp(2rem, 1.2rem + 2.2vw, 3.25rem);
+  line-height: 1.12;
+}
+
+.techFigmaStory .techFigmaHeaderAside > p {
+  max-width: 52ch;
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+  line-height: 1.6;
+}
+
+.techFigmaHeaderMain,
+.techFigmaHeaderAside { display: contents; }
+
+.techFigmaStory .techRoleCopy ul {
+  gap: 0.5rem;
+  margin-top: var(--space-5);
+}
+
+.techFigmaStory .techRoleCopy li {
+  min-height: 36px;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.9rem;
+  transition: border-color 250ms ease, background-color 250ms ease, color 250ms ease;
+}
+
+.techFigmaStory .techRoleCopy li.techFigmaToolActive {
+  animation: none;
+  transform: none;
+  border-color: var(--color-blue-cyan);
+  color: var(--color-text);
+  background: rgba(0, 194, 255, 0.12);
+  box-shadow: none;
+}
+
+.techFigmaProgress {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin: 0 0 var(--space-5);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 750;
+}
+
+.techFigmaProgress > i {
+  display: block;
+  height: 3px;
+  flex: 1;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.techFigmaProgress > i > i {
+  display: block;
+  height: 100%;
+  background: var(--color-blue-cyan);
+  transition: width 400ms ease-out;
+}
+
+.techFigmaProgressNumber {
+  position: relative;
+  display: inline-block;
+  min-width: 1.25em;
+  height: 1em;
+  line-height: inherit;
+  overflow: hidden;
+  vertical-align: baseline;
+}
+
+.techFigmaProgressNumber > span {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.techFigmaVisual {
+  z-index: 2;
+  display: grid;
+  min-height: 0;
+  gap: 0.65rem;
+  align-content: start;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border-color: rgba(0, 194, 255, 0.28);
+  border-radius: 20px;
+  background: rgba(10, 16, 30, 0.98);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+  backdrop-filter: none;
+}
+
+.techFigmaPreviewFrame {
+  position: relative;
+  display: grid;
+  height: clamp(240px, 30vh, 340px);
+  min-height: 240px;
+  place-items: stretch;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 13px;
+  background: rgba(5, 11, 22, 0.5);
+}
+
+.techFigmaPreviewLayer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  place-items: stretch;
+}
+
+.techFigmaCurrentStep {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.techFigmaStoryboard {
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+  min-height: 12.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.techFigmaStoryboard li {
+  display: grid;
+  grid-template-rows: 40px 0fr;
+  min-width: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.025);
+  transition:
+    grid-template-rows 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 250ms ease,
+    background-color 250ms ease;
+}
+
+.techFigmaStoryboard button {
+  display: flex;
+  width: 100%;
+  min-height: 40px;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0.75rem;
+  border: 0;
+  color: var(--color-text-muted);
+  background: transparent;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: color 250ms ease;
+}
+
+.techFigmaStoryboard button > span {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: rgba(0, 194, 255, 0.38);
+  transition: background-color 250ms ease, transform 250ms ease;
+}
+
+.techFigmaStoryboard li.techFigmaItemActive {
+  grid-template-rows: 40px 1fr;
+  min-height: 0;
+  align-content: normal;
+  padding: 0;
+  border-color: var(--color-blue-cyan);
+  background: rgba(0, 194, 255, 0.09);
+  box-shadow: none;
+  opacity: 1;
+  transform: none;
+}
+
+.techFigmaStoryboard li.techFigmaItemActive button { color: var(--color-text); }
+.techFigmaStoryboard li.techFigmaItemActive button > span {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  aspect-ratio: 1;
+  background: var(--color-blue-cyan);
+  transform: scale(1.25);
+}
+
+.techFigmaStoryboard button > span { transition: background-color 250ms ease, transform 250ms ease; }
+
+.techFigmaItemContent {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 0.75rem;
+}
+
+.techFigmaItemContent > div {
+  min-height: 0;
+}
+
+.techFigmaItemContent p,
+.techFigmaMobileDescription {
+  margin: 0 0 0.7rem;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.techFigmaItemContent p { max-height: none; overflow: visible; }
+
+.techFigmaTabs { display: none; }
+.techFigmaStageTrack { display: none; }
+.techFigmaMobileChips { display: none; }
+.techFigmaTabletMarkers {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+  min-height: 14px;
+}
+
+.techFigmaTabletMarkers button {
+  display: flex;
+  width: 18px;
+  min-width: 18px;
+  height: 14px;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.techFigmaTabletMarkers button > span {
+  display: block;
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 999px;
+  background: rgba(130, 155, 184, 0.55);
+  transition: width 250ms ease, flex-basis 250ms ease, background-color 250ms ease;
+}
+
+.techFigmaTabletMarkers button[aria-current="step"] > span {
+  width: 22px;
+  flex-basis: 22px;
+  background: var(--color-blue-cyan);
+}
+
+.techFigmaTabletMarkerActive { outline: none; }
+.techFigmaMobileContentSlot {
+  position: relative;
+  min-height: 8rem;
+}
+
+.techFigmaMobileContentPanel {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+}
+
+.techFigmaTabLabel {
+  position: relative;
+  z-index: 1;
+}
+
+.techFigmaTabPill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border: 1px solid var(--color-blue-cyan);
+  border-radius: inherit;
+  background: rgba(0, 194, 255, 0.12);
+  pointer-events: none;
+}
+
+.techFigmaStory :focus-visible {
+  outline: 2px solid var(--color-blue-cyan);
+  outline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .techFigmaStory {
+    min-height: 280vh;
+  }
+
+  .techFigmaLayout {
+    display: contents;
+  }
+
+  .techFigmaStory .techRoleCopy {
+    padding-top: 1.5rem;
+  }
+
+  .techFigmaVisual {
+    position: sticky;
+    top: 100px;
+    margin-top: 1.25rem;
+    max-height: 45vh;
+    gap: 0.3rem;
+    padding: 0.75rem;
+  }
+
+  .techFigmaPreviewFrame { height: clamp(180px, 24vh, 220px); min-height: 180px; }
+  .techFigmaStoryboard li { grid-template-rows: 32px 0fr; }
+  .techFigmaStoryboard li.techFigmaItemActive { grid-template-rows: 32px 1fr; }
+  .techFigmaStoryboard button { min-height: 32px; }
+  .techFigmaTabs { display: none; }
+  .techFigmaItemContent { display: none; }
+  .techFigmaStoryboard { display: none; }
+
+.techFigmaDesktopStages {
+  display: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+  .techFigmaStageTrack {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .techFigmaStageTrack li {
+    min-height: 78vh;
+    padding: 2rem 0;
+    color: var(--color-text-muted);
+    opacity: 0.42;
+    transition: opacity 300ms ease;
+  }
+
+  .techFigmaStageTrack li[aria-current="step"] { opacity: 1; }
+  .techFigmaStageTrack strong { color: var(--color-blue-cyan); }
+  .techFigmaStageTrack p { max-width: 48ch; margin-top: 0.5rem; line-height: 1.6; }
+}
+
+@media (min-width: 1024px) {
+  .techFigmaStory { min-height: 280vh; }
+
+  .techFigmaLayout {
+    position: sticky;
+    top: 84px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(1.25rem, 3vh, 2.25rem);
+    align-content: start;
+    min-height: 0;
+    padding: clamp(0.5rem, 3vh, 2rem) 0 1rem;
+  }
+
+  .techFigmaStory .techRoleCopy {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    grid-template-areas: "progress progress" "main aside";
+    column-gap: clamp(2rem, 5vw, 6rem);
+    row-gap: 0.45rem;
+    align-items: end;
+    padding-top: 0;
+  }
+
+  .techFigmaStory .techFigmaProgress {
+    grid-area: progress;
+    margin-bottom: clamp(0.75rem, 2vh, 1.25rem);
+  }
+
+  .techFigmaHeaderMain,
+  .techFigmaHeaderAside {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .techFigmaHeaderMain { grid-area: main; gap: 0.55rem; }
+  .techFigmaHeaderAside { grid-area: aside; gap: 0.65rem; }
+  .techFigmaStory .techFigmaHeaderMain > span { margin: 0; }
+
+  .techFigmaStory .techRoleCopy h3 {
+    max-width: none;
+    font-size: clamp(1.75rem, 1rem + 1.8vw, 2.75rem);
+    line-height: 1.15;
+  }
+
+  .techFigmaStory .techFigmaHeaderAside > p {
+    max-width: 56ch;
+    margin: 0;
+    font-size: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+    line-height: 1.6;
+  }
+
+  .techFigmaStory .techRoleCopy ul {
+    gap: 0.25rem;
+    margin-top: 0;
+  }
+
+  .techFigmaStory .techRoleCopy li {
+    min-height: 32px;
+    padding: 0.35rem 0.38rem;
+    font-size: 0.72rem;
+    letter-spacing: -0.015em;
+    white-space: nowrap;
+  }
+
+  .techFigmaVisual {
+    position: relative;
+    top: auto;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: clamp(0.75rem, 2vh, 1.25rem);
+    margin-top: 0;
+    padding: clamp(1rem, 2vw, 1.5rem);
+    max-height: none;
+  }
+
+  .techFigmaPreviewFrame { height: clamp(190px, 32vh, 340px); min-height: 190px; }
+  .techFigmaDesktopStages {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 2rem);
+  }
+
+  .techFigmaDesktopStages li {
+    min-width: 0;
+    padding-top: 0.55rem;
+    border-top: 2px solid rgba(130, 155, 184, 0.45);
+    transition: border-color 250ms ease, color 250ms ease;
+  }
+
+  .techFigmaDesktopStages li[data-stage-status="complete"] { border-color: #2f7188; }
+  .techFigmaDesktopStages li[data-stage-status="active"] { border-color: var(--color-blue-cyan); }
+
+  .techFigmaDesktopStages button {
+    display: flex;
+    min-height: 32px;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0;
+    color: #a1a1aa;
+    background: transparent;
+    font: inherit;
+    font-size: clamp(0.9rem, 0.9rem + 0.08vw, 1rem);
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: color 250ms ease;
+  }
+
+  .techFigmaDesktopStages button:focus-visible {
+    outline: 2px solid var(--color-blue-cyan);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  .techFigmaDesktopStages button > span:first-child { color: #91a4b8; font-variant-numeric: tabular-nums; }
+  .techFigmaDesktopStages li[data-stage-status="active"] button { color: #fff; }
+  .techFigmaDesktopStages li[data-stage-status="complete"] button { color: #bfccd8; }
+  .techFigmaDesktopStages li[data-stage-status="active"] button > span:first-child { color: var(--color-blue-cyan); }
+  .techFigmaDesktopStages p {
+    max-width: 42ch;
+    margin: 0.15rem 0 0;
+    color: #a1a1aa;
+    font-size: clamp(0.8rem, 0.78rem + 0.08vw, 0.875rem);
+    line-height: 1.5;
+  }
+
+  .techFigmaTabletMarkers { display: none; }
+  .techFigmaStageTrack { display: none; }
+}
+
+@media (min-width: 1024px) and (max-height: 760px) {
+  .techFigmaLayout { gap: 0.75rem; padding-top: 0.5rem; }
+  .techFigmaStory .techRoleCopy { row-gap: 0.25rem; }
+  .techFigmaStory .techFigmaProgress { margin-bottom: 0.45rem; }
+  .techFigmaHeaderMain { gap: 0.35rem; }
+  .techFigmaHeaderAside { gap: 0.4rem; }
+  .techFigmaStory .techFigmaHeaderAside > p { font-size: 0.94rem; line-height: 1.45; }
+  .techFigmaStory .techRoleCopy li { min-height: 29px; padding-block: 0.25rem; }
+  .techFigmaVisual { gap: 0.65rem; padding: 0.85rem; }
+  .techFigmaPreviewFrame { height: clamp(150px, 26vh, 200px); min-height: 150px; }
+  .techFigmaDesktopStages { gap: clamp(0.75rem, 1.5vw, 1.25rem); }
+  .techFigmaDesktopStages li { padding-top: 0.4rem; }
+  .techFigmaDesktopStages button { min-height: 26px; font-size: 0.84rem; }
+  .techFigmaDesktopStages p { font-size: 0.76rem; line-height: 1.4; }
+}
+
+@media (min-width: 1024px) and (max-height: 680px) {
+  .techFigmaDesktopStages p {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}
+
+@media (max-width: 767px) {
+  .techFigmaProgress { display: none; }
+  .techFigmaStory .techRoleCopy h3 { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+  .techFigmaStory .techFigmaToolList { display: none; }
+  .techFigmaVisual { gap: 0.75rem; }
+  .techFigmaTabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.35rem;
+  }
+
+  .techFigmaTabs button {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    display: grid;
+    place-items: center;
+    min-height: 44px;
+    padding: 0.4rem 0.3rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    color: var(--color-text-muted);
+    background: transparent;
+    font: inherit;
+    font-size: 0.78rem;
+    cursor: pointer;
+  }
+
+  .techFigmaTabs button.techFigmaTabActive {
+    color: var(--color-text);
+    background: transparent;
+  }
+
+  .techFigmaMobileDescription { min-height: 3.2rem; }
+  .techFigmaMobileContentPanel[aria-hidden="true"] { pointer-events: none; }
+  .techFigmaMobileChips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .techFigmaMobileChips li {
+    display: inline-flex;
+    min-height: 36px;
+    align-items: center;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid rgba(0, 194, 255, 0.46);
+    border-radius: 999px;
+    color: var(--color-text);
+    background: rgba(0, 194, 255, 0.09);
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+  .techFigmaStoryboard, .techFigmaCurrentStep { display: none; }
+  .techFigmaPreviewFrame { height: 240px; min-height: 240px; }
+  .techFigmaTabletMarkers { display: none; }
+}
+
+@media (max-height: 720px) and (min-width: 768px) {
+  .techFigmaPreviewFrame { height: clamp(180px, 26vh, 230px); min-height: 180px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .techFigmaProgress > i > i,
+  .techFigmaStoryboard li,
+  .techFigmaStoryboard button,
+  .techFigmaStoryboard button > span,
+  .techFigmaTabs button,
+  .techFigmaStory .techRoleCopy li,
+  .techFigmaStageTrack li { animation: none; transition: none; }
+
+  .techFigmaTabs button.techFigmaTabActive {
+    border-color: var(--color-blue-cyan);
+    background: rgba(0, 194, 255, 0.12);
+  }
+
+  .techFigmaDesktopStages li,
+  .techFigmaDesktopStages button { transition: none; }
 }

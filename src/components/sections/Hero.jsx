@@ -12,7 +12,16 @@ export default function Hero() {
   const figureImageRef = useRef(null);
 
   return (
-    <section id="home" className={styles.hero} aria-labelledby="home-title" ref={heroRef}>
+    <>
+      <link
+        rel="preload"
+        as="image"
+        href={heroImage}
+        imageSrcSet={`${heroImage768} 768w, ${heroImage1280} 1280w, ${heroImage} 1672w`}
+        imageSizes="(max-width: 767px) 175vw, (max-width: 1023px) 130vw, min(82vw, 150svh)"
+        fetchPriority="high"
+      />
+      <section id="home" className={styles.hero} aria-labelledby="home-title" ref={heroRef}>
       <div className={styles.heroFx} aria-hidden="true">
         <HeroParticles heroRef={heroRef} imageRef={figureImageRef} />
       </div>
@@ -51,6 +60,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

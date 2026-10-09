@@ -1,38 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { forwardRef, useEffect, useId, useRef, useState } from 'react';
+import { AnimatePresence, motion, useIsPresent, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import Container from '../ui/Container';
+import FigmaPreviewContent from './FigmaPreviews';
+import { figmaStoryboardItems } from './figmaPreviewData';
 import { barReveal, cardReveal, flowStepReveal, revealViewport, tagReveal, verticalReveal } from './technologyMotion';
 import sectionStyles from './TechnologyRoles.module.css';
 
 const identityRevealSectionClassName = (className) => className;
 const noop = () => {};
-
-const figmaStoryboardItems = [
-  {
-    key: 'flow',
-    label: 'Fluxo',
-    description: 'Define a organização das informações para conduzir o usuário até a ação mais importante da página.',
-  },
-  {
-    key: 'interface',
-    label: 'Interface',
-    description: 'Define hierarquia visual, componentes e padrões para criar uma navegação clara.',
-  },
-  {
-    key: 'responsive',
-    label: 'Responsivo',
-    description: 'Garante uma experiência consistente em desktop, tablet e dispositivos móveis.',
-  },
-];
-
-const figmaResultItems = [
-  'Wireframes',
-  'UI Design',
-  'Componentes',
-  'Protótipos',
-  'Desktop',
-  'Mobile',
-];
 
 const reactCompositionComponents = [
   { key: 'button', label: 'Button', className: 'Button' },
@@ -117,6 +92,40 @@ function useDesktopTimeline() {
   return matches;
 }
 
+function useFigmaScrollMode() {
+  const [matches, setMatches] = useState(() => (
+    typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches
+  ));
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+    const updateMatches = () => setMatches(mediaQuery.matches);
+
+    updateMatches();
+    mediaQuery.addEventListener('change', updateMatches);
+
+    return () => mediaQuery.removeEventListener('change', updateMatches);
+  }, []);
+
+  return matches;
+}
+
+function useFigmaDesktopLayout() {
+  const [matches, setMatches] = useState(() => (
+    typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches
+  ));
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+    const updateMatches = () => setMatches(mediaQuery.matches);
+    updateMatches();
+    mediaQuery.addEventListener('change', updateMatches);
+    return () => mediaQuery.removeEventListener('change', updateMatches);
+  }, []);
+
+  return matches;
+}
+
 const technologyRoles = [
   {
     kind: 'figma',
@@ -193,145 +202,336 @@ function getFigmaPhase(progress) {
   return 'intro';
 }
 
-function isFigmaToolActive(item, phase) {
-  const activeToolsByPhase = {
-    flow: new Set(['Wireframes', 'Protótipos']),
-    interface: new Set(['Componentes', 'Protótipos']),
-    responsive: new Set(['Versão desktop/mobile', 'UI Design']),
-  };
-
-  return activeToolsByPhase[phase]?.has(item) ?? false;
-}
-
-function FigmaRoleVisual({ role, visualClassName, progress, phase, shouldReduceMotion }) {
-  const cardOpacity = useTransform(progress, [0, 0.15], [0.72, 1]);
-  const cardY = useTransform(progress, [0, 0.15], [18, 0]);
-  const cardGlow = useTransform(progress, [0, 0.4, 1], [0.16, 0.32, 0.42]);
-  const visualPhase = shouldReduceMotion ? 'complete' : phase;
-  const activeItem = {
-    flow: 'flow',
-    interface: 'interface',
-    responsive: 'responsive',
-  }[visualPhase];
-  const isComplete = visualPhase === 'complete';
-  const shouldHideResultGrid = !isComplete && visualPhase !== 'intro';
-  const figmaClassName = [
-    visualClassName,
-    sectionStyles.techFigmaVisual,
-    activeItem || isComplete ? sectionStyles.techRoleVisualActive : '',
-    sectionStyles[`techFigmaPhase-${visualPhase}`],
-  ].filter(Boolean).join(' ');
+const FigmaPreviewLayer = forwardRef(function FigmaPreviewLayer({ stage, direction, shouldReduceMotion }, ref) {
+  const isPresent = useIsPresent();
+  const variants = shouldReduceMotion
+    ? {
+      enter: { opacity: 0 },
+      center: { opacity: 1, transition: { duration: 0.08 } },
+      exit: { opacity: 0, transition: { duration: 0.08 } },
+    }
+    : {
+      enter: (travelDirection) => ({ opacity: 0, y: travelDirection * 12, scale: 0.98 }),
+      center: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, delay: 0.08, ease: [0.22, 1, 0.36, 1] } },
+      exit: (travelDirection) => ({ opacity: 0, y: travelDirection * -12, scale: 0.98, transition: { duration: 0.2, ease: 'easeIn' } }),
+    };
 
   return (
     <motion.div
-      className={figmaClassName}
-      style={shouldReduceMotion ? undefined : {
-        opacity: cardOpacity,
-        y: cardY,
-        '--figma-card-glow': cardGlow,
-      }}
-      aria-hidden="true"
+      animate="center"
+      aria-hidden={!isPresent}
+      className={sectionStyles.techFigmaPreviewLayer}
+      custom={direction}
+      exit="exit"
+      inert={!isPresent}
+      initial="enter"
+      ref={ref}
+      variants={variants}
     >
-      <span>{role.label}</span>
-      <strong>{role.visualTitle}</strong>
-
-      <ol className={sectionStyles.techFigmaStoryboard}>
-        {figmaStoryboardItems.map((item) => {
-          const itemIsActive = activeItem === item.key;
-          const itemIsComplete = isComplete;
-          const itemClassName = [
-            sectionStyles.techFigmaItem,
-            itemIsActive ? sectionStyles.techFigmaItemActive : '',
-            itemIsComplete ? sectionStyles.techFigmaItemComplete : '',
-          ].filter(Boolean).join(' ');
-
-          return (
-            <li className={itemClassName} key={item.key}>
-              <div className={sectionStyles.techFigmaItemHeader}>
-                <i aria-hidden="true" />
-                <span>{item.label}</span>
-                {itemIsComplete && <em aria-hidden="true">✓</em>}
-              </div>
-              <p>{item.description}</p>
-            </li>
-          );
-        })}
-      </ol>
-
-      <div
-        className={[
-          sectionStyles.techFigmaResultGrid,
-          shouldHideResultGrid ? sectionStyles.techFigmaResultGridHidden : '',
-          isComplete ? sectionStyles.techFigmaResultGridComplete : '',
-        ].filter(Boolean).join(' ')}
-      >
-        {figmaResultItems.map((item) => (
-          <span key={item}>{isComplete ? `✓ ${item}` : item}</span>
-        ))}
-      </div>
+      <FigmaPreviewContent isPresent={isPresent} shouldReduceMotion={shouldReduceMotion} stage={stage} />
     </motion.div>
+  );
+});
+
+function FigmaPreviewSlot({ stage, direction, shouldReduceMotion }) {
+  return (
+    <div className={sectionStyles.techFigmaPreviewFrame}>
+      <AnimatePresence custom={direction} initial={false} mode="popLayout">
+        <FigmaPreviewLayer key={stage} direction={direction} shouldReduceMotion={shouldReduceMotion} stage={stage} />
+      </AnimatePresence>
+    </div>
   );
 }
 
-function FigmaRoleStory({ role, index }) {
-  const shouldReduceMotion = useReducedMotion();
-  const storyRef = useRef(null);
-  const [phase, setPhase] = useState('intro');
-  const { scrollYProgress } = useScroll({
-    target: storyRef,
-    offset: ['start start', 'end end'],
-  });
+function FigmaAnimatedCount({ value, direction, shouldReduceMotion, ariaHidden = false }) {
+  const variants = shouldReduceMotion
+    ? {
+      enter: { opacity: 0 },
+      center: { opacity: 1, transition: { duration: 0.08 } },
+      exit: { opacity: 0, transition: { duration: 0.08 } },
+    }
+    : {
+      enter: (travelDirection) => ({ opacity: 0, y: travelDirection * 10 }),
+      center: { opacity: 1, y: 0, transition: { duration: 0.2, ease: 'easeOut' } },
+      exit: (travelDirection) => ({ opacity: 0, y: travelDirection * -10, transition: { duration: 0.2, ease: 'easeIn' } }),
+    };
+
+  return (
+    <span className={sectionStyles.techFigmaProgressNumber} aria-hidden={ariaHidden}>
+      <AnimatePresence custom={direction} initial={false} mode="popLayout">
+        <motion.span key={value} animate="center" custom={direction} exit="exit" initial="enter" variants={variants}>
+          {value}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+}
+
+const FigmaMobilePanel = forwardRef(function FigmaMobilePanel({ item, activeTools, tabId, panelId, shouldReduceMotion }, ref) {
+  const isPresent = useIsPresent();
+
+  return (
+    <motion.div
+      animate={{ opacity: 1, transition: { duration: shouldReduceMotion ? 0.08 : 0.2 } }}
+      aria-hidden={!isPresent}
+      aria-labelledby={`${tabId}-${item.key}`}
+      className={sectionStyles.techFigmaMobileContentPanel}
+      exit={{ opacity: 0, transition: { duration: shouldReduceMotion ? 0.08 : 0.2 } }}
+      id={`${panelId}-${item.key}`}
+      initial={{ opacity: 0 }}
+      ref={ref}
+      role="tabpanel"
+      tabIndex={0}
+    >
+      <p className={sectionStyles.techFigmaMobileDescription}>{item.description}</p>
+      <ul className={sectionStyles.techFigmaMobileChips} aria-label="Recursos desta etapa">
+        {activeTools.map((tool) => <li key={tool}>{tool}</li>)}
+      </ul>
+    </motion.div>
+  );
+});
+
+function FigmaRoleVisual({ role, activeStep, activeTools, direction, shouldReduceMotion, isMobile, isTablet, isDesktop, onSelectStep, tabId, panelId }) {
+  const activeItem = figmaStoryboardItems.find((item) => item.key === activeStep) ?? figmaStoryboardItems[0];
   const visualClassName = [
     sectionStyles.techRoleVisual,
+    sectionStyles.techFigmaVisual,
     sectionStyles[`techRoleVisual-${role.kind}`],
     sectionStyles.techRoleVisualFramed,
   ].filter(Boolean).join(' ');
 
+  return (
+    <div className={visualClassName}>
+      {isMobile ? (
+        <div className={sectionStyles.techFigmaTabs} role="tablist" aria-label="Etapas do planejamento no Figma">
+          {figmaStoryboardItems.map((item, index) => (
+            <button
+              aria-controls={`${panelId}-${item.key}`}
+              aria-selected={activeStep === item.key}
+              className={activeStep === item.key ? sectionStyles.techFigmaTabActive : ''}
+              id={`${tabId}-${item.key}`}
+              key={item.key}
+              onClick={() => onSelectStep(item.key)}
+              onKeyDown={(event) => {
+                let nextIndex;
+                if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (index + 1) % figmaStoryboardItems.length;
+                if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (index - 1 + figmaStoryboardItems.length) % figmaStoryboardItems.length;
+                if (event.key === 'Home') nextIndex = 0;
+                if (event.key === 'End') nextIndex = figmaStoryboardItems.length - 1;
+                if (nextIndex !== undefined) {
+                  event.preventDefault();
+                  const next = figmaStoryboardItems[nextIndex];
+                  onSelectStep(next.key);
+                  document.getElementById(`${tabId}-${next.key}`)?.focus();
+                }
+              }}
+              role="tab"
+              tabIndex={activeStep === item.key ? 0 : -1}
+              type="button"
+            >
+              {activeStep === item.key && !shouldReduceMotion && (
+                <motion.span className={sectionStyles.techFigmaTabPill} layoutId="figma-active-tab-pill" transition={{ type: 'spring', stiffness: 400, damping: 32 }} />
+              )}
+              <span className={sectionStyles.techFigmaTabLabel}>{item.label}</span>
+            </button>
+          ))}
+        </div>
+      ) : null}
+
+      <FigmaPreviewSlot direction={direction} shouldReduceMotion={shouldReduceMotion} stage={activeStep} />
+
+      {isDesktop ? (
+        <ol className={sectionStyles.techFigmaDesktopStages} aria-label="Etapas do processo">
+          {figmaStoryboardItems.map((item, index) => {
+            const currentIndex = figmaStoryboardItems.findIndex((stage) => stage.key === activeStep);
+            const status = index === currentIndex ? 'active' : index < currentIndex ? 'complete' : 'next';
+            return (
+              <li data-stage-status={status} key={item.key}>
+                <button
+                  aria-current={status === 'active' ? 'step' : undefined}
+                  onClick={() => onSelectStep(item.key)}
+                  type="button"
+                >
+                  <span aria-hidden="true">0{index + 1}</span>
+                  <span>{item.label}</span>
+                </button>
+                <p>{item.description}</p>
+              </li>
+            );
+          })}
+        </ol>
+      ) : isMobile ? (
+        <div className={sectionStyles.techFigmaMobileContentSlot}>
+          <AnimatePresence custom={direction} initial={false} mode="popLayout">
+            <FigmaMobilePanel key={activeStep} activeTools={activeTools} item={activeItem} panelId={panelId} shouldReduceMotion={shouldReduceMotion} tabId={tabId} />
+          </AnimatePresence>
+        </div>
+      ) : (
+        <>
+          <p className={sectionStyles.techFigmaCurrentStep}>Etapa {figmaStoryboardItems.indexOf(activeItem) + 1} de 3 · {activeItem.label}</p>
+          {isTablet ? (
+            <div className={sectionStyles.techFigmaTabletMarkers} role="group" aria-label="Selecionar etapa">
+              {figmaStoryboardItems.map((item) => (
+                <button
+                  aria-current={activeStep === item.key ? 'step' : undefined}
+                  aria-label={item.label}
+                  className={activeStep === item.key ? sectionStyles.techFigmaTabletMarkerActive : ''}
+                  key={item.key}
+                  onClick={() => onSelectStep(item.key)}
+                  type="button"
+                >
+                  <span aria-hidden="true" />
+                </button>
+              ))}
+            </div>
+          ) : (
+            <ol className={sectionStyles.techFigmaStoryboard}>
+              {figmaStoryboardItems.map((item) => (
+                <li className={activeStep === item.key ? sectionStyles.techFigmaItemActive : ''} key={item.key}>
+                  <button
+                    aria-current={activeStep === item.key ? 'step' : undefined}
+                    onClick={() => onSelectStep(item.key)}
+                    type="button"
+                  >
+                    <span aria-hidden="true" />{item.label}
+                  </button>
+                  <div className={sectionStyles.techFigmaItemContent}>
+                    <div>
+                      <AnimatePresence custom={direction} initial={false} mode="popLayout">
+                        {activeStep === item.key && (
+                          <motion.p
+                            animate={{ opacity: 1, y: 0, transition: { duration: shouldReduceMotion ? 0 : 0.25, delay: shouldReduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] } }}
+                            exit={{ opacity: 0, y: shouldReduceMotion ? 0 : 6, transition: { duration: shouldReduceMotion ? 0 : 0.1 } }}
+                            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 6 }}
+                            key={item.key}
+                          >
+                            {item.description}
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+function FigmaRoleStory({ role }) {
+  const shouldReduceMotion = useReducedMotion();
+  const isScrollMode = useFigmaScrollMode();
+  const isDesktopLayout = useFigmaDesktopLayout();
+  const storyRef = useRef(null);
+  const [phase, setPhase] = useState('intro');
+  const [mobileStep, setMobileStep] = useState('flow');
+  const [transitionDirection, setTransitionDirection] = useState(1);
+  const previousStepRef = useRef('flow');
+  const { scrollYProgress } = useScroll({ target: storyRef, offset: ['start start', 'end end'] });
+  const phaseStep = ({
+    intro: 'flow', flow: 'flow', flowToInterface: 'flow', interface: 'interface',
+    interfaceToResponsive: 'interface', responsive: 'responsive', complete: 'responsive',
+  })[phase] ?? 'flow';
+  const activeStep = isScrollMode ? phaseStep : mobileStep;
+  const tabId = useId();
+  const panelId = useId();
+
+  const updateDirection = (nextStep) => {
+    const currentIndex = figmaStoryboardItems.findIndex((item) => item.key === previousStepRef.current);
+    const nextIndex = figmaStoryboardItems.findIndex((item) => item.key === nextStep);
+    if (nextIndex !== currentIndex) {
+      setTransitionDirection(nextIndex > currentIndex ? 1 : -1);
+      previousStepRef.current = nextStep;
+    }
+  };
+
+  useEffect(() => {
+    previousStepRef.current = activeStep;
+  }, [activeStep, isScrollMode]);
+
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
     const nextPhase = getFigmaPhase(latest);
+    const nextStep = ({
+      intro: 'flow', flow: 'flow', flowToInterface: 'flow', interface: 'interface',
+      interfaceToResponsive: 'interface', responsive: 'responsive', complete: 'responsive',
+    })[nextPhase] ?? 'flow';
+    if (isScrollMode) updateDirection(nextStep);
     setPhase((currentPhase) => (currentPhase === nextPhase ? currentPhase : nextPhase));
   });
 
-  return (
-    <section className={sectionStyles.techRoleStory} ref={storyRef}>
-      <motion.article
-        className={`${sectionStyles.techRoleBlock} ${sectionStyles.techRoleSticky}`}
-        custom={index}
-        initial="hidden"
-        key={role.title}
-        variants={cardReveal}
-        viewport={revealViewport}
-        whileInView="visible"
-      >
-        <div className={sectionStyles.techRoleCopy}>
-          <span>{role.label}</span>
-          <h3>{role.title}</h3>
-          <p>{role.description}</p>
-          <ul>
-            {role.items.map((item, itemIndex) => {
-              const shouldActivateTool = !shouldReduceMotion && isFigmaToolActive(item, phase);
+  const selectStep = (step) => {
+    if (!isScrollMode) {
+      updateDirection(step);
+      setMobileStep(step);
+      return;
+    }
 
-              return (
-                <motion.li
-                  className={shouldActivateTool ? sectionStyles.techFigmaToolActive : undefined}
-                  custom={itemIndex}
-                  key={item}
-                  variants={tagReveal}
-                >
-                  {item}
-                </motion.li>
-              );
-            })}
-          </ul>
+    const targetProgress = { flow: 0.25, interface: 0.55, responsive: 0.86 }[step];
+    const section = storyRef.current;
+    if (!section) return;
+    const sectionTop = window.scrollY + section.getBoundingClientRect().top;
+    const scrollDistance = Math.max(section.offsetHeight - window.innerHeight, 0);
+    window.scrollTo({ top: sectionTop + scrollDistance * targetProgress, behavior: shouldReduceMotion ? 'instant' : 'smooth' });
+  };
+
+  return (
+    <section className={sectionStyles.techFigmaStory} ref={storyRef}>
+      <article className={sectionStyles.techFigmaLayout}>
+        <div className={sectionStyles.techRoleCopy}>
+          <div
+            aria-label="Progresso das etapas do Figma"
+            aria-valuemax={3}
+            aria-valuemin={1}
+            aria-valuenow={figmaStoryboardItems.findIndex((item) => item.key === activeStep) + 1}
+            className={sectionStyles.techFigmaProgress}
+            role="progressbar"
+          >
+            <span><FigmaAnimatedCount ariaHidden direction={transitionDirection} shouldReduceMotion={shouldReduceMotion} value={`0${figmaStoryboardItems.findIndex((item) => item.key === activeStep) + 1}`} /> <span aria-hidden="true">/ 03</span></span>
+            <i><i style={{ width: `${(figmaStoryboardItems.findIndex((item) => item.key === activeStep) + 1) * 33.333}%` }} /></i>
+          </div>
+          <div className={sectionStyles.techFigmaHeaderMain}>
+            <span>{role.label}</span>
+            <h3>{role.title}</h3>
+          </div>
+          <div className={sectionStyles.techFigmaHeaderAside}>
+            <p>{role.description}</p>
+            <ul className={sectionStyles.techFigmaToolList}>
+              {role.items.filter((item) => isScrollMode || figmaStoryboardItems.find((stage) => stage.key === activeStep)?.activeTools.includes(item)).map((item) => (
+                <li className={figmaStoryboardItems.find((stage) => stage.key === activeStep)?.activeTools.includes(item) ? sectionStyles.techFigmaToolActive : ''} key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
         </div>
         <FigmaRoleVisual
-          phase={phase}
-          progress={scrollYProgress}
+          activeStep={activeStep}
+          activeTools={figmaStoryboardItems.find((stage) => stage.key === activeStep)?.activeTools ?? []}
+          direction={transitionDirection}
+          isDesktop={isScrollMode && isDesktopLayout}
+          isMobile={!isScrollMode}
+          isTablet={isScrollMode && !isDesktopLayout}
+          onSelectStep={selectStep}
+          panelId={panelId}
           role={role}
           shouldReduceMotion={shouldReduceMotion}
-          visualClassName={visualClassName}
+          tabId={tabId}
         />
-      </motion.article>
+      </article>
+      {isScrollMode && (
+        <ol className={sectionStyles.techFigmaStageTrack} aria-label="Etapas do planejamento no Figma">
+          {figmaStoryboardItems.map((item) => (
+            <li
+              aria-current={activeStep === item.key ? 'step' : undefined}
+              className={activeStep === item.key ? sectionStyles.techFigmaStageActive : ''}
+              key={item.key}
+            >
+              <strong>{item.label}</strong><p>{item.description}</p>
+            </li>
+          ))}
+        </ol>
+      )}
     </section>
   );
 }
@@ -646,7 +846,7 @@ export default function TechnologyRoles({
           aria-labelledby={titleId}
         >
           <Container size="wide">
-            <div className={revealStyles.techSectionIntro || undefined}>
+            <div className={[sectionStyles.techSectionIntro, revealStyles.techSectionIntro].filter(Boolean).join(' ')}>
               <p className={[revealStyles.techEyebrow, revealStyles.revealEyebrow].filter(Boolean).join(' ') || undefined}>COMO CADA TECNOLOGIA ATUA</p>
               <h2 className={revealStyles.revealTitle || undefined} id={titleId}>Cada escolha técnica precisa aparecer na experiência do usuário.</h2>
               <span className={revealStyles.revealDescription || undefined}>A tecnologia entra como sistema de suporte para transformar planejamento, interface e publicação em uma entrega mais confiável.</span>
