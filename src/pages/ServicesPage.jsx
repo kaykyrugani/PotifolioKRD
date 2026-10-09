@@ -2,66 +2,16 @@ import { useEffect, useState } from 'react';
 import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
+import SolutionsTrail from '../components/sections/SolutionsTrail';
+import TechnologyApplied from '../components/sections/TechnologyApplied';
+import TechnologyRoles from '../components/sections/TechnologyRoles';
+import TechnologyPerception from '../components/sections/TechnologyPerception';
 import servicosHeroImage from '../assets/images/servicosIMG.webp';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 import { whatsappUrl } from '../utils/contact';
 import styles from './Page.module.css';
 
-const mainSolutions = [
-  {
-    title: 'Sites Institucionais',
-    objective: 'Fortalecer marca',
-    description: 'Estrutura para apresentar empresa, serviços, diferenciais e canais de contato com clareza, autoridade e leitura profissional.',
-    includes: ['estrutura multipágina', 'arquitetura', 'SEO técnico', 'HTML semântico', 'responsividade'],
-    signal: 'Presença + autoridade',
-  },
-  {
-    title: 'Landing Pages',
-    objective: 'Conversão',
-    description: 'Páginas criadas para campanhas, lançamentos, tráfego pago e captação, com narrativa objetiva e chamadas de ação bem posicionadas.',
-    includes: ['copy', 'CTA estratégico', 'carregamento rápido', 'SEO', 'estrutura de métricas'],
-    signal: 'Oferta + ação',
-  },
-  {
-    title: 'Hospedagem e publicação',
-    objective: 'Colocar projeto no ar',
-    description: 'Configuração técnica para publicar o projeto com domínio, SSL, deploy e preparação de ambiente conforme a necessidade da entrega.',
-    includes: ['Hostinger', 'domínio', 'SSL', 'deploy', 'configuração'],
-    signal: 'Publicação + estabilidade',
-  },
-  {
-    title: 'Manutenção e evolução',
-    objective: 'Crescimento contínuo',
-    description: 'Acompanhamento para manter o site atualizado, corrigir pontos técnicos e evoluir a experiência depois da primeira versão.',
-    includes: ['suporte', 'melhorias', 'ajustes', 'atualização'],
-    signal: 'Suporte + melhoria',
-  },
-];
-
 const ecosystemNodes = ['Figma', 'React', 'SEO', 'Performance', 'Deploy', 'Hospedagem', 'Responsividade'];
-
-const includedGroups = [
-  {
-    title: 'Estrutura',
-    description: 'Organização da página, hierarquia de conteúdo, seções comerciais e fluxo de navegação.',
-    items: ['arquitetura de informação', 'HTML semântico', 'mensagem objetiva'],
-  },
-  {
-    title: 'SEO',
-    description: 'Base técnica para leitura, indexação e clareza semântica do conteúdo.',
-    items: ['heading structure', 'metadados base', 'conteúdo rastreável'],
-  },
-  {
-    title: 'Performance',
-    description: 'Construção leve, responsiva e preparada para carregamento rápido.',
-    items: ['CSS otimizado', 'assets controlados', 'boas práticas front-end'],
-  },
-  {
-    title: 'Publicação',
-    description: 'Preparação final para tirar o projeto do ambiente local e publicar com segurança.',
-    items: ['deploy', 'domínio', 'SSL quando disponível'],
-  },
-];
 
 const plans = [
   {
@@ -88,33 +38,6 @@ const plans = [
     description: 'Demandas específicas.',
     items: ['APIs', 'sistemas', 'integrações', 'dashboards', 'soluções específicas'],
     cta: 'Falar com especialista',
-  },
-];
-
-const differentials = [
-  {
-    title: 'Design com objetivo comercial',
-    description: 'Cada seção precisa explicar, reduzir fricção e levar o usuário para uma próxima ação.',
-  },
-  {
-    title: 'SEO técnico',
-    description: 'Estrutura semântica, hierarquia de títulos e conteúdo preparado para ser compreendido por buscadores.',
-  },
-  {
-    title: 'Performance',
-    description: 'Interface pensada para carregar rápido e manter boa experiência em mobile e desktop.',
-  },
-  {
-    title: 'Código preparado para crescimento',
-    description: 'Organização visual e técnica para permitir ajustes, manutenção e evolução.',
-  },
-  {
-    title: 'Suporte',
-    description: 'Acompanhamento para ajustes, publicação, dúvidas técnicas e melhorias planejadas.',
-  },
-  {
-    title: 'Responsividade',
-    description: 'Layout adaptado para celular, tablet e desktop com prioridade para legibilidade.',
   },
 ];
 
@@ -148,9 +71,10 @@ const faqs = [
 const revealSectionKeys = {
   solutions: 'solutions',
   ecosystem: 'ecosystem',
-  included: 'included',
+  techApplied: 'techApplied',
+  techRoles: 'techRoles',
+  techPerception: 'techPerception',
   plans: 'plans',
-  differentials: 'differentials',
   faq: 'faq',
   finalCta: 'finalCta',
 };
@@ -160,20 +84,17 @@ const revealSectionKeyList = Object.values(revealSectionKeys);
 const createRevealItemKey = (groupKey, index) => `${groupKey}-${index}`;
 
 const revealItemKeyList = [
-  ...mainSolutions.map((_, index) => createRevealItemKey('solutions', index)),
   'ecosystem-core',
   ...ecosystemNodes.map((_, index) => createRevealItemKey('ecosystem-node', index)),
-  ...includedGroups.map((_, index) => createRevealItemKey('included', index)),
   ...plans.map((_, index) => createRevealItemKey('plans', index)),
-  ...differentials.map((_, index) => createRevealItemKey('differentials', index)),
   ...faqs.map((_, index) => createRevealItemKey('faq', index)),
 ];
 
-function SectionIntro({ eyebrow, title, description, animateEyebrow = true }) {
+function SectionIntro({ id, eyebrow, title, description, animateEyebrow = true }) {
   return (
     <div className={styles.servicesPageSectionIntro}>
       <p className={animateEyebrow ? styles.revealEyebrow : undefined}>{eyebrow}</p>
-      <h2 className={styles.revealTitle}>{title}</h2>
+      <h2 className={styles.revealTitle} id={id}>{title}</h2>
       {description && <span className={styles.revealDescription}>{description}</span>}
     </div>
   );
@@ -314,40 +235,7 @@ export default function ServicesPage() {
           ref={(node) => setRevealSectionRef(revealSectionKeys.solutions, node)}
           aria-labelledby="services-solutions-title"
         >
-          <Container size="wide">
-            <SectionIntro
-              eyebrow="SOLUÇÕES PRINCIPAIS"
-              title="Escolha pelo problema que precisa resolver."
-              description="Cada entrega combina estratégia, interface e desenvolvimento, mas cada solução tem uma prioridade diferente."
-            />
-
-            <div className={`${styles.servicesSolutionsFlow} ${styles.revealCardGrid}`}>
-              {mainSolutions.map((solution, index) => (
-                <article
-                  className={getRevealItemClassName(`${styles.servicesSolutionRow} ${styles.revealCard}`, createRevealItemKey('solutions', index))}
-                  key={solution.title}
-                  ref={(node) => setRevealItemRef(createRevealItemKey('solutions', index), node)}
-                >
-                  <div className={styles.servicesSolutionCopy}>
-                    <span>{String(index + 1).padStart(2, '0')}</span>
-                    <h3>{solution.title}</h3>
-                    <p>{solution.description}</p>
-                  </div>
-
-                  <div className={`${styles.servicesSolutionPanel} ${index % 2 === 0 ? styles.servicesSolutionPanelFramed : ''}`}>
-                    <p>Objetivo</p>
-                    <strong>{solution.objective}</strong>
-                    <ul>
-                      {solution.includes.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                    <span>{solution.signal}</span>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </Container>
+          <SolutionsTrail />
         </section>
 
         <section
@@ -357,6 +245,7 @@ export default function ServicesPage() {
         >
           <Container size="wide">
             <SectionIntro
+              id="services-ecosystem-title"
               eyebrow="ECOSSISTEMA DE ENTREGA"
               title="O que sustenta cada projeto"
               description="A entrega não é apenas uma tela pronta. Ela nasce da conexão entre design, tecnologia, performance e publicação."
@@ -392,40 +281,33 @@ export default function ServicesPage() {
           </Container>
         </section>
 
-        <section
-          className={getRevealSectionClassName(styles.servicesPageSection, revealSectionKeys.included)}
-          ref={(node) => setRevealSectionRef(revealSectionKeys.included, node)}
-          aria-labelledby="services-included-title"
-        >
-          <Container size="wide">
-            <SectionIntro
-              eyebrow="O QUE ESTÁ INCLUSO"
-              title="A base técnica para uma entrega completa."
-              description="A composição muda conforme o projeto, mas estes pilares guiam a construção da presença digital."
-            />
+        <TechnologyApplied
+          id="tecnologia-aplicada"
+          titleId="services-tech-applied-title"
+          sectionKey={revealSectionKeys.techApplied}
+          getRevealSectionClassName={getRevealSectionClassName}
+          setRevealSectionRef={setRevealSectionRef}
+          revealStyles={styles}
+          headerAlign="start"
+        />
 
-            <div className={`${styles.servicesIncludedEditorial} ${styles.revealCardGrid}`}>
-              {includedGroups.map((group, index) => (
-                <article
-                  className={getRevealItemClassName(`${styles.servicesIncludedItem} ${styles[`servicesIncludedItem${index + 1}`]} ${styles.revealCard}`, createRevealItemKey('included', index))}
-                  key={group.title}
-                  ref={(node) => setRevealItemRef(createRevealItemKey('included', index), node)}
-                >
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <div>
-                    <h3>{group.title}</h3>
-                    <p>{group.description}</p>
-                    <ul>
-                      {group.items.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </Container>
-        </section>
+        <TechnologyRoles
+          id="como-cada-tecnologia-atua"
+          titleId="services-tech-roles-title"
+          sectionKey={revealSectionKeys.techRoles}
+          getRevealSectionClassName={getRevealSectionClassName}
+          setRevealSectionRef={setRevealSectionRef}
+          revealStyles={styles}
+        />
+
+        <TechnologyPerception
+          id="tecnologia-em-acao"
+          titleId="services-tech-perception-title"
+          sectionKey={revealSectionKeys.techPerception}
+          getRevealSectionClassName={getRevealSectionClassName}
+          setRevealSectionRef={setRevealSectionRef}
+          revealStyles={styles}
+        />
 
         <section
           className={getRevealSectionClassName(styles.servicesPageSection, revealSectionKeys.plans)}
@@ -434,6 +316,7 @@ export default function ServicesPage() {
         >
           <Container size="wide">
             <SectionIntro
+              id="services-plans-title"
               eyebrow="PLANOS / INVESTIMENTO"
               title="Pontos de partida para escolher a melhor solução."
               description="Os valores abaixo ajudam a orientar o primeiro passo. O escopo final é definido conforme necessidade, conteúdo e complexidade."
@@ -469,41 +352,13 @@ export default function ServicesPage() {
         </section>
 
         <section
-          className={getRevealSectionClassName(styles.servicesPageSection, revealSectionKeys.differentials)}
-          ref={(node) => setRevealSectionRef(revealSectionKeys.differentials, node)}
-          aria-labelledby="services-differentials-title"
-        >
-          <Container size="wide">
-            <SectionIntro
-              eyebrow="DIFERENCIAIS"
-              title="Mais do que entrega: experiência e estrutura"
-              description="A diferença está em unir estética, leitura, código e orientação comercial em uma experiência coerente."
-              animateEyebrow={false}
-            />
-
-            <div className={`${styles.servicesDifferentials} ${styles.revealCardGrid}`}>
-              {differentials.map((item, index) => (
-                <article
-                  className={getRevealItemClassName(`${styles.servicesDifferentialItem} ${styles.revealCard}`, createRevealItemKey('differentials', index))}
-                  key={item.title}
-                  ref={(node) => setRevealItemRef(createRevealItemKey('differentials', index), node)}
-                >
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                </article>
-              ))}
-            </div>
-          </Container>
-        </section>
-
-        <section
           className={getRevealSectionClassName(styles.servicesPageSection, revealSectionKeys.faq)}
           ref={(node) => setRevealSectionRef(revealSectionKeys.faq, node)}
           aria-labelledby="services-faq-title"
         >
           <Container>
             <SectionIntro
+              id="services-faq-title"
               eyebrow="FAQ"
               title="Dúvidas comuns antes de começar"
               description="Respostas diretas para entender escopo, publicação, SEO, suporte e alterações."

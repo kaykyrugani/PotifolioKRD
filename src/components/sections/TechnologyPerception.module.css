@@ -1,0 +1,420 @@
+
+
+.techActionSection {
+  position: relative;
+  padding: var(--space-16) 0;
+}
+
+.techActionGrid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.techActionModule {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  gap: var(--space-6);
+  overflow: hidden;
+  padding: var(--space-5);
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-radius: 24px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.018)),
+    rgba(8, 14, 27, 0.68);
+  box-shadow:
+    0 22px 72px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
+  backdrop-filter: blur(14px);
+}
+
+.techActionModule::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    radial-gradient(circle at 16% 0%, rgba(0, 194, 255, 0.09), transparent 15rem),
+    linear-gradient(135deg, transparent 0 64%, rgba(124, 58, 237, 0.055) 65%, transparent 66%);
+  opacity: 0.78;
+  pointer-events: none;
+}
+
+.techActionModule > * {
+  position: relative;
+  z-index: 1;
+}
+
+.techActionModule h3 {
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.14;
+}
+
+.techActionModule p {
+  margin-top: var(--space-3);
+  color: var(--color-text-muted);
+  line-height: 1.68;
+}
+
+.techPerformanceVisual {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.techPerformanceRow {
+  display: grid;
+  gap: var(--space-2);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.075);
+}
+
+.techPerformanceRow span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.88rem;
+}
+
+.techPerformanceRow strong {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 30px;
+  align-items: center;
+  padding: 0.32rem 0.68rem;
+  border: 1px solid rgba(0, 194, 255, 0.18);
+  border-radius: var(--radius-full);
+  color: var(--color-blue-cyan);
+  background: rgba(0, 194, 255, 0.07);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.techVideoFrame {
+  position: relative;
+  min-height: 190px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  background:
+    linear-gradient(135deg, rgba(0, 194, 255, 0.08), rgba(124, 58, 237, 0.08)),
+    rgba(4, 8, 17, 0.74);
+}
+
+.techVideoFrame::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.032) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px);
+  background-size: 38px 38px;
+  opacity: 0.34;
+}
+
+.techVideoElement {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.techVideoFallback {
+  position: absolute;
+  inset: var(--space-4);
+  display: grid;
+  align-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(7, 11, 20, 0.42);
+}
+
+.techVideoFallback span {
+  color: var(--color-blue-cyan);
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.techVideoFallback strong {
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  line-height: 1.12;
+}
+
+.techScrollDemo {
+  position: relative;
+  display: grid;
+  min-height: 190px;
+  align-content: end;
+  gap: var(--space-3);
+  overflow: hidden;
+  padding: var(--space-4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  background: rgba(5, 10, 20, 0.5);
+}
+
+.techScrollDemo::before {
+  position: absolute;
+  top: var(--space-4);
+  bottom: var(--space-4);
+  left: var(--space-6);
+  width: 1px;
+  content: "";
+  background: linear-gradient(180deg, rgba(0, 194, 255, 0.58), rgba(139, 92, 246, 0.24), transparent);
+}
+
+.techScrollDemo span {
+  position: relative;
+  display: block;
+  width: min(86%, 320px);
+  height: 34px;
+  margin-left: var(--space-8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.techScrollDemo span:nth-child(2) {
+  width: min(72%, 280px);
+}
+
+.techScrollDemo span:nth-child(3) {
+  width: min(58%, 240px);
+}
+
+.techScrollDemo strong {
+  margin-left: var(--space-8);
+  color: rgba(255, 255, 255, 0.76);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.techAiFlow {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.techAiFlow li {
+  position: relative;
+  min-height: 42px;
+  padding: 0.62rem var(--space-4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.techAiFlow li:not(:last-child)::after {
+  position: absolute;
+  bottom: -13px;
+  left: var(--space-5);
+  width: 1px;
+  height: 13px;
+  content: "";
+  background: rgba(0, 194, 255, 0.28);
+}
+
+@media (min-width: 560px) {
+
+  .techActionGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techActionGrid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: stretch;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techActionModule {
+    padding: var(--space-6);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techActionModule-performance,
+.techActionModule-ai {
+    grid-column: span 7;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techActionModule-video,
+.techActionModule-scroll {
+    grid-column: span 5;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .techActionSection {
+    padding: var(--space-12) 0;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .techActionModule {
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 380px) {
+
+  .techActionModule h3 {
+    font-size: 1.28rem;
+  }
+}
+
+.techAiFlow {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.techPerformanceRow {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.techPerformanceRow span {
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-heading);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.techPerformanceRow em {
+  position: relative;
+  display: block;
+  height: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.techPerformanceRow em::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 10px 100%;
+  opacity: 0.38;
+}
+
+.techPerformanceRow i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(0, 194, 255, 0.72), rgba(59, 130, 246, 0.48), rgba(139, 92, 246, 0.36));
+  box-shadow: 0 0 20px rgba(0, 194, 255, 0.16);
+  transform-origin: left center;
+}
+
+.techPerformanceRow:nth-child(2) i {
+  right: 12%;
+}
+
+.techVideoFrame::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -30%;
+  width: 18%;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(0, 194, 255, 0.12), transparent);
+  opacity: 0.55;
+  transform: skewX(-14deg);
+  animation: techVideoScan 7s ease-in-out infinite;
+}
+
+.techScrollDemo::before {
+  opacity: 0;
+}
+
+.techScrollPath {
+  position: relative;
+  min-height: 150px;
+  padding: var(--space-4) 0 var(--space-3) var(--space-8);
+}
+
+.techScrollPath i {
+  position: absolute;
+  top: var(--space-3);
+  bottom: var(--space-2);
+  left: var(--space-4);
+  display: block;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(0, 194, 255, 0.7), rgba(139, 92, 246, 0.28), transparent);
+  transform-origin: top center;
+}
+
+.techScrollPath span {
+  display: block;
+  height: 1px;
+  margin: 0 0 var(--space-6);
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(90deg, rgba(0, 194, 255, 0.62), rgba(139, 92, 246, 0.24), transparent);
+  transform-origin: left center;
+}
+
+.techScrollDemo .techScrollPath span:nth-child(2) {
+  width: 34%;
+}
+
+.techScrollDemo .techScrollPath span:nth-child(3) {
+  width: 58%;
+}
+
+.techScrollDemo .techScrollPath span:nth-child(4) {
+  width: 86%;
+}
+
+.techScrollDemo strong {
+  margin-left: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .techVideoFrame::after {
+    animation: none;
+  }
+}
+
+.techVideoFrame::before,
+.techPerformanceRow em::before {
+  display: none;
+}
+
+@keyframes techVideoScan {
+  0%,
+  32% {
+    left: -30%;
+  }
+
+  70%,
+  100% {
+    left: 118%;
+  }
+}

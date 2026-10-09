@@ -1,0 +1,1298 @@
+
+
+.techRoleVisual > span {
+  color: var(--color-blue-cyan);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.techRoleVisual strong {
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 1.08rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.12;
+}
+
+.techSection {
+  position: relative;
+  padding: var(--space-16) 0;
+}
+
+.techRolesFlow {
+  display: grid;
+  gap: var(--space-10);
+}
+
+.techRoleStory {
+  position: relative;
+  min-width: 0;
+}
+
+.techRoleReactSeoStory {
+  position: relative;
+  min-width: 0;
+}
+
+.techReactSeoSticky {
+  display: grid;
+  gap: var(--space-10);
+}
+
+.techReactSeoPanel {
+  min-width: 0;
+}
+
+.techReactSeoStaticLayer {
+  display: none;
+}
+
+.techRoleBlock {
+  position: relative;
+  display: grid;
+  gap: var(--space-5);
+  align-items: center;
+  padding: var(--space-8) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.075);
+}
+
+.techRoleBlock::before {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  content: "";
+  background: var(--color-blue-cyan);
+  box-shadow: 0 0 20px rgba(0, 194, 255, 0.32);
+}
+
+.techRoleCopy {
+  min-width: 0;
+}
+
+.techRoleCopy > span {
+  display: inline-flex;
+  margin-bottom: var(--space-3);
+  color: var(--color-blue-cyan);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.techRoleCopy h3 {
+  max-width: 650px;
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 1.62rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+}
+
+.techRoleCopy p {
+  max-width: 680px;
+  margin-top: var(--space-4);
+  color: var(--color-text-muted);
+  line-height: 1.72;
+  overflow-wrap: break-word;
+}
+
+.techRoleCopy ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+.techRoleCopy li {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  padding: 0.42rem 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-radius: var(--radius-full);
+  color: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.techRoleCopy li.techFigmaToolActive {
+  border-color: rgba(0, 194, 255, 0.3);
+  color: var(--color-text);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(0, 194, 255, 0.14), transparent 7rem),
+    rgba(0, 194, 255, 0.07);
+  box-shadow:
+    0 0 18px rgba(0, 194, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.065);
+  animation: techFigmaToolFloat 2.8s linear infinite;
+}
+
+.techRoleVisual {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: 280px;
+  gap: var(--space-4);
+  align-content: start;
+  overflow: visible;
+  padding: var(--space-6);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 24px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
+    rgba(10, 16, 30, 0.7);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+}
+
+.techRoleVisualFramed::before {
+  position: absolute;
+  inset: 10px -8px -8px 10px;
+  z-index: -1;
+  content: "";
+  border: 1px solid rgba(0, 194, 255, 0.15);
+  border-radius: 22px;
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.techRoleVisualFlow {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.techRoleVisualFlow em {
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  color: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--font-heading);
+  font-size: 0.84rem;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.techRoleVisualFlow em::after {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  content: "";
+  background: rgba(0, 194, 255, 0.72);
+  box-shadow: 0 0 18px rgba(0, 194, 255, 0.32);
+}
+
+.techRoleVisualGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin-top: auto;
+}
+
+.techRoleVisualGrid i {
+  display: block;
+  min-height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(0, 194, 255, 0.09), transparent),
+    rgba(255, 255, 255, 0.035);
+}
+
+.reactCompositionPanel {
+  display: none;
+}
+
+.techFigmaVisual {
+  --figma-card-glow: 0.16;
+
+  overflow: hidden;
+  border-color: rgba(0, 194, 255, calc(0.12 + var(--figma-card-glow) * 0.24));
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(10, 16, 30, 0.72);
+  box-shadow:
+    0 18px 58px rgba(0, 0, 0, 0.22),
+    0 0 calc(var(--figma-card-glow) * 28px) rgba(0, 194, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.065);
+}
+
+.techRoleVisualActive {
+  border-color: rgba(0, 194, 255, 0.22);
+}
+
+.techFigmaStoryboard {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.techFigmaItem {
+  position: relative;
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  min-height: 38px;
+  align-content: center;
+  padding: 0 0.84rem;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+  opacity: 0.72;
+  transform: translateY(0) scale(1);
+  transition:
+    min-height 420ms ease,
+    padding 420ms ease,
+    border-color 460ms ease,
+    background 460ms ease,
+    box-shadow 460ms ease,
+    opacity 420ms ease,
+    transform 460ms ease;
+}
+
+.techFigmaItemActive {
+  min-height: 96px;
+  align-content: start;
+  padding: 0.68rem 0.9rem 0.78rem;
+  border-color: rgba(0, 194, 255, 0.36);
+  background:
+    rgba(0, 194, 255, 0.055);
+  box-shadow:
+    0 0 18px rgba(0, 194, 255, 0.085),
+    inset 0 1px 0 rgba(255, 255, 255, 0.065);
+  opacity: 1;
+  transform: translateY(-1px) scale(1.012);
+}
+
+.techFigmaItemComplete {
+  min-height: 38px;
+  padding: 0 0.84rem;
+  border-color: rgba(0, 194, 255, 0.22);
+  background: rgba(0, 194, 255, 0.045);
+  opacity: 1;
+}
+
+.techFigmaItemHeader {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  align-items: center;
+  min-height: 20px;
+}
+
+.techFigmaItemHeader i {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 194, 255, 0.52);
+  box-shadow: 0 0 0 rgba(0, 194, 255, 0);
+  transition: background 420ms ease, box-shadow 420ms ease, scale 420ms ease;
+}
+
+.techFigmaItemActive .techFigmaItemHeader i,
+.techFigmaItemComplete .techFigmaItemHeader i {
+  background: var(--color-blue-cyan);
+  box-shadow: 0 0 14px rgba(0, 194, 255, 0.38);
+  scale: 1.12;
+}
+
+.techFigmaItemHeader span,
+.techFigmaItemHeader em {
+  color: rgba(255, 255, 255, 0.82);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-style: normal;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+.techFigmaItemActive .techFigmaItemHeader span,
+.techFigmaItemComplete .techFigmaItemHeader span,
+.techFigmaItemHeader em {
+  color: var(--color-text);
+}
+
+.techFigmaItem p {
+  max-height: 0;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  line-height: 1.48;
+  opacity: 0;
+  transform: translate3d(0, -4px, 0);
+  transition:
+    max-height 420ms ease,
+    opacity 420ms ease,
+    transform 420ms ease;
+}
+
+.techFigmaItemActive p {
+  max-height: 58px;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.techFigmaResultGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: auto;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 480ms ease, transform 480ms ease;
+}
+
+.techFigmaResultGridHidden {
+  opacity: 0;
+  transform: translateY(8px) scale(0.95);
+}
+
+.techFigmaResultGrid span {
+  display: grid;
+  min-height: 34px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  color: transparent;
+  background:
+    linear-gradient(135deg, rgba(0, 194, 255, 0.09), transparent),
+    rgba(255, 255, 255, 0.035);
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 850;
+  line-height: 1.15;
+  text-align: center;
+  transition:
+    border-color 460ms ease,
+    background 460ms ease,
+    color 460ms ease,
+    box-shadow 460ms ease;
+}
+
+.techFigmaResultGridComplete span {
+  border-color: rgba(0, 194, 255, 0.18);
+  color: rgba(255, 255, 255, 0.84);
+  background:
+    radial-gradient(circle at 12% 10%, rgba(0, 194, 255, 0.12), transparent 7rem),
+    rgba(0, 194, 255, 0.045);
+  box-shadow:
+    0 0 22px rgba(0, 194, 255, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+@media (min-width: 780px) {
+
+  .techRoleCopy h3 {
+    font-size: 2.35rem;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleBlock {
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.68fr);
+    gap: clamp(3rem, 6vw, 5rem);
+    padding: var(--space-12) 0;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleStory {
+    min-height: var(--tech-figma-track, 280vh);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleReactSeoStoryAnimated {
+    min-height: var(--tech-react-seo-track, 360vh);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleSticky {
+    position: sticky;
+    top: 84px;
+    min-height: calc(100vh - 84px);
+    align-content: center;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleReactSeoStoryAnimated .techReactSeoSticky {
+    position: sticky;
+    top: 84px;
+    display: block;
+    height: calc(100vh - 84px);
+    min-height: calc(100vh - 84px);
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleReactSeoStoryAnimated .techReactSeoStaticLayer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 72% 18%, rgba(0, 194, 255, 0.055), transparent 20rem),
+      radial-gradient(circle at 28% 76%, rgba(124, 58, 237, 0.05), transparent 24rem),
+      rgba(4, 8, 18, 0.32);
+    transform: none;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleBlockReverse {
+    grid-template-columns: minmax(360px, 0.68fr) minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleBlockReverse .techRoleCopy {
+    order: 2;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleBlockReverse .techRoleVisual {
+    order: 1;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleBlockReact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(3rem, 5vw, 4.75rem);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleReactSeoStoryAnimated .techReactSeoPanel {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: calc(100vh - 84px);
+    min-height: calc(100vh - 84px);
+    align-content: center;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleReactSeoStoryAnimated .techReactSeoPanelReact {
+    z-index: 1;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleReactSeoStoryAnimated .techReactSeoPanelSeo {
+    z-index: 2;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleBlockReact .techRoleCopy {
+    order: 1;
+    max-width: 760px;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleBlockReact .reactCompositionPanel {
+    order: 2;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleBlockReact .techReactMobileVisual {
+    display: none;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactCompositionPanel {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: minmax(170px, 0.72fr) minmax(280px, 1fr) minmax(300px, 1.06fr);
+    gap: clamp(1.15rem, 2.4vw, 2.2rem);
+    align-items: center;
+    min-height: 370px;
+    overflow: hidden;
+    padding: var(--space-7);
+    border: 1px solid rgba(255, 255, 255, 0.085);
+    border-radius: 24px;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.046), rgba(255, 255, 255, 0.016)),
+      radial-gradient(circle at 82% 8%, rgba(0, 194, 255, 0.07), transparent 18rem),
+      rgba(8, 13, 24, 0.72);
+    box-shadow:
+      0 24px 78px rgba(0, 0, 0, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.055);
+    backdrop-filter: blur(14px);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactCompositionPanel::before {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    content: "";
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px);
+    background-size: 62px 62px;
+    mask-image: radial-gradient(circle at 50% 50%, black, transparent 76%);
+    opacity: 0.58;
+    pointer-events: none;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactConnectionLayer {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactConnectionPath {
+    fill: none;
+    stroke: rgba(0, 194, 255, 0.34);
+    stroke-linecap: round;
+    stroke-width: 1.35;
+    filter: drop-shadow(0 0 7px rgba(0, 194, 255, 0.11));
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactBaseNode,
+.reactComponentCluster,
+.reactAppNode {
+    position: relative;
+    z-index: 2;
+    min-width: 0;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactBaseNode {
+    display: grid;
+    width: min(100%, 190px);
+    justify-self: center;
+    justify-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 1px solid rgba(0, 194, 255, 0.13);
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.86);
+    background:
+      radial-gradient(circle at 50% 0%, rgba(0, 194, 255, 0.095), transparent 9rem),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.074), rgba(255, 255, 255, 0.022)),
+      rgba(7, 13, 26, 0.82);
+    box-shadow:
+      0 16px 42px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactNodeLabel {
+    color: rgba(255, 255, 255, 0.52);
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactBaseButton {
+    display: inline-flex;
+    min-width: 116px;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 194, 255, 0.34);
+    border-radius: 999px;
+    color: var(--color-text);
+    background:
+      linear-gradient(135deg, rgba(0, 194, 255, 0.16), rgba(124, 58, 237, 0.12)),
+      rgba(255, 255, 255, 0.045);
+    box-shadow:
+      0 0 22px rgba(0, 194, 255, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 850;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactComponentCluster {
+    display: grid;
+    width: min(100%, 345px);
+    justify-self: center;
+    gap: var(--space-4);
+    justify-items: center;
+    align-self: center;
+    padding: var(--space-4) var(--space-4) var(--space-5);
+    border: 1px solid rgba(0, 194, 255, 0.12);
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(0, 194, 255, 0.08), transparent 10rem),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.058), rgba(255, 255, 255, 0.018)),
+      rgba(7, 13, 26, 0.7);
+    box-shadow:
+      0 16px 44px rgba(0, 0, 0, 0.19),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactComponentOrbit {
+    position: relative;
+    width: 100%;
+    min-height: 210px;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactComponentNode {
+    --react-node-x: 0;
+
+    position: absolute;
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.84rem;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 15px;
+    color: rgba(255, 255, 255, 0.84);
+    background:
+      radial-gradient(circle at 24% 18%, rgba(0, 194, 255, 0.11), transparent 5.6rem),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.073), rgba(255, 255, 255, 0.024)),
+      rgba(8, 15, 29, 0.86);
+    box-shadow:
+      0 14px 34px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.055);
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 820;
+    white-space: nowrap;
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+    transform: translateX(var(--react-node-x));
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactComponentNode:hover {
+    border-color: rgba(0, 194, 255, 0.34);
+    box-shadow:
+      0 18px 40px rgba(0, 0, 0, 0.2),
+      0 0 20px rgba(0, 194, 255, 0.13),
+      inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    transform: translateX(var(--react-node-x)) translateY(-2px);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactComponentNodeButton {
+    --react-node-x: -50%;
+
+    top: 2%;
+    left: 50%;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactComponentNodeInput {
+    top: 28%;
+    right: 5%;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactComponentNodeCard {
+    --react-node-x: -50%;
+
+    top: 41%;
+    left: 50%;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactComponentNodeModal {
+    bottom: 26%;
+    left: 6%;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactComponentNodeDropdown {
+    --react-node-x: 50%;
+
+    right: 50%;
+    bottom: 2%;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactAppNode {
+    display: grid;
+    width: min(100%, 330px);
+    justify-self: center;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border: 1px solid rgba(124, 58, 237, 0.18);
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at 76% 20%, rgba(124, 58, 237, 0.12), transparent 10rem),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.073), rgba(255, 255, 255, 0.022)),
+      rgba(7, 12, 24, 0.86);
+    box-shadow:
+      0 18px 52px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.065);
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactAppNode:hover {
+    border-color: rgba(124, 58, 237, 0.32);
+    box-shadow:
+      0 22px 60px rgba(0, 0, 0, 0.24),
+      0 0 26px rgba(124, 58, 237, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.075);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactCompositionPanel:has(.reactAppNode:hover) .reactComponentNode {
+    border-color: rgba(0, 194, 255, 0.24);
+    box-shadow:
+      0 16px 38px rgba(0, 0, 0, 0.2),
+      0 0 16px rgba(0, 194, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.065);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactCompositionPanel:has(.reactAppNode:hover) .reactConnectionPath {
+    stroke: rgba(124, 58, 237, 0.46);
+    filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.16));
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactCompositionPanel:has(.reactComponentNode:hover) .reactComponentCluster {
+    border-color: rgba(0, 194, 255, 0.2);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactMiniInterface {
+    display: grid;
+    gap: var(--space-3);
+    min-height: 190px;
+    padding: var(--space-4);
+    border: 1px solid rgba(255, 255, 255, 0.075);
+    border-radius: 18px;
+    background:
+      linear-gradient(135deg, rgba(0, 194, 255, 0.075), rgba(124, 58, 237, 0.055)),
+      rgba(255, 255, 255, 0.03);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactMiniInterface > span {
+    display: block;
+    width: 42%;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(0, 194, 255, 0.22);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactMiniInterface div {
+    display: grid;
+    grid-template-columns: 1.1fr 0.8fr 0.8fr;
+    gap: var(--space-2);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactMiniInterface i,
+.reactMiniInterface em {
+    display: block;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.07);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactMiniInterface i {
+    min-height: 48px;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactMiniInterface section {
+    display: grid;
+    gap: var(--space-2);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactMiniInterface em {
+    height: 12px;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactMiniInterface em:nth-child(1) {
+    width: 78%;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactMiniInterface em:nth-child(2) {
+    width: 94%;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .reactMiniInterface em:nth-child(3) {
+    width: 62%;
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techRoleVisual {
+    min-height: 340px;
+    padding: var(--space-8);
+  }
+}
+
+@media (min-width: 900px) {
+
+  .techFigmaVisual {
+    min-height: 300px;
+    padding: var(--space-6);
+  }
+}
+
+@media (min-width: 1180px) {
+
+  .techRoleCopy h3 {
+    font-size: 2.85rem;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1080px) {
+  .reactCompositionPanel {
+    grid-template-columns: minmax(140px, 0.68fr) minmax(245px, 1fr) minmax(250px, 0.96fr);
+    gap: var(--space-4);
+    min-height: 360px;
+    padding: var(--space-5);
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1080px) {
+
+  .reactBaseNode {
+    width: min(100%, 160px);
+    padding: var(--space-4);
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1080px) {
+
+  .reactAppNode {
+    width: min(100%, 280px);
+    padding: var(--space-4);
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1080px) {
+
+  .reactBaseButton {
+    min-width: 102px;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1080px) {
+
+  .reactComponentOrbit {
+    min-height: 190px;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1080px) {
+
+  .reactComponentCluster {
+    width: min(100%, 288px);
+    padding: var(--space-4);
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1080px) {
+
+  .reactComponentNode {
+    padding: 0.46rem 0.66rem;
+    font-size: 0.76rem;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1080px) {
+
+  .reactMiniInterface {
+    min-height: 170px;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .techSection {
+    padding: var(--space-12) 0;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .techRoleVisual {
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .techRoleVisualFramed::before {
+    inset: 8px -6px -6px 8px;
+    border-radius: 18px;
+    opacity: 0.54;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .techRoleCopy h3 {
+    font-size: 1.48rem;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .techRoleCopy li {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 380px) {
+
+  .techRoleCopy h3 {
+    font-size: 1.28rem;
+  }
+}
+
+.techRoleVisual-react {
+  background:
+    linear-gradient(180deg, rgba(0, 194, 255, 0.045), rgba(255, 255, 255, 0.018)),
+    rgba(10, 16, 30, 0.7);
+}
+
+.techRoleVisual-seo-ai {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(124, 58, 237, 0.12), transparent 15rem),
+    rgba(10, 16, 30, 0.7);
+}
+
+.techRoleVisual-performance {
+  background:
+    radial-gradient(circle at 0% 100%, rgba(0, 194, 255, 0.12), transparent 15rem),
+    rgba(10, 16, 30, 0.7);
+}
+
+.techRoleVisual-hosting {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.052), rgba(124, 58, 237, 0.04)),
+    rgba(10, 16, 30, 0.72);
+}
+
+.techArchitectureFlow,
+.techStrategyFlow,
+.techPublishFlow {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+  padding: 0;
+  list-style: none;
+}
+
+.techArchitectureFlow li,
+.techStrategyFlow li,
+.techPublishFlow li {
+  position: relative;
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 0.64rem var(--space-4);
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-radius: 14px;
+  color: rgba(255, 255, 255, 0.84);
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 800;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+.techArchitectureFlow li::after,
+.techStrategyFlow li::after {
+  position: absolute;
+  bottom: -13px;
+  left: 50%;
+  width: 1px;
+  height: 13px;
+  content: "";
+  background: linear-gradient(180deg, rgba(0, 194, 255, 0.34), rgba(139, 92, 246, 0.18));
+  transform: translateX(-50%);
+}
+
+.techArchitectureFlow li:last-child::after,
+.techStrategyFlow li:last-child::after {
+  display: none;
+}
+
+.techStrategyFlow li {
+  justify-content: flex-start;
+}
+
+.techStrategyFlow li::before {
+  width: 7px;
+  height: 7px;
+  margin-right: var(--space-3);
+  border-radius: var(--radius-full);
+  content: "";
+  background: rgba(0, 194, 255, 0.72);
+  box-shadow: 0 0 18px rgba(0, 194, 255, 0.26);
+}
+
+.techRoleBars {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.techRoleBar {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.techRoleBar span {
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-heading);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.techRoleBar em {
+  position: relative;
+  display: block;
+  height: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.techRoleBar em::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 10px 100%;
+  opacity: 0.38;
+}
+
+.techRoleBar i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(0, 194, 255, 0.72), rgba(59, 130, 246, 0.48), rgba(139, 92, 246, 0.36));
+  box-shadow: 0 0 20px rgba(0, 194, 255, 0.16);
+  transform-origin: left center;
+}
+
+.techRoleBar:nth-child(3) i {
+  right: 12%;
+}
+
+.techPublishFlow li {
+  min-height: 40px;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.techPublishFlow li span {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.techPublishFlow li i {
+  display: block;
+  width: 1px;
+  height: 18px;
+  background: linear-gradient(180deg, rgba(0, 194, 255, 0.58), rgba(139, 92, 246, 0.26));
+  transform-origin: top center;
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 900px) {
+
+  .techRoleStory {
+    min-height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 900px) {
+
+  .techRoleSticky {
+    position: relative;
+    top: auto;
+    min-height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .techFigmaToolActive {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .techFigmaToolActive {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .techFigmaVisual,
+.techFigmaItem,
+.techFigmaItemHeader i,
+.techFigmaItem p,
+.techFigmaResultGrid,
+.techFigmaResultGrid span {
+    transition: none;
+  }
+}
+
+@keyframes techFigmaToolFloat {
+  0%,
+  100% {
+    transform: translate3d(0, -2px, 0);
+  }
+
+  50% {
+    transform: translate3d(0, 3px, 0);
+  }
+}
