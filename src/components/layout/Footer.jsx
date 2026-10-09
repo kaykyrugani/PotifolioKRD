@@ -41,7 +41,7 @@ export default function Footer() {
           <section className={`${styles.panel} ${styles.leftPanel}`} aria-labelledby="footer-navigation">
             <span className={styles.eyebrow}>Navegação</span>
             <h2 id="footer-navigation">Caminhos principais</h2>
-            <p>Uma estrutura enxuta para navegar pelo projeto, serviços, tecnologias e contato.</p>
+            <p>Uma estrutura enxuta para navegar pelo projeto, serviços e contato.</p>
             <nav className={styles.linkList} aria-label="Links do rodapé">
             {navItems.map((item) => (
               <Link key={item.path} to={item.path}>{item.label}</Link>
@@ -96,7 +96,7 @@ export default function Footer() {
                 <h3>Stack</h3>
                 <div className={styles.tags}>
                   {technologies.slice(0, 6).map((tech) => (
-                    <Link key={tech} to="/tecnologias">{tech}</Link>
+                    <Link key={tech} to="/servicos#tecnologia-aplicada">{tech}</Link>
                   ))}
                 </div>
               </div>

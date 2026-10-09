@@ -37,7 +37,7 @@ O campo `SOCIAL_IMAGE_URL` deve permanecer vazio enquanto não existir uma image
 
 - `src/main.jsx`: inicialização React, `StrictMode` e `BrowserRouter`.
 - `src/App.jsx`: rotas da Home e páginas internas.
-- `src/pages/`: páginas de rota (`Home`, `About`, `ServicesPage`, `ProjectsPage`, `TechnologiesPage`, `Contact`).
+- `src/pages/`: páginas de rota (`Home`, `About`, `ServicesPage`, `ProjectsPage`, `Contact`).
 - `src/components/layout/`: estrutura compartilhada de página, navbar e footer.
 - `src/components/sections/`: seções principais da Home.
 - `src/components/ui/`: componentes reutilizáveis simples (`Button`, `Card`, `Badge`, `Container`, `SectionTitle`).

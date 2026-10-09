@@ -106,7 +106,7 @@ export default function TechStack({ reveal }) {
             performance e evolução contínua.
           </p>
           <div className={styles.headerActions}>
-            <Button to="/tecnologias" variant="secondary">Explorar stack completa</Button>
+            <Button to="/servicos#como-cada-tecnologia-atua" variant="secondary">Explorar stack completa</Button>
           </div>
           <ul className={styles.stackSignals} aria-label="Sinais técnicos">
             {stackSignals.map((signal) => (

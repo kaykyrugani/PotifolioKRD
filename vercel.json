@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/tecnologias/:path*",
+      "destination": "/servicos",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/sobre",
@@ -10,10 +17,6 @@
     },
     {
       "source": "/projetos",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/tecnologias",
       "destination": "/index.html"
     },
     {

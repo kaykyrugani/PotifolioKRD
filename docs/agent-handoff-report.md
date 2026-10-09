@@ -24,8 +24,9 @@ O repositorio atual esta implementado com React e Vite. As rotas existentes esta
 - `/sobre`;
 - `/servicos`;
 - `/projetos`;
-- `/tecnologias`;
 - `/contato`.
+
+A rota antiga da página de tecnologias redireciona para Serviços no Vercel e no roteador cliente.
 
 O conteudo comercial reaproveitavel esta concentrado em `src/data/siteContent.js`.
 

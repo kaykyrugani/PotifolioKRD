@@ -29,7 +29,7 @@ Os ativos raster usados pela interface são importados em formato WebP. Os arqui
   - `/sobre`: `About`
   - `/servicos`: `ServicesPage`
   - `/projetos`: `ProjectsPage`
-  - `/tecnologias`: `TechnologiesPage`
+  - a rota antiga de tecnologias redireciona para Serviços
   - `/contato`: `Contact`
 
 ### Páginas
@@ -38,7 +38,6 @@ Os ativos raster usados pela interface são importados em formato WebP. Os arqui
 - `src/pages/About.jsx`: página interna com `SectionTitle`, cards institucionais e CTAs.
 - `src/pages/ServicesPage.jsx`: página de serviços baseada no array `services`.
 - `src/pages/ProjectsPage.jsx`: página de previews de projeto baseada em `projectPreviews`.
-- `src/pages/TechnologiesPage.jsx`: página de tecnologias baseada em `technologies`.
 - `src/pages/Contact.jsx`: página de contato com label de WhatsApp vindo de `src/utils/contact.js`.
 
 ### Layout
@@ -434,12 +433,7 @@ Padrões:
 - Cards empilham em uma coluna.
 - Offsets decorativos são reduzidos para evitar overflow horizontal.
 
-#### Timeline de infraestrutura da página Tecnologias
-
-- Abaixo de `900px`, cada etapa usa uma grade vertical com marcador numérico à esquerda e um bloco único de título e descrição à direita.
-- Em telas de até `640px`, marcadores, espaçamentos e tipografia são reduzidos para preservar a área útil de leitura.
-- Em telas de até `380px`, a coluna dos marcadores é reduzida novamente para impedir quebra excessiva de texto.
-- A partir de `900px`, a timeline mantém a composição horizontal em seis colunas.
+As seções de tecnologia aplicadas, atuação técnica e percepção agora são renderizadas na página Serviços. Seus componentes e estilos próprios permanecem compartilhados e ativos.
 
 ## Decisões Arquiteturais Atuais
 

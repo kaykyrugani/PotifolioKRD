@@ -5,7 +5,7 @@ import lockupLogo from '../../assets/logos/logoKRD1semFundo-trim.webp';
 import { navItems } from '../../data/siteContent';
 import styles from './Navbar.module.css';
 
-const visibleNavItems = navItems.filter(({ label }) => label !== 'Home' && label !== 'Tecnologias');
+const visibleNavItems = navItems.filter(({ label }) => label !== 'Home');
 const leftItems = visibleNavItems.slice(0, 2);
 const rightItems = visibleNavItems.slice(2);
 

@@ -3,7 +3,6 @@ export const navItems = [
   { label: 'Sobre', path: '/sobre' },
   { label: 'Serviços', path: '/servicos' },
   { label: 'Projetos', path: '/projetos' },
-  { label: 'Tecnologias', path: '/tecnologias' },
   { label: 'Contato', path: '/contato' },
 ];
 

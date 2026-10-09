@@ -19,10 +19,6 @@ export const ROUTE_SEO = Object.freeze({
     title: 'Projetos de Sites e Landing Pages | Kayky Rugani Dev',
     description: 'Conheça projetos de sites, landing pages e experiências digitais desenvolvidos com estratégia, responsividade, SEO técnico e foco em resultados.',
   },
-  '/tecnologias': {
-    title: 'Tecnologias para Desenvolvimento Web | Kayky Rugani Dev',
-    description: 'Tecnologias aplicadas à criação de sites rápidos, responsivos e preparados para SEO, performance, manutenção e evolução contínua.',
-  },
   '/contato': {
     title: 'Contato | Criação de Sites em Franca | Kayky Rugani',
     description: 'Entre em contato com Kayky Rugani Dev para criar sites profissionais e landing pages para empresas, autônomos e negócios em Franca e região.',

@@ -1,28 +1,34 @@
 import { useEffect } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import ProjectsPage from './pages/ProjectsPage';
 import ProjectCasePage from './pages/ProjectCasePage';
 import ServicesPage from './pages/ServicesPage';
-import TechnologiesPage from './pages/TechnologiesPage';
 import Seo from './components/seo/Seo';
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
 
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'auto',
+    const frame = window.requestAnimationFrame(() => {
+      const anchor = hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
+
+      if (anchor) {
+        anchor.scrollIntoView({ behavior: 'auto', block: 'start' });
+        return;
+      }
+
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     });
-  }, [pathname]);
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [hash, pathname]);
 
   return null;
 }
@@ -38,7 +44,7 @@ function App() {
         <Route path="/servicos" element={<ServicesPage />} />
         <Route path="/projetos" element={<ProjectsPage />} />
         <Route path="/projetos/:slug" element={<ProjectCasePage />} />
-        <Route path="/tecnologias" element={<TechnologiesPage />} />
+        <Route path="/tecnologias" element={<Navigate to="/servicos" replace />} />
         <Route path="/contato" element={<Contact />} />
       </Routes>
     </>
