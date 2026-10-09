@@ -1480,91 +1480,18 @@
 
 .aboutSection {
   position: relative;
-  margin-top: var(--space-20);
+  margin-top: var(--space-24);
 }
 
-.aboutSystemTransition {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  min-height: clamp(180px, 24vw, 270px);
-  place-items: center;
-  margin: clamp(2.5rem, 6vw, 5rem) 0 0;
-  overflow: hidden;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(0, 194, 255, 0.11), transparent 16rem),
-    radial-gradient(circle at 50% 74%, rgba(124, 58, 237, 0.09), transparent 18rem),
-    linear-gradient(180deg, transparent, rgba(8, 13, 24, 0.58) 64%, rgba(6, 12, 26, 0.92));
-}
-
-.aboutSystemTransition::before {
-  position: absolute;
-  inset: 0;
-  content: "";
-  background-image:
-    radial-gradient(circle, rgba(255, 255, 255, 0.13) 0 1px, transparent 1px),
-    linear-gradient(90deg, transparent, rgba(0, 194, 255, 0.08), transparent);
-  background-position: center;
-  background-size: 32px 32px, 100% 1px;
-  opacity: 0.18;
-  mask-image: radial-gradient(circle at 50% 50%, black, transparent 72%);
-}
-
-.aboutTransitionLine {
-  position: absolute;
-  width: min(78vw, 900px);
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0, 194, 255, 0.2), rgba(139, 92, 246, 0.16), rgba(0, 194, 255, 0.2), transparent);
-}
-
-.aboutTransitionCore {
-  position: relative;
-  display: grid;
-  width: clamp(74px, 8vw, 104px);
-  aspect-ratio: 1;
-  place-items: center;
-  border: 1px solid rgba(0, 194, 255, 0.18);
-  border-radius: var(--radius-full);
-  background:
-    radial-gradient(circle, rgba(0, 194, 255, 0.14), rgba(7, 11, 20, 0.86) 58%, rgba(124, 58, 237, 0.08));
-  box-shadow:
-    0 0 56px rgba(0, 194, 255, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-.aboutTransitionCore span {
-  width: 28%;
-  aspect-ratio: 1;
-  border-radius: var(--radius-full);
-  background: rgba(0, 194, 255, 0.6);
-  box-shadow: 0 0 24px rgba(0, 194, 255, 0.24);
-}
-
-.aboutTransitionOrbit {
-  position: absolute;
-  width: clamp(132px, 15vw, 190px);
-  aspect-ratio: 1;
-  border: 1px solid rgba(139, 92, 246, 0.14);
-  border-right-color: rgba(0, 194, 255, 0.2);
-  border-radius: var(--radius-full);
-}
-
-.aboutTransitionDot {
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  border-radius: var(--radius-full);
-  background: var(--color-purple-soft);
-  box-shadow: 0 0 18px rgba(139, 92, 246, 0.32);
-  transform: translate(clamp(60px, 7vw, 90px), clamp(-32px, -3vw, -24px));
+.aboutIntroContainer {
+  padding-bottom: clamp(5rem, 8vw, 7rem);
 }
 
 .aboutLowerAtmosphere {
   position: relative;
   isolation: isolate;
   margin-top: -1px;
-  padding: clamp(1.25rem, 4vw, 2.5rem) 0 0;
+  padding: clamp(2rem, 4vw, 3rem) 0 0;
   overflow: hidden;
   background:
     radial-gradient(circle at 50% 0%, rgba(18, 34, 72, 0.42), transparent 34rem),
@@ -2480,32 +2407,11 @@
   }
 
   .aboutSection {
-    margin-top: var(--space-16);
-  }
-
-  .aboutSystemTransition {
-    min-height: 150px;
-    margin-top: var(--space-12);
-    background:
-      radial-gradient(circle at 50% 48%, rgba(0, 194, 255, 0.1), transparent 12rem),
-      linear-gradient(180deg, transparent, rgba(6, 12, 26, 0.9));
-  }
-
-  .aboutSystemTransition::before {
-    opacity: 0.1;
-  }
-
-  .aboutTransitionLine {
-    width: 82vw;
-  }
-
-  .aboutTransitionOrbit,
-  .aboutTransitionDot {
-    display: none;
+    margin-top: var(--space-20);
   }
 
   .aboutLowerAtmosphere {
-    padding-top: var(--space-6);
+    padding-top: var(--space-12);
     background:
       radial-gradient(circle at 50% 0%, rgba(18, 34, 72, 0.34), transparent 24rem),
       radial-gradient(circle at 84% 32%, rgba(124, 58, 237, 0.08), transparent 18rem),
@@ -10120,6 +10026,162 @@
   }
 }
 
+/* Método de trabalho: grade bento e animações locais ao CSS Module. */
+.aboutMethodTimeline {
+  --method-entry-duration: 500ms;
+  --method-icon-duration: 700ms;
+  --method-stagger: 70ms;
+  --method-ease: cubic-bezier(.2, .7, .2, 1);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(12px, 1.2vw, 20px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.aboutMethodTimeline::before { content: none; }
+
+.aboutMethodStep {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: clamp(18px, 1.6vw, 24px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-soft);
+}
+
+.aboutMethodStep > svg {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  color: var(--color-blue-cyan);
+}
+
+.aboutMethodOrder {
+  position: absolute;
+  top: clamp(18px, 1.6vw, 24px);
+  right: clamp(18px, 1.6vw, 24px);
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.aboutMethodContent {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.aboutMethodContent::before,
+.aboutMethodContent::after { content: none; }
+
+.aboutMethodContent h3 {
+  margin: 0 0 var(--space-3);
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 1.18rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.aboutMethodContent p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.aboutMethodContent .aboutMethodDeliverables {
+  margin-top: var(--space-4);
+  color: var(--color-text-soft);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.aboutMethodReady .aboutMethodStep {
+  opacity: 0;
+  transform: translateY(12px);
+  will-change: opacity, transform;
+}
+
+.aboutMethodVisible .aboutMethodStep {
+  animation: aboutMethodCardIn var(--method-entry-duration) var(--method-ease) both;
+  animation-delay: calc(var(--method-step-index, 0) * var(--method-stagger));
+}
+
+.aboutMethodVisible .aboutMethodStep > svg > * {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: aboutMethodStrokeIn var(--method-icon-duration) var(--method-ease) both;
+  animation-delay: calc(var(--method-step-index, 0) * var(--method-stagger) + var(--method-entry-duration));
+}
+
+@keyframes aboutMethodCardIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes aboutMethodStrokeIn {
+  to { stroke-dashoffset: 0; }
+}
+
+@media (min-width: 640px) {
+  .aboutMethodTimeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .aboutMethodStep:nth-child(1), .aboutMethodStep:nth-child(6) { grid-column: span 2; }
+}
+
+@media (min-width: 1024px) {
+  .aboutMethodTimeline { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .aboutMethodStep:nth-child(1) { grid-column: 1 / span 2; grid-row: 1; }
+  .aboutMethodStep:nth-child(2) { grid-column: 3; grid-row: 1; }
+  .aboutMethodStep:nth-child(3) { grid-column: 4; grid-row: 1 / span 2; }
+  .aboutMethodStep:nth-child(4) { grid-column: 1; grid-row: 2; }
+  .aboutMethodStep:nth-child(5) { grid-column: 2 / span 2; grid-row: 2; }
+  .aboutMethodStep:nth-child(6) { grid-column: 1 / -1; grid-row: 3; }
+}
+
+@media (max-width: 639px) {
+  .aboutMethodStep { padding: 16px; gap: var(--space-3); }
+  .aboutMethodStep > svg { width: 28px; height: 28px; }
+  .aboutMethodOrder { top: 16px; right: 16px; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .aboutMethodStep { transition: border-color 250ms ease; }
+  .aboutMethodStep:hover { border-color: var(--color-blue-cyan); }
+  .aboutMethodStep:hover > svg > * { animation: aboutMethodStrokeHover 700ms var(--method-ease) both; }
+}
+
+@keyframes aboutMethodStrokeHover {
+  from { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  to { stroke-dasharray: 1; stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aboutMethodStep,
+  .aboutMethodReady .aboutMethodStep,
+  .aboutMethodVisible .aboutMethodStep,
+  .aboutMethodVisible .aboutMethodStep > svg > *,
+  .aboutMethodStep:hover > svg > * {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+  .aboutMethodStep { transition: none; }
+}
+
 @keyframes servicesHeroFadeUp {
   from {
     opacity: 0;
@@ -10404,7 +10466,7 @@
 .projectsPreviewFrame::before,
 .projectsFinalBox::before,
 .aboutPage::before,
-.aboutSystemTransition::before,
+
 .aboutLowerAtmosphere::before,
 .aboutFinalCta::before,
 .servicesPage::before,

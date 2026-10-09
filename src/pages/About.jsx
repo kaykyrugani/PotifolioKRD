@@ -2,6 +2,7 @@ import PageLayout from '../components/layout/PageLayout';
 import Button from '../components/ui/Button';
 import Container from '../components/ui/Container';
 import aboutPhoto from '../assets/images/KaykyRuagani.webp';
+import { useLayoutEffect, useRef } from 'react';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 import { whatsappUrl } from '../utils/contact';
 import styles from './Page.module.css';
@@ -19,42 +20,58 @@ const positioningCards = [
 
 const methodSteps = [
   {
-    number: '01',
+    id: 'diagnosis', step: 1, icon: 'target',
     title: 'Diagnóstico e direção',
     description: 'Entendimento do negócio, público, objetivos, referências, concorrentes e proposta de valor.',
-    items: ['Briefing', 'Análise de mercado', 'Objetivo da página', 'Prioridade de conversão'],
+    deliverables: ['Briefing', 'Análise de mercado', 'Objetivo da página', 'Prioridade de conversão'],
   },
   {
-    number: '02',
+    id: 'strategy', step: 2, icon: 'layout',
     title: 'Estratégia, copy e arquitetura',
     description: 'Definição da estrutura da página, hierarquia de mensagens, CTAs, seções e narrativa comercial.',
-    items: ['Headline', 'Oferta', 'Objeções', 'Jornada do usuário', 'SEO semântico'],
+    deliverables: ['Headline', 'Oferta', 'Objeções', 'Jornada do usuário', 'SEO semântico'],
   },
   {
-    number: '03',
+    id: 'prototype', step: 3, icon: 'design',
     title: 'Prototipação no Figma',
     description: 'Criação da interface com foco em estética, leitura, responsividade e experiência.',
-    items: ['Wireframe', 'UI design', 'Componentes', 'Desktop e mobile', 'Identidade visual'],
+    deliverables: ['Wireframe', 'UI design', 'Componentes', 'Desktop e mobile', 'Identidade visual'],
   },
   {
-    number: '04',
+    id: 'frontend', step: 4, icon: 'code',
     title: 'Desenvolvimento front-end',
     description: 'Construção da interface com código limpo, responsivo e preparado para manutenção.',
-    items: ['React ou Next.js quando aplicável', 'HTML semântico', 'CSS modular', 'Componentes reutilizáveis', 'Acessibilidade base'],
+    deliverables: ['React ou Next.js', 'HTML semântico', 'CSS modular', 'Componentes reutilizáveis', 'Acessibilidade base'],
   },
   {
-    number: '05',
+    id: 'seo', step: 5, icon: 'performance',
     title: 'SEO técnico e performance',
     description: 'Ajustes para carregamento rápido, boa estrutura de conteúdo e melhor leitura por mecanismos de busca.',
-    items: ['Meta tags', 'Heading structure', 'Alt text', 'Performance', 'Core Web Vitals', 'Schema quando fizer sentido'],
+    deliverables: ['Meta tags', 'Heading structure', 'Alt text', 'Performance', 'Core Web Vitals', 'Schema'],
   },
   {
-    number: '06',
+    id: 'deploy', step: 6, icon: 'check',
     title: 'Deploy, validação e suporte',
     description: 'Publicação do projeto, testes finais, revisão responsiva e acompanhamento pós-entrega.',
-    items: ['Deploy', 'Domínio e hospedagem', 'Testes mobile', 'Ajustes finais', 'Manutenção'],
+    deliverables: ['Deploy', 'Domínio e hospedagem', 'Testes mobile', 'Ajustes finais', 'Manutenção'],
   },
 ];
+
+function MethodIcon({ name }) {
+  const common = { viewBox: '0 0 32 32', fill: 'none', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': 'true', focusable: 'false' };
+  const pathProps = { pathLength: 1 };
+
+  return (
+    <svg {...common}>
+      {name === 'target' && <><circle cx="16" cy="16" r="11" {...pathProps} /><circle cx="16" cy="16" r="5" {...pathProps} /><path d="M16 2v5M16 25v5M2 16h5M25 16h5" {...pathProps} /></>}
+      {name === 'layout' && <><rect x="4" y="5" width="24" height="5" rx="1" {...pathProps} /><rect x="4" y="14" width="14" height="13" rx="1" {...pathProps} /><rect x="21" y="14" width="7" height="13" rx="1" {...pathProps} /></>}
+      {name === 'design' && <><rect x="7" y="7" width="18" height="18" {...pathProps} /><rect x="4" y="4" width="5" height="5" {...pathProps} /><rect x="23" y="4" width="5" height="5" {...pathProps} /><rect x="4" y="23" width="5" height="5" {...pathProps} /><rect x="23" y="23" width="5" height="5" {...pathProps} /></>}
+      {name === 'code' && <path d="M10 9L3 16l7 7M22 9l7 7-7 7M18 6l-4 20" {...pathProps} />}
+      {name === 'performance' && <><path d="M5 23a11 11 0 1 1 22 0" {...pathProps} /><path d="M16 23l6-9" {...pathProps} /></>}
+      {name === 'check' && <><circle cx="16" cy="16" r="12" {...pathProps} /><path d="M10 16.5l4 4 8-9" {...pathProps} /></>}
+    </svg>
+  );
+}
 
 const buildSteps = [
   {
@@ -121,7 +138,6 @@ const trustSignals = ['SEO técnico', 'Deploy orientado', 'Responsividade', 'Per
 
 const revealSectionKeys = {
   positioning: 'positioning',
-  method: 'method',
   stack: 'stack',
   principles: 'principles',
   trust: 'trust',
@@ -134,7 +150,6 @@ const createRevealItemKey = (groupKey, index) => `${groupKey}-${index}`;
 
 const revealItemKeyList = [
   ...positioningCards.map((_, index) => createRevealItemKey('positioning', index)),
-  ...methodSteps.map((_, index) => createRevealItemKey('method', index)),
   'build-track',
   ...buildSteps.map((_, index) => createRevealItemKey('build', index)),
   'build-cta',
@@ -143,6 +158,20 @@ const revealItemKeyList = [
 ];
 
 export default function About() {
+  const methodSectionRef = useRef(null);
+  useLayoutEffect(() => {
+    const section = methodSectionRef.current;
+    if (!section || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    if (section.getBoundingClientRect().top <= window.innerHeight) return undefined;
+    section.classList.add(styles.aboutMethodReady);
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      section.classList.add(styles.aboutMethodVisible);
+      observer.disconnect();
+    }, { threshold: 0.05 });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
   const {
     setRevealSectionRef,
     getRevealSectionClassName,
@@ -158,7 +187,7 @@ export default function About() {
   return (
     <PageLayout>
       <section className={styles.aboutPage}>
-        <Container size="wide">
+        <Container size="wide" className={styles.aboutIntroContainer}>
           <div className={styles.aboutHero}>
             <div className={styles.aboutHeroCopy}>
               <p className={`${styles.aboutEyebrow} ${styles.aboutHeroEyebrow}`}>SOBRE O DESENVOLVEDOR</p>
@@ -220,55 +249,29 @@ export default function About() {
           </section>
 
           <section
-            className={getRevealSectionClassName(styles.aboutSection, revealSectionKeys.method)}
-            ref={(node) => setRevealSectionRef(revealSectionKeys.method, node)}
+            className={styles.aboutSection}
+            ref={(node) => { methodSectionRef.current = node; }}
             aria-labelledby="about-method-title"
           >
             <div className={styles.aboutSectionHeader}>
               <p className={`${styles.aboutSectionKicker} ${styles.revealEyebrow}`}>MÉTODO DE TRABALHO</p>
               <h2 className={styles.revealTitle} id="about-method-title">Um processo pensado para transformar briefing em resultado.</h2>
             </div>
-            <div className={styles.aboutMethodTimeline}>
-              {methodSteps.map((step, index) => {
-                const methodItemKey = createRevealItemKey('method', index);
-                const methodSideClassName = index % 2 === 0
-                  ? styles.aboutMethodStepRight
-                  : styles.aboutMethodStepLeft;
-
-                return (
-                  <article
-                    className={getRevealItemClassName(
-                      `${styles.aboutMethodStep} ${styles.aboutMethodStepReveal} ${methodSideClassName}`,
-                      methodItemKey,
-                    )}
-                    key={step.number}
-                    ref={(node) => setRevealItemRef(methodItemKey, node)}
-                  >
-                    <span className={styles.aboutMethodNumber}>{step.number}</span>
+            <ol className={styles.aboutMethodTimeline}>
+              {methodSteps.map((step, index) => (
+                <li className={styles.aboutMethodStep} key={step.id} style={{ '--method-step-index': index }}>
+                    <span className={styles.aboutMethodOrder} aria-hidden="true">Etapa {step.step}</span>
+                    <MethodIcon name={step.icon} />
                     <div className={styles.aboutMethodContent}>
                       <h3>{step.title}</h3>
                       <p>{step.description}</p>
-                      <ul>
-                        {step.items.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
+                      <p className={styles.aboutMethodDeliverables}>{step.deliverables.join(' · ')}</p>
                     </div>
-                  </article>
-                );
-              })}
-            </div>
+                </li>
+              ))}
+            </ol>
           </section>
         </Container>
-
-        <div className={styles.aboutSystemTransition} aria-hidden="true">
-          <span className={styles.aboutTransitionLine} />
-          <span className={styles.aboutTransitionCore}>
-            <span />
-          </span>
-          <span className={styles.aboutTransitionOrbit} />
-          <span className={styles.aboutTransitionDot} />
-        </div>
 
         <div className={styles.aboutLowerAtmosphere}>
           <Container size="wide">
