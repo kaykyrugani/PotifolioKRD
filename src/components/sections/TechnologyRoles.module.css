@@ -73,6 +73,9 @@
   box-shadow: 0 0 20px rgba(0, 194, 255, 0.32);
 }
 
+.techRoleBlockReact { border-top: 0; }
+.techRoleBlockReact::before { display: none; }
+
 .techRoleCopy {
   min-width: 0;
 }
@@ -290,7 +293,7 @@
     display: block;
     height: calc(100vh - 84px);
     min-height: calc(100vh - 84px);
-    overflow: hidden;
+    overflow: visible;
   }
 }
 
@@ -1105,6 +1108,59 @@
   .techFigmaToolActive {
     animation: none;
   }
+}
+
+/* The React story shares the existing React-to-SEO scroll transition without its old dark overlay. */
+.techRoleReactSeoStory::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  z-index: 0;
+  width: 100vw;
+  content: "";
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 18% 22%, rgba(0, 194, 255, 0.08), transparent 28rem),
+    radial-gradient(ellipse at 86% 72%, rgba(124, 58, 237, 0.075), transparent 30rem);
+  transform: translateX(-50%);
+}
+
+@media (min-width: 900px) {
+  .techRoleReactSeoStoryAnimated .techReactSeoStaticLayer { display: none; }
+  .techRoleReactSeoStoryAnimated .techReactSeoPanelReact {
+    padding: 0;
+    border: 0;
+    pointer-events: auto;
+  }
+}
+
+.techRoleReactSeoStory h2.techFigmaHeading {
+  max-width: none;
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 1.62rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 780px) {
+  .techRoleReactSeoStory h2.techFigmaHeading { font-size: 2.35rem; }
+}
+
+@media (min-width: 1024px) {
+  .techFigmaStory h3.techFigmaHeading,
+  .techRoleReactSeoStory h2.techFigmaHeading {
+    font-size: clamp(1.75rem, 1rem + 1.8vw, 2.75rem);
+    line-height: 1.15;
+    letter-spacing: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .techRoleReactSeoStory h2.techFigmaHeading { font-size: clamp(1.8rem, 7vw, 2.4rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {

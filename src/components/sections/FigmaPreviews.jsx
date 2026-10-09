@@ -8,6 +8,7 @@ import {
   responsivePreviewCopy,
 } from './figmaPreviewData';
 import styles from './FigmaPreviews.module.css';
+import { TechnologyPlaybackButton } from './TechnologyStoryPrimitives';
 
 const slotIntroDelay = 780;
 const miniPageLogicalWidth = 1280;
@@ -250,9 +251,15 @@ function FlowPreview({ shouldReduceMotion, isPresent }) {
 
   const activeNode = flowPreviewNodes[activeIndex];
   const controls = (
-    <button className={styles.previewIconButton} type="button" aria-label="Repetir animação do fluxo" title="Repetir" onClick={repeat} onFocus={cancelIntro}>
-      <PreviewIcon name="refresh" /><span>Repetir</span>
-    </button>
+    <TechnologyPlaybackButton
+      ariaLabel="Repetir animação do fluxo"
+      className={styles.previewIconButton}
+      icon={<PreviewIcon name="refresh" />}
+      label="Repetir"
+      onClick={repeat}
+      onFocus={cancelIntro}
+      title="Repetir"
+    />
   );
 
   return (

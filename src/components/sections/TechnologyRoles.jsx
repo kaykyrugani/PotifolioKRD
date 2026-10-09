@@ -2,77 +2,14 @@ import { forwardRef, useEffect, useId, useRef, useState } from 'react';
 import { AnimatePresence, motion, useIsPresent, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import Container from '../ui/Container';
 import FigmaPreviewContent from './FigmaPreviews';
+import ReactCompositionStory from './ReactCompositionStory';
+import { TechnologyProgress, TechnologyStorySteps } from './TechnologyStoryPrimitives';
 import { figmaStoryboardItems } from './figmaPreviewData';
 import { barReveal, cardReveal, flowStepReveal, revealViewport, tagReveal, verticalReveal } from './technologyMotion';
 import sectionStyles from './TechnologyRoles.module.css';
 
 const identityRevealSectionClassName = (className) => className;
 const noop = () => {};
-
-const reactCompositionComponents = [
-  { key: 'button', label: 'Button', className: 'Button' },
-  { key: 'input', label: 'Input', className: 'Input' },
-  { key: 'card', label: 'Card', className: 'Card' },
-  { key: 'modal', label: 'Modal', className: 'Modal' },
-  { key: 'dropdown', label: 'Dropdown', className: 'Dropdown' },
-];
-
-const reactCompositionPanelReveal = {
-  hidden: { opacity: 0, y: 26, scale: 0.985 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.62,
-      ease: [0.22, 1, 0.36, 1],
-      when: 'beforeChildren',
-    },
-  },
-};
-
-const reactCompositionBaseReveal = {
-  hidden: { opacity: 0, x: -20, scale: 0.96 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    scale: 1,
-    transition: { delay: 0.22, duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
-const reactCompositionNodeReveal = {
-  hidden: { opacity: 0, y: 18, scale: 0.94 },
-  visible: (index = 0) => ({
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      delay: 0.9 + index * 0.11,
-      duration: 0.46,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-};
-
-const reactCompositionAppReveal = {
-  hidden: { opacity: 0, x: 24, scale: 0.96 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    scale: 1,
-    transition: { delay: 1.76, duration: 0.56, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
-const reactCompositionConnectionReveal = {
-  hidden: { opacity: 0, pathLength: 0 },
-  visible: (delay = 0.62) => ({
-    opacity: 1,
-    pathLength: 1,
-    transition: { delay, duration: 0.72, ease: [0.22, 1, 0.36, 1] },
-  }),
-};
 
 function useDesktopTimeline() {
   const [matches, setMatches] = useState(false);
@@ -341,25 +278,12 @@ function FigmaRoleVisual({ role, activeStep, activeTools, direction, shouldReduc
       <FigmaPreviewSlot direction={direction} shouldReduceMotion={shouldReduceMotion} stage={activeStep} />
 
       {isDesktop ? (
-        <ol className={sectionStyles.techFigmaDesktopStages} aria-label="Etapas do processo">
-          {figmaStoryboardItems.map((item, index) => {
-            const currentIndex = figmaStoryboardItems.findIndex((stage) => stage.key === activeStep);
-            const status = index === currentIndex ? 'active' : index < currentIndex ? 'complete' : 'next';
-            return (
-              <li data-stage-status={status} key={item.key}>
-                <button
-                  aria-current={status === 'active' ? 'step' : undefined}
-                  onClick={() => onSelectStep(item.key)}
-                  type="button"
-                >
-                  <span aria-hidden="true">0{index + 1}</span>
-                  <span>{item.label}</span>
-                </button>
-                <p>{item.description}</p>
-              </li>
-            );
-          })}
-        </ol>
+        <TechnologyStorySteps
+          activeIndex={figmaStoryboardItems.findIndex((item) => item.key === activeStep)}
+          classNames={{ list: sectionStyles.techFigmaDesktopStages, item: '', button: '', number: '', title: '', description: '', label: 'Etapas do processo' }}
+          items={figmaStoryboardItems}
+          onSelect={onSelectStep}
+        />
       ) : isMobile ? (
         <div className={sectionStyles.techFigmaMobileContentSlot}>
           <AnimatePresence custom={direction} initial={false} mode="popLayout">
@@ -481,20 +405,17 @@ function FigmaRoleStory({ role }) {
     <section className={sectionStyles.techFigmaStory} ref={storyRef}>
       <article className={sectionStyles.techFigmaLayout}>
         <div className={sectionStyles.techRoleCopy}>
-          <div
-            aria-label="Progresso das etapas do Figma"
-            aria-valuemax={3}
-            aria-valuemin={1}
-            aria-valuenow={figmaStoryboardItems.findIndex((item) => item.key === activeStep) + 1}
+          <TechnologyProgress
             className={sectionStyles.techFigmaProgress}
-            role="progressbar"
+            index={figmaStoryboardItems.findIndex((item) => item.key === activeStep)}
+            label="Progresso das etapas do Figma"
+            total={3}
           >
-            <span><FigmaAnimatedCount ariaHidden direction={transitionDirection} shouldReduceMotion={shouldReduceMotion} value={`0${figmaStoryboardItems.findIndex((item) => item.key === activeStep) + 1}`} /> <span aria-hidden="true">/ 03</span></span>
-            <i><i style={{ width: `${(figmaStoryboardItems.findIndex((item) => item.key === activeStep) + 1) * 33.333}%` }} /></i>
-          </div>
+            <span><FigmaAnimatedCount ariaHidden direction={transitionDirection} shouldReduceMotion={shouldReduceMotion} value={'0' + (figmaStoryboardItems.findIndex((item) => item.key === activeStep) + 1)} /> <span aria-hidden="true">/ 03</span></span>
+          </TechnologyProgress>
           <div className={sectionStyles.techFigmaHeaderMain}>
             <span>{role.label}</span>
-            <h3>{role.title}</h3>
+            <h3 className={sectionStyles.techFigmaHeading}>{role.title}</h3>
           </div>
           <div className={sectionStyles.techFigmaHeaderAside}>
             <p>{role.description}</p>
@@ -536,111 +457,6 @@ function FigmaRoleStory({ role }) {
   );
 }
 
-function ReactRoleVisual({ role, index }) {
-  const shouldFrame = index % 2 === 0;
-  const visualClassName = [
-    sectionStyles.techRoleVisual,
-    sectionStyles[`techRoleVisual-${role.kind}`],
-    shouldFrame ? sectionStyles.techRoleVisualFramed : '',
-  ].filter(Boolean).join(' ');
-
-  return (
-    <>
-      <motion.div
-        className={`${visualClassName} ${sectionStyles.techReactMobileVisual}`}
-        aria-hidden="true"
-        initial="hidden"
-        whileInView="visible"
-        viewport={revealViewport}
-      >
-        <span>{role.label}</span>
-        <strong>Arquitetura visual</strong>
-        <ol className={sectionStyles.techArchitectureFlow}>
-          {['Interface', 'Componentes', 'Estados', 'Reutilização', 'Escalabilidade'].map((item, itemIndex) => (
-            <motion.li custom={itemIndex} key={item} variants={flowStepReveal}>
-              {item}
-            </motion.li>
-          ))}
-        </ol>
-      </motion.div>
-
-      <motion.div
-        className={sectionStyles.reactCompositionPanel}
-        aria-hidden="true"
-        initial="hidden"
-        variants={reactCompositionPanelReveal}
-        viewport={{ once: true, amount: 0.34 }}
-        whileInView="visible"
-      >
-        <svg className={sectionStyles.reactConnectionLayer} viewBox="0 0 1000 360" preserveAspectRatio="none">
-          <motion.path
-            className={sectionStyles.reactConnectionPath}
-            custom={0.62}
-            d="M230 164 C292 150 326 148 372 154"
-            variants={reactCompositionConnectionReveal}
-          />
-          <motion.path
-            className={sectionStyles.reactConnectionPath}
-            custom={0.72}
-            d="M230 198 C292 216 326 218 372 206"
-            variants={reactCompositionConnectionReveal}
-          />
-          <motion.path
-            className={sectionStyles.reactConnectionPath}
-            custom={1.46}
-            d="M636 154 C696 146 734 150 770 166"
-            variants={reactCompositionConnectionReveal}
-          />
-          <motion.path
-            className={sectionStyles.reactConnectionPath}
-            custom={1.56}
-            d="M636 210 C696 224 734 216 770 194"
-            variants={reactCompositionConnectionReveal}
-          />
-        </svg>
-
-        <motion.div className={sectionStyles.reactBaseNode} variants={reactCompositionBaseReveal}>
-          <span className={sectionStyles.reactNodeLabel}>Componente Base</span>
-          <span className={sectionStyles.reactBaseButton}>Button</span>
-        </motion.div>
-
-        <div className={sectionStyles.reactComponentCluster}>
-          <span className={sectionStyles.reactNodeLabel}>Sistema de Componentes</span>
-          <div className={sectionStyles.reactComponentOrbit}>
-            {reactCompositionComponents.map((component, componentIndex) => (
-              <motion.span
-                className={`${sectionStyles.reactComponentNode} ${sectionStyles[`reactComponentNode${component.className}`]}`}
-                custom={componentIndex}
-                key={component.key}
-                variants={reactCompositionNodeReveal}
-              >
-                {component.label}
-              </motion.span>
-            ))}
-          </div>
-        </div>
-
-        <motion.div className={sectionStyles.reactAppNode} variants={reactCompositionAppReveal}>
-          <span className={sectionStyles.reactNodeLabel}>Aplicação</span>
-          <div className={sectionStyles.reactMiniInterface}>
-            <span />
-            <div>
-              <i />
-              <i />
-              <i />
-            </div>
-            <section>
-              <em />
-              <em />
-              <em />
-            </section>
-          </div>
-        </motion.div>
-      </motion.div>
-    </>
-  );
-}
-
 function ReactSeoTransitionStory({ reactRole, reactIndex, seoRole, seoIndex }) {
   const shouldReduceMotion = useReducedMotion();
   const isDesktopTimeline = useDesktopTimeline();
@@ -650,12 +466,10 @@ function ReactSeoTransitionStory({ reactRole, reactIndex, seoRole, seoIndex }) {
     offset: ['start start', 'end end'],
   });
   const shouldAnimateTransition = isDesktopTimeline && !shouldReduceMotion;
-  const reactX = useTransform(scrollYProgress, [0, 0.62, 0.72, 1], ['0%', '0%', '-110%', '-110%'], { clamp: true });
   const reactOpacity = useTransform(scrollYProgress, [0, 0.62, 0.72, 1], [1, 1, 0, 0], { clamp: true });
-  const seoX = useTransform(scrollYProgress, [0, 0.74, 0.84, 1], ['110%', '110%', '0%', '0%'], { clamp: true });
   const seoOpacity = useTransform(scrollYProgress, [0, 0.74, 0.84, 1], [0, 0, 1, 1], { clamp: true });
-  const reactPanelStyle = shouldAnimateTransition ? { x: reactX, opacity: reactOpacity } : undefined;
-  const seoPanelStyle = shouldAnimateTransition ? { x: seoX, opacity: seoOpacity } : undefined;
+  const reactPanelStyle = shouldAnimateTransition ? { opacity: reactOpacity } : undefined;
+  const seoPanelStyle = shouldAnimateTransition ? { opacity: seoOpacity } : undefined;
 
   return (
     <section
@@ -666,30 +480,13 @@ function ReactSeoTransitionStory({ reactRole, reactIndex, seoRole, seoIndex }) {
       ref={storyRef}
     >
       <div className={sectionStyles.techReactSeoSticky}>
-      <div className={sectionStyles.techReactSeoStaticLayer} aria-hidden="true" />
       <motion.article
         className={`${sectionStyles.techRoleBlock} ${sectionStyles.techRoleBlockReact} ${sectionStyles.techReactSeoPanel} ${sectionStyles.techReactSeoPanelReact}`}
         custom={reactIndex}
-        initial="hidden"
         key={reactRole.title}
         style={reactPanelStyle}
-        variants={cardReveal}
-        viewport={revealViewport}
-        whileInView="visible"
       >
-        <div className={sectionStyles.techRoleCopy}>
-          <span>{reactRole.label}</span>
-          <h3>{reactRole.title}</h3>
-          <p>{reactRole.description}</p>
-          <ul>
-            {reactRole.items.map((item, itemIndex) => (
-              <motion.li custom={itemIndex} key={item} variants={tagReveal}>
-                {item}
-              </motion.li>
-            ))}
-          </ul>
-        </div>
-        <ReactRoleVisual index={reactIndex} role={reactRole} />
+        <ReactCompositionStory />
       </motion.article>
 
       <motion.article
